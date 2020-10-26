@@ -1,0 +1,9 @@
+{
+    "eslint.alwaysShowStatus": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "javascript.format.enable": false,
+    "prettier.eslintIntegration": true,
+    "compile-hero.disable-compile-files-on-did-save-code": true
+  }
