@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import color from './color';
 
 const Button = styled.button`
-  background-color: white;
-  margin: 0;
   height: 2.5rem;
-  text-align: center;
+  margin: 0;
   border: transparent;
+  background-color: white;
+  text-align: center;
   &: hover {
     background-color: whitesmoke;
     cursor: pointer;
@@ -15,10 +16,10 @@ const Button = styled.button`
 `;
 const Counter = styled.span`
   display: inline-block;
-  text-align: center;
-  background-color: #e4e7ea;
-  border-radius: 32px;
   padding: 3px 8px;
+  border-radius: 32px;
+  background-color: ${color.grey};
+  text-align: center;
 `;
 const Icon = styled.img`
   width: 20px;
