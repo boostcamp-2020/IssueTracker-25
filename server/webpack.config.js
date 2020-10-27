@@ -12,11 +12,12 @@ module.exports = {
   },
   target: 'node',
   node: false,
-  externals: [nodeExternals()],
+  externals: [
+    nodeExternals({
+      additionalModuleDirs: [path.resolve(__dirname, '../node_modules')],
+    }),
+  ],
   plugins: [new CleanWebpackPlugin(), new Dotenv()],
-  resolve: {
-    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-  },
   optimization: {
     minimizer: [
       new TerserPlugin({
