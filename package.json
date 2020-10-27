@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
-  "repository": "https://github.com/changheedev/IssueTracker-25.git",
-  "author": "Changehee Choi <changhee.dev@gmail.com>",
+  "repository": "https://github.com/boostcamp-2020/IssueTracker-25.git",
   "license": "MIT",
   "workspaces": [
     "front",
