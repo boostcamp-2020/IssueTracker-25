@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path')
+const path = require('path');
+
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
@@ -43,9 +44,9 @@ module.exports = {
       minify:
         process.env.NODE_ENV === 'production'
           ? {
-            collapseWhitespace: true,
-            removeComments: true,
-          }
+              collapseWhitespace: true,
+              removeComments: true,
+            }
           : false,
     }),
   ],
