@@ -17,10 +17,7 @@ const sequelizeConfigs = {
 };
 
 const sequelize = new Sequelize(sequelizeConfigs);
-
-User.init(sequelize);
-Issue.init(sequelize);
-Label.init(sequelize);
-Milestone.init(sequelize);
+const models = [User, Issue, Label, Milestone];
+models.forEach((model) => model.init(sequelize));
 
 export default { Sequelize, sequelize };
