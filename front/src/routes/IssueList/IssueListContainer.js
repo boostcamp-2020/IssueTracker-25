@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import color from '../../components/color';
 import ListHeader from '../../components/ListHeader';
+import actionType from './issueAction';
 
+const { CHECK_ALL_ISSUE_HANDLER, CHECK_ISSUE_HANDLER } = actionType;
 const CustomCheckBoxButton = styled.button`
   width: 1rem;
   height: 1rem;
@@ -24,30 +25,17 @@ const Ul = styled.ul`
 
   list-style-type: none;
 `;
-function IssueListHeader({ setCheckedIssues, checkedIssues }) {
-  const { issues, allIssue } = checkedIssues;
-
+function IssueListHeader({ allIssue, dispatch }) {
   const checkBoxClickHandler = () => {
-    const updatedIssues = setAllIssueChecked(issues, !allIssue);
-    setCheckedIssues({
-      issues: updatedIssues,
-      allIssue: !allIssue,
-    });
+    dispatch({ type: CHECK_ALL_ISSUE_HANDLER });
   };
-
-  const setAllIssueChecked = (issues, value) =>
-    issues.map((issue) => {
-      issue.checked = value;
-      return issue;
-    });
-
   return (
     <>
       <CustomCheckBoxButton
         type="button"
         checked={allIssue}
         onClick={checkBoxClickHandler}
-      ></CustomCheckBoxButton>
+      />
     </>
   );
 }
@@ -61,32 +49,16 @@ function IssueItem({ issue, checkBoxClickHandler }) {
         checked={checked}
         onClick={checkBoxClickHandler}
         id={id}
-      ></CustomCheckBoxButton>
+      />
       <div className="issue__title">{title}</div>
     </IssueItemContainer>
   );
 }
 
-function IssueListBody({ issues, setCheckedIssues }) {
+function IssueListBody({ issues, dispatch }) {
   const checkBoxClickHandler = ({ target }) => {
     const { id } = target;
-    const updatedIssues = toggleIssue(issues, id);
-    setCheckedIssues({
-      issues: updatedIssues,
-      allIssue: isAllChecked(updatedIssues),
-    });
-  };
-
-  const isAllChecked = (issues) =>
-    issues.every((issue) => issue.checked === true);
-
-  const toggleIssue = (issues, id) => {
-    return issues.map((issue) => {
-      if (+issue.id === +id) {
-        issue.checked = !issue.checked;
-      }
-      return issue;
-    });
+    dispatch({ type: CHECK_ISSUE_HANDLER, id });
   };
 
   return (
@@ -96,27 +68,20 @@ function IssueListBody({ issues, setCheckedIssues }) {
           key={issue.id}
           issue={issue}
           checkBoxClickHandler={checkBoxClickHandler}
-        ></IssueItem>
+        />
       ))}
     </Ul>
   );
 }
 
-function IssueListContainer({ checkedIssues, setCheckedIssues }) {
-  const { issues } = checkedIssues;
+function IssueListContainer({ issues, allIssue, dispatch }) {
   return (
     <>
       <IssueList>
         <ListHeader>
-          <IssueListHeader
-            setCheckedIssues={setCheckedIssues}
-            checkedIssues={checkedIssues}
-          />
+          <IssueListHeader allIssue={allIssue} dispatch={dispatch} />
         </ListHeader>
-        <IssueListBody
-          setCheckedIssues={setCheckedIssues}
-          issues={issues}
-        ></IssueListBody>
+        <IssueListBody issues={issues} dispatch={dispatch} />
       </IssueList>
     </>
   );
