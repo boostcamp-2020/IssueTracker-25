@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import config from '../config';
 import User from './user';
+import Issue from './issue';
 
 const sequelizeConfigs = {
   ...config.db,
@@ -16,5 +17,6 @@ const sequelizeConfigs = {
 const sequelize = new Sequelize(sequelizeConfigs);
 
 User.init(sequelize);
+Issue.init(sequelize);
 
 export default { Sequelize, sequelize };
