@@ -19,5 +19,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'react/jsx-filename-extension': 0,
+    'no-use-before-define': ['error', { functions: false, variables: false }],
+    'react/prop-types': 0,
   },
 };
