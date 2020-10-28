@@ -1,7 +1,8 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cors = require('cors');
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cors from 'cors';
+import db from './models';
 
 const app = express();
 app.use(logger('dev'));
@@ -10,4 +11,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-module.exports = app;
+db.sequelize.sync();
+
+export default app;
