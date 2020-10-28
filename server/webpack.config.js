@@ -12,6 +12,17 @@ module.exports = {
   },
   target: 'node',
   node: false,
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+    ],
+  },
   externals: [
     nodeExternals({
       additionalModuleDirs: [path.resolve(__dirname, '../node_modules')],
