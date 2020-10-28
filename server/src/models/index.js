@@ -4,6 +4,7 @@ import User from './user';
 import Issue from './issue';
 import Label from './label';
 import Milestone from './milestone';
+import Comment from './comment';
 
 const sequelizeConfigs = {
   ...config.db,
@@ -17,7 +18,7 @@ const sequelizeConfigs = {
 };
 
 const sequelize = new Sequelize(sequelizeConfigs);
-const models = [User, Issue, Label, Milestone];
+const models = [User, Issue, Label, Milestone, Comment];
 models.forEach((model) => model.init(sequelize));
 
 export default { Sequelize, sequelize };
