@@ -1,0 +1,26 @@
+{
+  "name": "issue-tracker-25",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/boostcamp-2020/IssueTracker-25.git",
+  "license": "MIT",
+  "workspaces": [
+    "front",
+    "server"
+  ],
+  "scripts": {
+    "test": "run-s test:server test:front",
+    "test:server": "yarn workspace server test",
+    "test:front": "yarn workspace front test",
+    "precommit:server": "yarn workspace server precommit",
+    "precommit:front": "yarn workspace front precommit",
+    "precommit": "run-p precommit:server precommit:front",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2"
+  }
+}
