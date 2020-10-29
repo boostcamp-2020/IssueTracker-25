@@ -2,6 +2,6 @@ import axios from './axios';
 
 export default {
   getIssues: () => {
-    return axios.get('/issue');
+    return axios.get('/issues');
   },
 };
