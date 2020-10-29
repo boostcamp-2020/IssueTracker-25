@@ -28,6 +28,13 @@ class Label extends Model {
   static init(sequelize) {
     return super.init(scheme, { sequelize, ...initOptions });
   }
+
+  static associate(models) {
+    this.belongsToMany(models.Issue, {
+      through: 'issue_labels',
+      timestamps: false,
+    });
+  }
 }
 
 export default Label;

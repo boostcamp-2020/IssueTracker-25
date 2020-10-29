@@ -33,6 +33,19 @@ class Issue extends Model {
   static init(sequelize) {
     return super.init(scheme, { sequelize, ...initOptions });
   }
+
+  static associate(models) {
+    this.belongsTo(models.User);
+    this.belongsTo(models.Milestone);
+    this.belongsToMany(models.User, {
+      through: 'issue_assignees',
+      timestamps: false,
+    });
+    this.belongsToMany(models.Label, {
+      through: 'issue_labels',
+      timestamps: false,
+    });
+  }
 }
 
 export default Issue;

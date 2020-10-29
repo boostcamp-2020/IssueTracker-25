@@ -8,11 +8,11 @@ const scheme = {
     autoIncrement: true,
   },
   name: {
-    type: new DataTypes.STRING(100),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   uid: {
-    type: new DataTypes.STRING(255),
+    type: DataTypes.STRING(255),
     allowNull: false,
     unique: true,
   },
@@ -29,6 +29,13 @@ const initOptions = {
 class User extends Model {
   static init(sequelize) {
     return super.init(scheme, { sequelize, ...initOptions });
+  }
+
+  static associate(models) {
+    this.belongsToMany(models.Issue, {
+      through: 'issue_assignees',
+      timestamps: false,
+    });
   }
 }
 

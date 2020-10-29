@@ -21,6 +21,11 @@ class Comment extends Model {
   static init(sequelize) {
     return super.init(scheme, { sequelize, ...initOptions });
   }
+
+  static associate(models) {
+    this.belongsTo(models.User);
+    this.belongsTo(models.Issue);
+  }
 }
 
 export default Comment;

@@ -20,14 +20,10 @@ const sequelizeConfigs = {
 const sequelize = new Sequelize(sequelizeConfigs);
 const models = [User, Issue, Label, Milestone, Comment];
 models.forEach((model) => model.init(sequelize));
-
-Issue.belongsTo(User);
-Issue.belongsTo(Milestone);
-Comment.belongsTo(User);
-Comment.belongsTo(Issue);
-User.belongsToMany(Issue, { through: 'issue_assignees', timestamps: false });
-Issue.belongsToMany(User, { through: 'issue_assignees', timestamps: false });
-Issue.belongsToMany(Label, { through: 'issue_labels', timestamps: false });
-Label.belongsToMany(Issue, { through: 'issue_labels', timestamps: false });
+models.forEach((model) => {
+  if (model.associate) {
+    model.associate(sequelize.models);
+  }
+});
 
 export default { Sequelize, sequelize };
