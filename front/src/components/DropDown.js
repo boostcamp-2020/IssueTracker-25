@@ -12,7 +12,7 @@ const DropDownButton = styled.button`
   background-color: transparent;
   border: none;
   &:hover {
-    cusor: pointer;
+    cursor: pointer;
   }
 `;
 const DropDownMenu = styled.div`
