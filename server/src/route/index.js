@@ -1,10 +1,8 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
-const express = require('express');
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
 
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
 
 const basename = path.basename(__filename);
 
