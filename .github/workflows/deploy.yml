@@ -49,9 +49,10 @@ jobs:
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          API_BASE_URL: ${{secrets.API_BASE_URL}}
         run: |
           chmod +x ./scripts/build_push.sh
-          ./scripts/build_push.sh "$RELEASE_VERSION" "$DOCKER_USER" "$DOCKER_PASSWORD"
+          ./scripts/build_push.sh "$RELEASE_VERSION" "$DOCKER_USER" "$DOCKER_PASSWORD" "$API_BASE_URL"
 
       - name: Deploy
         uses: appleboy/ssh-action@master

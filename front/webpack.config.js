@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -48,6 +49,11 @@ module.exports = {
               removeComments: true,
             }
           : false,
+    }),
+    new webpack.DefinePlugin({
+      'process.env.API_BASE_URL': process.env.API_BASE_URL
+        ? JSON.stringify(process.env.API_BASE_URL)
+        : JSON.stringify('http://localhost:3000'),
     }),
   ],
   resolve: {
