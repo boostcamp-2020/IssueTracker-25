@@ -16,22 +16,26 @@
 
 ## 📌 Project
 > 기술 스택
-- **Front-End**
+### Front-End
+<p align="center">
 <img width="250" height="200" src="https://user-images.githubusercontent.com/44409642/97563378-4d20b280-1a26-11eb-9da6-537f55b37718.png"/>
 <img width="200" height="200" src="https://user-images.githubusercontent.com/44409642/97563380-4e51df80-1a26-11eb-880a-e8839c453956.png"/>
 
-- **Back-End**
+### Back-End
+<p align="center">
 <Img  width="250" height="200" src="https://user-images.githubusercontent.com/44409642/97563827-041d2e00-1a27-11eb-8331-64681489f8fe.png"/>
 <Img  width="250" height="200" src="https://user-images.githubusercontent.com/44409642/97563829-054e5b00-1a27-11eb-851c-185099d08247.png"/>
 <Img  width="200" height="200" src="https://user-images.githubusercontent.com/44409642/97563831-067f8800-1a27-11eb-85ab-0fd8d6eca3bc.png"/>
+</p>
 
-- **Test** 
+### Test 
 <Img width='270' height='200' src="https://user-images.githubusercontent.com/44409642/97564024-49416000-1a27-11eb-9750-577ccf3db88a.png"/>
 
 
 > ERD
 
 ![erd_image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d71a75c5-4cac-463b-8550-f995c837d0af/Copy_of_undefined_%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201028%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201028T095500Z&X-Amz-Expires=86400&X-Amz-Signature=02ba40fb977db3b381d6c55d02333ad5254799c365bf9f40c4a30366a00a2946&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Copy_of_undefined_%281%29.png%22)
+
 
 
 
@@ -74,8 +78,4 @@
 - 리뷰어는 팀원 **모두**를 지정해야 한다. 
 - **2명 이상**이 리뷰와 승인 후 merge할 수 있다.
 - 깔끔한 커밋 관리를 위하여 **squash merge**를 한다.
-
-
-
-
 
