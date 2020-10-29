@@ -1,8 +1,8 @@
 import express from 'express';
-import getUserList from '../service/user';
+import getMilestoneList from '../services/milestone';
 
 const router = express.Router();
 
-router.get('', getUserList);
+router.get('', getMilestoneList);
 
 export default router;

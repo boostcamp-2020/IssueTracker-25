@@ -1,8 +1,8 @@
 import express from 'express';
-import getMilestoneList from '../service/milestone';
+import getLabelList from '../services/label';
 
 const router = express.Router();
 
-router.get('', getMilestoneList);
+router.get('/', getLabelList);
 
 export default router;
