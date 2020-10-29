@@ -1,4 +1,5 @@
 import actionType from './issueAction';
+import utils from '../../libs/utils';
 
 const {
   FETCH_SUCCESS,
@@ -9,16 +10,22 @@ const {
 
 export default function reducer(state, action) {
   const { type } = action;
-  const { issues, allIssue } = state;
+  const { filteredIssues, checkAllIssue } = state;
   switch (type) {
     case FETCH_SUCCESS: {
       const { issueItems } = action;
+      const openedIssues = utils.getFilteredElement(
+        issueItems,
+        (issue) => !issue.isClosed,
+      );
       return {
         ...state,
         loading: false,
-        issues: issueItems.map((issue) => {
-          return { ...issue, checked: false };
-        }),
+        issues: [...issueItems],
+        filteredIssues: openedIssues.map((issue) => ({
+          ...issue,
+          checked: false,
+        })),
       };
     }
     case FETCH_ERROR: {
@@ -29,20 +36,23 @@ export default function reducer(state, action) {
       };
     }
     case CHECK_ALL_ISSUE_HANDLER: {
-      const updatedAllIssues = setAllIssueChecked(issues, !allIssue);
+      const updatedAllIssues = setAllIssueChecked(
+        filteredIssues,
+        !checkAllIssue,
+      );
       return {
         ...state,
-        issues: updatedAllIssues,
-        allIssue: !allIssue,
+        filteredIssues: updatedAllIssues,
+        checkAllIssue: !checkAllIssue,
       };
     }
     case CHECK_ISSUE_HANDLER: {
       const { id } = action;
-      const updatedOneIssue = toggleIssue(issues, id);
+      const updatedOneIssue = toggleIssue(filteredIssues, id);
       return {
         ...state,
-        issues: updatedOneIssue,
-        allIssue: isAllChecked(updatedOneIssue),
+        filteredIssues: updatedOneIssue,
+        checkAllIssue: isAllChecked(updatedOneIssue),
       };
     }
 
