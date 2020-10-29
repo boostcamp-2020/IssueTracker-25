@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import color from './color';
 
 const HeaderDiv = styled.div`
-  width: 100%;
   height: 2rem;
   padding: 1rem;
 

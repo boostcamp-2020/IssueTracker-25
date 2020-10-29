@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import color from '../../components/color';
-import ListHeader from '../../components/ListHeader';
 import actionType from './issueAction';
+import ListHeader from '../../components/ListHeader';
+import { UserProfileList } from '../../components/UserProfile';
 
 const { CHECK_ALL_ISSUE_HANDLER, CHECK_ISSUE_HANDLER } = actionType;
 const CustomCheckBoxButton = styled.button`
@@ -13,6 +14,7 @@ const CustomCheckBoxButton = styled.button`
 `;
 const IssueList = styled.div`
   border: 1px solid ${color.boldBlue};
+  color: ${color.mainBlack};
 `;
 const IssueItemContainer = styled.li`
   border-top: 1px solid ${color.boldBlue};
@@ -25,7 +27,8 @@ const Ul = styled.ul`
 
   list-style-type: none;
 `;
-function IssueListHeader({ allIssue, dispatch }) {
+
+function IssueListHeader({ checkAllIssue, dispatch }) {
   const checkBoxClickHandler = () => {
     dispatch({ type: CHECK_ALL_ISSUE_HANDLER });
   };
@@ -33,7 +36,7 @@ function IssueListHeader({ allIssue, dispatch }) {
     <>
       <CustomCheckBoxButton
         type="button"
-        checked={allIssue}
+        checked={checkAllIssue}
         onClick={checkBoxClickHandler}
       />
     </>
@@ -41,16 +44,42 @@ function IssueListHeader({ allIssue, dispatch }) {
 }
 
 function IssueItem({ issue, checkBoxClickHandler }) {
-  const { id, title, checked } = issue;
+  const {
+    id,
+    title,
+    writer,
+    milestoneTitle,
+    checked,
+    isClosed,
+    assigneeList,
+  } = issue;
+
   return (
-    <IssueItemContainer>
-      <CustomCheckBoxButton
-        type="button"
-        checked={checked}
-        onClick={checkBoxClickHandler}
-        id={id}
-      />
-      <div className="issue__title">{title}</div>
+    <IssueItemContainer id={id}>
+      <div>
+        <CustomCheckBoxButton
+          type="button"
+          checked={checked}
+          onClick={checkBoxClickHandler}
+          id={id}
+        />
+        <span className="issue-item__title">{title}</span>
+        <span className="issue-item__label">라벨</span>
+      </div>
+      <div>
+        <span className="issue-item__issue-number">#{id}</span>
+        <span className="issue-item__date">
+          {isClosed ? 'closed' : 'opened'}
+        </span>
+        <span className="issue-item__writer">{writer}</span>
+        {milestoneTitle !== '' && (
+          <span className="issue-item__milestone-title">{milestoneTitle}</span>
+        )}
+        <UserProfileList
+          className="issue-item__assignee"
+          users={assigneeList}
+        />
+      </div>
     </IssueItemContainer>
   );
 }
@@ -74,12 +103,12 @@ function IssueListBody({ issues, dispatch }) {
   );
 }
 
-function IssueListContainer({ issues, allIssue, dispatch }) {
+function IssueListContainer({ issues, checkAllIssue, dispatch }) {
   return (
     <>
       <IssueList>
         <ListHeader>
-          <IssueListHeader allIssue={allIssue} dispatch={dispatch} />
+          <IssueListHeader checkAllIssue={checkAllIssue} dispatch={dispatch} />
         </ListHeader>
         <IssueListBody issues={issues} dispatch={dispatch} />
       </IssueList>
