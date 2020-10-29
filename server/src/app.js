@@ -10,4 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+const router = require('./route');
+
+app.use(router);
 module.exports = app;
