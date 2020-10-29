@@ -8,7 +8,7 @@ function getUserList(req, res, next) {
     data,
   ) {
     if (err) next(err);
-    res.josn(JSON.parse(data));
+    res.json(JSON.parse(data));
   });
 }
 
