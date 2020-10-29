@@ -2,7 +2,7 @@
 
 ## api 명세서
 
-### issue
+### issues
 
 | URL | Method | Body | Query | param |
 | --- | ------ | ---- | ----- | ----- |
@@ -41,7 +41,7 @@
 
 ```
 
-### lable
+### labels
 
 | URL | Method | Body | Query | param |
 | --- | ------ | ---- | ----- | ----- |
@@ -60,7 +60,7 @@
 ]
 ```
 
-### user
+### users
 
 | URL | Method | Body | Query | param |
 | --- | ------ | ---- | ----- | ----- |
@@ -79,7 +79,7 @@
 ]
 ```
 
-### milestone
+### milestones
 
 | URL | Method | Body | Query | param |
 | --- | ------ | ---- | ----- | ----- |

@@ -21,6 +21,12 @@ module.exports = {
     'jest/prefer-to-have-length': 'warn',
     'jest/valid-expect': 'error',
   },
+  parser: '@babel/eslint-parser',
+  parserOptions: {
+    sourceType: 'module',
+    allowImportExportEverywhere: false,
+    requireConfigFile: false,
+  },
   settings: {
     jest: {
       version: 26,
