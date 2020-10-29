@@ -31,6 +31,7 @@ export default function reducer(state, action) {
     case CHECK_ALL_ISSUE_HANDLER: {
       const updatedAllIssues = setAllIssueChecked(issues, !allIssue);
       return {
+        ...state,
         issues: updatedAllIssues,
         allIssue: !allIssue,
       };
@@ -39,6 +40,7 @@ export default function reducer(state, action) {
       const { id } = action;
       const updatedOneIssue = toggleIssue(issues, id);
       return {
+        ...state,
         issues: updatedOneIssue,
         allIssue: isAllChecked(updatedOneIssue),
       };
