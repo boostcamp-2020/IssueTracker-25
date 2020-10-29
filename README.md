@@ -4,15 +4,16 @@
 > 깃헙 Issue Tracker 클론 프로젝트 배포 사이트입니다.
 
 ## 📖 [WIKI Home](https://github.com/boostcamp-2020/IssueTracker-25/wiki)
-> 그라운드 룰, 주차별 계획, 데일리스크럼 그리고 치열한 회의 내용을 기록합니다.
->
-
-[그라운드 룰](https://github.com/boostcamp-2020/IssueTracker-25/wiki/팀프로젝트-그라운드-룰)
+> 팀 그라운드 룰, 스프린트 과정의 기록을 남깁니다.
 
 
-[일정 계획](https://github.com/boostcamp-2020/IssueTracker-25/wiki/일정-계획)
+[일정계획](https://github.com/boostcamp-2020/IssueTracker-25/wiki/%EC%9D%BC%EC%A0%95-%EA%B3%84%ED%9A%8D)
 
-[Backlog](https://github.com/boostcamp-2020/IssueTracker-25/projects)
+[팀 그라운드 룰](https://github.com/boostcamp-2020/IssueTracker-25/wiki/%ED%8C%80%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0)
+
+[커밋 & PR & 코드리뷰 규칙](https://github.com/boostcamp-2020/IssueTracker-25/wiki/%EC%BB%A4%EB%B0%8B,-PR,-%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0-%EB%A3%B0)
+
+[코딩 컨벤션 & 네이밍 규칙](https://github.com/boostcamp-2020/IssueTracker-25/wiki/%EC%BD%94%EB%94%A9-%EC%BB%A8%EB%B2%A4%EC%85%98-&-%EB%84%A4%EC%9D%B4%EB%B0%8D-%EA%B7%9C%EC%B9%99)
 
 ## 📌 Project
 > 기술 스택
