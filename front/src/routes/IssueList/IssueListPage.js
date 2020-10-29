@@ -41,7 +41,7 @@ function IssueListPage() {
   if (loading) {
     return null;
   }
-  if (state.filteredIssues && state.filteredIssues.length === 0) {
+  if (filteredIssues.length === 0) {
     return <div>No results matched your search.</div>;
   }
   return (
