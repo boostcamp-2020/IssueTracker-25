@@ -35,15 +35,16 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Install yarn
+        run: |
+          npm install -g yarn
+          yarn install
       - name: Run tests
         env:
           DB_USERNAME: user
           DB_PASSWORD: password
           DB_DATABASE: test
-        run: |
-          chmod +x ./scripts/run-test.sh
-          ./scripts/run-test.sh
-
+        run: yarn test 
       - name: Build & Push Docker Images
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
