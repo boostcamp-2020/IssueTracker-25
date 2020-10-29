@@ -1,15 +1,22 @@
 import React, { useReducer, useEffect } from 'react';
+import styled from 'styled-components';
+
 import issueApi from '../../apis/issue';
-import IssueListContainer from './IssueListContainer';
 import reducer from './issueHook';
 import actionType from './issueAction';
+import IssueListContainer from './IssueListContainer';
+import IssueFilterContainer from './IssueFilterContainer';
 
 const { FETCH_SUCCESS, FETCH_ERROR } = actionType;
 
+const Div = styled.div`
+  padding: 2rem 5rem;
+`;
 function IssueListPage() {
   const [state, dispatch] = useReducer(reducer, {
     issues: undefined,
-    allIssue: false,
+    filteredIssues: undefined,
+    checkAllIssue: false,
     error: undefined,
     loading: true,
   });
@@ -27,24 +34,25 @@ function IssueListPage() {
     fetchIssue();
   }, []);
 
-  const { issues, allIssue, error, loading } = state;
+  const { filteredIssues, checkAllIssue, error, loading } = state;
   if (error) {
     return <div>{error}</div>;
   }
   if (loading) {
     return null;
   }
-  if (state.issues && state.issues.length === 0) {
+  if (state.filteredIssues && state.filteredIssues.length === 0) {
     return <div>No results matched your search.</div>;
   }
   return (
-    <>
+    <Div>
+      <IssueFilterContainer />
       <IssueListContainer
-        issues={issues}
-        allIssue={allIssue}
+        issues={filteredIssues}
+        checkAllIssue={checkAllIssue}
         dispatch={dispatch}
       />
-    </>
+    </Div>
   );
 }
 export default IssueListPage;
