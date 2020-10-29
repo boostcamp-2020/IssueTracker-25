@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import color from '../../components/color';
-import ListHeader from '../../components/ListHeader';
 import actionType from './issueAction';
-import utils from '../../libs/utils';
+import ListHeader from '../../components/ListHeader';
+import { UserProfileList } from '../../components/UserProfile';
 
 const { CHECK_ALL_ISSUE_HANDLER, CHECK_ISSUE_HANDLER } = actionType;
 const CustomCheckBoxButton = styled.button`
@@ -14,6 +14,7 @@ const CustomCheckBoxButton = styled.button`
 `;
 const IssueList = styled.div`
   border: 1px solid ${color.boldBlue};
+  color: ${color.mainBlack};
 `;
 const IssueItemContainer = styled.li`
   border-top: 1px solid ${color.boldBlue};
@@ -27,33 +28,17 @@ const Ul = styled.ul`
   list-style-type: none;
 `;
 
-function IssueListHeader({ allIssue, issues, dispatch }) {
+function IssueListHeader({ checkAllIssue, dispatch }) {
   const checkBoxClickHandler = () => {
     dispatch({ type: CHECK_ALL_ISSUE_HANDLER });
   };
-  const openedIssueCount = utils.countFilteredElement(
-    issues,
-    (issue) => issue.isClosed,
-  );
-  const closedIssueCount = utils.countFilteredElement(
-    issues,
-    (issue) => !issue.isClosed,
-  );
   return (
     <>
       <CustomCheckBoxButton
         type="button"
-        checked={allIssue}
+        checked={checkAllIssue}
         onClick={checkBoxClickHandler}
       />
-      <span className="issue-list-header__opend-issue-count">
-        {openedIssueCount}
-        Open,
-      </span>
-      <span className="issue-list-header__closed-issue-count">
-        {closedIssueCount}
-        Closed
-      </span>
     </>
   );
 }
@@ -64,10 +49,11 @@ function IssueItem({ issue, checkBoxClickHandler }) {
     title,
     writer,
     milestoneTitle,
-    createdAt,
     checked,
+    isClosed,
     assigneeList,
   } = issue;
+
   return (
     <IssueItemContainer id={id}>
       <div>
@@ -81,24 +67,18 @@ function IssueItem({ issue, checkBoxClickHandler }) {
         <span className="issue-item__label">라벨</span>
       </div>
       <div>
-        <span className="issue-item__issue-number">#</span>
-        <span className="issue-item__open-date">
-          opened
-          {createdAt}
+        <span className="issue-item__issue-number">#{id}</span>
+        <span className="issue-item__date">
+          {isClosed ? 'closed' : 'opened'}
         </span>
         <span className="issue-item__writer">{writer}</span>
         {milestoneTitle !== '' && (
           <span className="issue-item__milestone-title">{milestoneTitle}</span>
         )}
-        {assigneeList.map((assignee) => (
-          <span
-            className="issue-item__assignee"
-            key={assignee.id}
-            id={assignee.id}
-          >
-            {assignee.name}
-          </span>
-        ))}
+        <UserProfileList
+          className="issue-item__assignee"
+          users={assigneeList}
+        />
       </div>
     </IssueItemContainer>
   );
@@ -112,30 +92,23 @@ function IssueListBody({ issues, dispatch }) {
 
   return (
     <Ul>
-      {issues.map(
-        (issue) =>
-          !issue.isClosed && (
-            <IssueItem
-              key={issue.id}
-              issue={issue}
-              checkBoxClickHandler={checkBoxClickHandler}
-            />
-          ),
-      )}
+      {issues.map((issue) => (
+        <IssueItem
+          key={issue.id}
+          issue={issue}
+          checkBoxClickHandler={checkBoxClickHandler}
+        />
+      ))}
     </Ul>
   );
 }
 
-function IssueListContainer({ issues, allIssue, dispatch }) {
+function IssueListContainer({ issues, checkAllIssue, dispatch }) {
   return (
     <>
       <IssueList>
         <ListHeader>
-          <IssueListHeader
-            allIssue={allIssue}
-            issues={issues}
-            dispatch={dispatch}
-          />
+          <IssueListHeader checkAllIssue={checkAllIssue} dispatch={dispatch} />
         </ListHeader>
         <IssueListBody issues={issues} dispatch={dispatch} />
       </IssueList>
