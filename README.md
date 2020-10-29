@@ -16,7 +16,7 @@
 [코딩 컨벤션 & 네이밍 규칙](https://github.com/boostcamp-2020/IssueTracker-25/wiki/%EC%BD%94%EB%94%A9-%EC%BB%A8%EB%B2%A4%EC%85%98-&-%EB%84%A4%EC%9D%B4%EB%B0%8D-%EA%B7%9C%EC%B9%99)
 
 ## 📌 Project
-> 기술 스택
+> ### 기술 스택
 ### Front-End
 <p align="center">
 <img width="250" height="200" src="https://user-images.githubusercontent.com/44409642/97563378-4d20b280-1a26-11eb-9da6-537f55b37718.png"/>
@@ -33,9 +33,10 @@
 <Img width='270' height='200' src="https://user-images.githubusercontent.com/44409642/97564024-49416000-1a27-11eb-9750-577ccf3db88a.png"/>
 
 
-> ERD
+> ### [API 명세서](https://github.com/boostcamp-2020/IssueTracker-25/wiki/API-%EB%AA%85%EC%84%B8%EC%84%9C)
 
-![erd_image](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/d71a75c5-4cac-463b-8550-f995c837d0af/Copy_of_undefined_%281%29.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20201028%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20201028T095500Z&X-Amz-Expires=86400&X-Amz-Signature=02ba40fb977db3b381d6c55d02333ad5254799c365bf9f40c4a30366a00a2946&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Copy_of_undefined_%281%29.png%22)
+
+> ### [ERD](https://github.com/boostcamp-2020/IssueTracker-25/wiki/ERD)
 
 
 
@@ -53,12 +54,13 @@
 🐑 **J114_양예진**[**@yejineee**](https://github.com/yejineee)
 
 ## 🔥 배포
-👉 [**배포 결과 예시**](https://github.com/boostcamp-2020/IssueTracker-25/runs/1324874733?check_suite_focus=true)
-> 배포 전략
+> ### 🔗 [배포 결과 예시](https://github.com/boostcamp-2020/IssueTracker-25/runs/1324874733?check_suite_focus=true)
+
+> ### 배포 전략
 - 배포를 위한 **버전 태그**를 붙이면 자동으로 배포가 진행된다.
 - **테스트에 통과**된 커밋만 배포될 수 있다.
 - 배포 Flow의 **모든 단계에 통과**해야 배포된다.
-> 배포 Flow
+> ### 배포 Flow
 1. **버전 태그 등록**
 마스터 브랜치에 `버전 태그` 를 등록하면 작성해놓은 `깃헙 액션`이 실행 
 [**work flow**](https://github.com/boostcamp-2020/IssueTracker-25/blob/master/.github/workflows/deploy.yml)
