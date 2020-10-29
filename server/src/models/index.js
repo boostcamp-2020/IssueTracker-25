@@ -1,10 +1,7 @@
 import { Sequelize } from 'sequelize';
+import fs from 'fs';
+import path from 'path';
 import config from '../config';
-import User from './user';
-import Issue from './issue';
-import Label from './label';
-import Milestone from './milestone';
-import Comment from './comment';
 
 const sequelizeConfigs = {
   ...config.db,
@@ -18,9 +15,18 @@ const sequelizeConfigs = {
 };
 
 const sequelize = new Sequelize(sequelizeConfigs);
-const models = [User, Issue, Label, Milestone, Comment];
-models.forEach((model) => model.init(sequelize));
-models.forEach((model) => {
+
+fs.readdirSync(__dirname)
+  .filter((file) => {
+    return file.indexOf('.') !== 0 && file !== 'index.js';
+  })
+  .forEach((file) => {
+    const model = require(path.join(__dirname, file)).default;
+    model.init(sequelize);
+    sequelize[model.name] = model;
+  });
+
+Object.values(sequelize.models).forEach((model) => {
   if (model.associate) {
     model.associate(sequelize.models);
   }
