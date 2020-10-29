@@ -16,8 +16,8 @@ function IssueListPage() {
 
   const fetchIssue = async () => {
     try {
-      const response = await issueApi.getIssues();
-      dispatch({ type: FETCH_SUCCESS, issueItems: response });
+      const issues = await issueApi.getIssues();
+      dispatch({ type: FETCH_SUCCESS, issueItems: issues });
     } catch (e) {
       dispatch({ type: FETCH_ERROR, error: e.message });
     }

@@ -50,9 +50,7 @@ export default function reducer(state, action) {
 }
 
 const setAllIssueChecked = (issues, value) =>
-  issues.map((issue) => {
-    return { ...issue, checked: value };
-  });
+  issues.map((issue) => ({ ...issue, checked: value }));
 
 const isAllChecked = (issues) =>
   issues.every((issue) => issue.checked === true);
