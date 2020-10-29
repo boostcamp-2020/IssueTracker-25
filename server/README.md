@@ -2,7 +2,7 @@
 
 ## api 명세서
 
-### issue
+### issues
 
 | URL | Method | Body | Query | param |
 | --- | ------ | ---- | ----- | ----- |
@@ -39,4 +39,63 @@
     }
 ]
 
+```
+
+### labels
+
+| URL | Method | Body | Query | param |
+| --- | ------ | ---- | ----- | ----- |
+| /   | GET    |      |       |       |
+
+**Return**
+
+```
+[
+    {
+        "id" : Number,
+        "name" : String,
+        "color" : String,
+        "description" : String,
+    }
+]
+```
+
+### users
+
+| URL | Method | Body | Query | param |
+| --- | ------ | ---- | ----- | ----- |
+| /   | GET    |      |       |       |
+
+**Return**
+
+```
+[
+    {
+        "id": Number,
+        "name": String,
+        "uid": String,
+        "profile_link": String
+    }
+]
+```
+
+### milestones
+
+| URL | Method | Body | Query | param |
+| --- | ------ | ---- | ----- | ----- |
+| /   | GET    |      |       |       |
+
+**Return**
+
+```
+[
+    {
+        "id": Number,
+        "title": String,
+        "description": String,
+        "end_date": String,
+        "createdAt": String,
+        "updatedAt": String
+    }
+]
 ```

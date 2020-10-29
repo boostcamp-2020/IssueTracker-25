@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-function getIssueList(req, res, next) {
-  const filename = 'issueList.json';
+function getMilestoneList(req, res, next) {
+  const filename = 'milestone.json';
   fs.readFile(path.join(__dirname, 'dumy', filename), 'utf-8', function (
     err,
     data,
@@ -12,4 +12,4 @@ function getIssueList(req, res, next) {
   });
 }
 
-export default getIssueList;
+export default getMilestoneList;
