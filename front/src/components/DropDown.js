@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import color from './color';
 
 const DropDownContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
+  flex: fit-content;
   position: relative;
 `;
 const DropDownButton = styled.button`
@@ -15,13 +15,11 @@ const DropDownButton = styled.button`
     cusor: pointer;
   }
 `;
-
 const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1.3rem;
   position: absolute;
-  width: fit-content;
   border: 1px solid ${color.boldBlue};
   border-radius: 0.2rem;
   background-color: white;
@@ -32,6 +30,10 @@ const Header = styled.div`
   flex-direction: column;
   padding: 0.3rem;
   font-weight: bolder;
+
+  .header-title {
+    min-width: max-content;
+  }
 `;
 const HeaderSubContianer = styled.div`
   display: flex;
@@ -80,13 +82,11 @@ const DropDown = ({ title, filter, children }) => {
 };
 
 const DropDownHeader = ({ filter = false, title, toggleHandler }) => {
+  const headerTitle = `Filter by ${title}`;
   return (
     <Header>
       <HeaderSubContianer>
-        <div>
-          Filter by
-          {title}
-        </div>
+        <div className="header-title">{headerTitle}</div>
         <CloseButton onClick={toggleHandler}>
           <Icon src="https://img.icons8.com/material-rounded/24/000000/delete-sign.png" />
         </CloseButton>
