@@ -1,4 +1,4 @@
-import actionType from './issueAction';
+import actionType from './action-type';
 import utils from '../../libs/utils';
 
 const {

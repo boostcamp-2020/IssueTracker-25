@@ -2,8 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import styled from 'styled-components';
 
 import issueApi from '../../apis/issue';
-import reducer from './issueHook';
-import actionType from './issueAction';
+import reducer from './reducer';
+import actionType from './action-type';
 import IssueListContainer from './IssueListContainer';
 import IssueFilterContainer from './IssueFilterContainer';
 
@@ -41,7 +41,7 @@ function IssueListPage() {
   if (loading) {
     return null;
   }
-  if (state.filteredIssues && state.filteredIssues.length === 0) {
+  if (filteredIssues.length === 0) {
     return <div>No results matched your search.</div>;
   }
   return (

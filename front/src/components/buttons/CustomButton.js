@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import theme from './ColorStyle';
+import buttonTheme from './theme';
 
 const Button = styled.button`
   width: fit-content;
@@ -12,7 +12,7 @@ const Button = styled.button`
 `;
 
 function CustomButton({ handleClick, children, style = {} }) {
-  const colorStyle = theme[style.color] || theme.default;
+  const colorStyle = buttonTheme[style.color] || buttonTheme.default;
   const fontSize = style.size === 'sm' ? '0.8rem' : '1rem';
   return (
     <Button style={{ fontSize, ...colorStyle }} onClick={handleClick}>

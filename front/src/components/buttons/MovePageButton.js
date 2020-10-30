@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import color from './color';
+import color from '../../libs/color';
 
 const Button = styled.button`
   height: 2.5rem;
