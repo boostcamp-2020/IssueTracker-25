@@ -2,8 +2,8 @@ import React, { useReducer, useEffect } from 'react';
 import styled from 'styled-components';
 
 import issueApi from '../../apis/issue';
-import reducer from './issueHook';
-import actionType from './issueAction';
+import reducer from './reducer';
+import actionType from './action-type';
 import IssueListContainer from './IssueListContainer';
 import IssueFilterContainer from './IssueFilterContainer';
 
