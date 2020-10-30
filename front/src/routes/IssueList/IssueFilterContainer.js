@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import CustomButton from '../../components/CustomButton';
-import MovePageButton from '../../components/MovePageButton';
+import CustomButton from '../../components/buttons/CustomButton';
+import MovePageButton from '../../components/buttons/MovePageButton';
 
 const Div = styled.div`
   margin: 2rem 0;

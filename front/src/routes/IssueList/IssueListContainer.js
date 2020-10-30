@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import color from '../../components/color';
-import actionType from './issueAction';
+import color from '../../libs/color';
+import actionType from './action-type';
 import ListHeader from '../../components/ListHeader';
 import { UserProfileList } from '../../components/UserProfile';
 
@@ -9,22 +9,20 @@ const { CHECK_ALL_ISSUE_HANDLER, CHECK_ISSUE_HANDLER } = actionType;
 const CustomCheckBoxButton = styled.button`
   width: 1rem;
   height: 1rem;
-
-  background-color: ${({ checked }) => (checked ? color.blue : 'white')};
+  background-color: ${({ checked }) => (checked ? color.blue : color.white)};
 `;
 const IssueList = styled.div`
-  border: 1px solid ${color.boldBlue};
-  color: ${color.mainBlack};
+  border: 1px solid ${color.lightGray};
+  color: ${color.black};
 `;
 const IssueItemContainer = styled.li`
-  border-top: 1px solid ${color.boldBlue};
+  border-top: 1px solid ${color.lightGray};
   padding: 1rem;
 `;
 
 const Ul = styled.ul`
   margin: 0;
   padding: 0;
-
   list-style-type: none;
 `;
 
