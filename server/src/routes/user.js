@@ -1,8 +1,8 @@
 import express from 'express';
-import getLabelList from '../service/label';
+import getUserList from '../services/user';
 
 const router = express.Router();
 
-router.get('/', getLabelList);
+router.get('', getUserList);
 
 export default router;

@@ -10,7 +10,7 @@
     "server"
   ],
   "scripts": {
-    "test": "yarn test:server",
+    "test": "run-p test:front test:server",
     "test:server": "yarn workspace server test",
     "test:front": "yarn workspace front test",
     "precommit:server": "yarn workspace server precommit",
