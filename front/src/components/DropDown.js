@@ -1,17 +1,18 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import color from './color';
-import useOutSideClick from './useOutsideClick';
 
-const DropDownContainer = styled.div`
+const DropdownContainer = styled.div`
   display: inline-flex;
   position: relative;
 `;
+
 const DropdownButton = styled.button`
   background: transparent;
   border: none;
 `;
-const DropDownMenu = styled.div`
+
+const DropdownMenu = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 1.8rem;
@@ -19,22 +20,32 @@ const DropDownMenu = styled.div`
   border: 1px solid ${color.boldBlue};
   border-radius: 0.2rem;
   background-color: white;
-  z-index: 1;
+  z-index: 11;
 `;
-const DropDownBody = styled.div`
+
+const DropdownBody = styled.div`
   width: 100%;
 `;
+
 const Header = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0.3rem;
   font-weight: bolder;
-
   .header-title {
     min-width: max-content;
   }
 `;
-// close button
+
+const DropdownOverlay = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+`;
+
 const CloseButton = styled.div`
   width: fit-content;
   margin-left: 4rem;
@@ -43,37 +54,33 @@ const CloseButton = styled.div`
   }
 `;
 
-const DropDown = ({ headerText, button, children }) => {
+const Dropdown = ({ headerText, button, children }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const ref = useRef();
 
-  const toggleHandler = () => {
-    setShowMenu(!showMenu);
-  };
-  const closeHandler = () => {
-    setShowMenu(false);
-  };
-  useOutSideClick(ref, closeHandler);
+  const toggleHandler = () => setShowMenu(!showMenu);
 
   return (
-    <DropDownContainer ref={ref}>
+    <DropdownContainer>
       <DropdownButton className="dropdown-button" onClick={toggleHandler}>
         {button}
       </DropdownButton>
-      {showMenu ? (
-        <DropDownMenu className="dropdown-menu">
-          <DropDownHeader
-            headerText={headerText}
-            toggleHandler={toggleHandler}
-          />
-          <DropDownBody className="dropdown-body">{children}</DropDownBody>
-        </DropDownMenu>
-      ) : null}
-    </DropDownContainer>
+      {showMenu && (
+        <>
+          <DropdownOverlay onClick={toggleHandler} />
+          <DropdownMenu className="dropdown-menu">
+            <DropdownHeader
+              headerText={headerText}
+              toggleHandler={toggleHandler}
+            />
+            <DropdownBody className="dropdown-body">{children}</DropdownBody>
+          </DropdownMenu>
+        </>
+      )}
+    </DropdownContainer>
   );
 };
 
-const DropDownHeader = ({ headerText, toggleHandler }) => {
+const DropdownHeader = ({ headerText, toggleHandler }) => {
   return (
     <Header>
       <div className="dropdown-header">{headerText}</div>
@@ -88,4 +95,4 @@ const DropDownHeader = ({ headerText, toggleHandler }) => {
   );
 };
 
-export default DropDown;
+export default Dropdown;
