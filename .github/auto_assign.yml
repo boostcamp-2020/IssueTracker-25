@@ -1,0 +1,11 @@
+addReviewers: true
+
+addAssignees: author
+
+reviewers:
+  - changheedev
+  - rolled-potatoes
+  - LeeSuKyeong
+  - yejineee
+
+numberOfReviewers: 0
