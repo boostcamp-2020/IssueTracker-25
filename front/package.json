@@ -7,7 +7,7 @@
     "precommit": "lint-staged",
     "test": "jest",
     "start": "webpack-dev-server --open",
-    "build": "webpack"
+    "build": "NODE_ENV=production webpack"
   },
   "lint-staged": {
     "*.{json,md,html}": [
