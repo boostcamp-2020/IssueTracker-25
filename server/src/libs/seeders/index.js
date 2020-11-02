@@ -9,13 +9,9 @@ const { sequelize } = db;
 const seeds = [userSeed, labelSeed, milestoneSeed, issueSeed, commentSeed];
 async function seedInit() {
   await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
-  // seeds.reduce((acc, cur) => acc.then(() => cur.down()), Promise.resolve());
-  // ok 흐음...아..
-  // await Promise.all(seeds.map((seed) => seed.down()));
-
   await sequelize.truncate({ cascade: true });
   await sequelize.query('SET FOREIGN_KEY_CHECKS = 1');
-  await Promise.all(seeds.map((seed) => seed.up()));
+  seeds.reduce((acc, seed) => acc.then(() => seed.up()), Promise.resolve());
 }
 
 export default seedInit;
