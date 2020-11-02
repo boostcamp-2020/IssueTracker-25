@@ -53,6 +53,7 @@ jobs:
           ./scripts/build_push.sh "$RELEASE_VERSION" "$DOCKER_USER" "$DOCKER_PASSWORD"
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: appleboy/ssh-action@master
@@ -61,4 +62,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-        run: ./deploy.sh
+          script: ./deploy.sh
