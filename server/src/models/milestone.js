@@ -15,7 +15,7 @@ const scheme = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  end_date: {
+  endDate: {
     type: DataTypes.DATE,
   },
 };
