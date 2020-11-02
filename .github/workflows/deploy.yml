@@ -6,7 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     services:
       db:
         image: mysql:5.7
@@ -44,22 +43,22 @@ jobs:
           DB_USERNAME: user
           DB_PASSWORD: password
           DB_DATABASE: test
-        run: yarn test 
+        run: yarn test
       - name: Build & Push Docker Images
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          API_BASE_URL: ${{secrets.API_BASE_URL}}
         run: |
           chmod +x ./scripts/build_push.sh
-          ./scripts/build_push.sh "$RELEASE_VERSION" "$DOCKER_USER" "$DOCKER_PASSWORD" "$API_BASE_URL"
+          ./scripts/build_push.sh "$RELEASE_VERSION" "$DOCKER_USER" "$DOCKER_PASSWORD"
 
-      - name: Deploy
-        uses: appleboy/ssh-action@master
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          script: |
-            ./deploy.sh
+        run: ./deploy.sh

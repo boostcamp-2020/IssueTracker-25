@@ -17,7 +17,12 @@
     "precommit:front": "yarn workspace front precommit",
     "precommit": "run-p precommit:server precommit:front",
     "format": "prettier --write .",
-    "dev:server": "yarn workspace server dev"
+    "dev:server": "yarn workspace server dev",
+    "dev:front": "yarn workspace front dev",
+    "dev": "run-s dev:server dev:front",
+    "build:server": "yarn workspace server build",
+    "build:front": "yarn workspace front build",
+    "build": "run-p build:server build:front"
   },
   "devDependencies": {
     "husky": "^4.3.0",
