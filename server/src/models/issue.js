@@ -23,6 +23,14 @@ const scheme = {
   closedAt: {
     type: DataTypes.DATE,
   },
+  userId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+  milestoneId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
 };
 
 const initOptions = {
@@ -40,10 +48,12 @@ class Issue extends Model {
     this.belongsToMany(models.User, {
       through: 'issue_assignees',
       timestamps: false,
+      onDelete: 'cascade',
     });
     this.belongsToMany(models.Label, {
       through: 'issue_labels',
       timestamps: false,
+      onDelete: 'cascade',
     });
   }
 }

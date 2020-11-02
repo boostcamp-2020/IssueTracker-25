@@ -33,6 +33,7 @@ class Label extends Model {
     this.belongsToMany(models.Issue, {
       through: 'issue_labels',
       timestamps: false,
+      onDelete: 'cascade',
     });
   }
 }

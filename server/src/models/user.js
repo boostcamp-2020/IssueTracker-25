@@ -16,7 +16,7 @@ const scheme = {
     allowNull: false,
     unique: true,
   },
-  profile_link: {
+  profileLink: {
     type: DataTypes.STRING(255),
     allowNull: false,
   },

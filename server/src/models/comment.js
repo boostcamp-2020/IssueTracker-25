@@ -9,6 +9,13 @@ const scheme = {
   },
   contents: {
     type: DataTypes.STRING,
+  },
+  userId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+  issueId: {
+    type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
   },
 };
@@ -24,7 +31,9 @@ class Comment extends Model {
 
   static associate(models) {
     this.belongsTo(models.User);
-    this.belongsTo(models.Issue);
+    this.belongsTo(models.Issue, {
+      onDelete: 'CASCADE',
+    });
   }
 }
 
