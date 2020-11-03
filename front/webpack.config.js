@@ -14,6 +14,7 @@ module.exports = {
     port: 4000,
     hot: true,
     open: true,
+    historyApiFallback: true,
   },
   devtool: 'cheap-module-eval-source-map',
   module: {
