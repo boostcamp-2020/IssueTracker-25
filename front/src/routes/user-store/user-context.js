@@ -13,7 +13,7 @@ const { Provider } = store;
 const BaseProvider = ({ children }) => {
   const [state, dispatch] = useReducer((userInformationState, action) => {
     switch (action.type) {
-      case 'setUserInfo': {
+      case 'SET_USER_INFOMATION': {
         const { info } = action.payload;
         return { ...state, ...info, logged: true };
       }

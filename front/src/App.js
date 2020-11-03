@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BaseProvider } from './routes/user-store/user-context';
 import IssueListPage from './routes/IssueList/IssueListPage';
 import Header from './components/Header';
-import { BaseProvider } from './routes/base/user-context';
 import LoginPage from './routes/Login/LoginPage';
 import CallbackPage from './routes/oauth/callback';
+import UserStore from './routes/user-store';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -21,12 +22,17 @@ const GlobalStyled = createGlobalStyle`
   }
 `;
 
+const TempComponent = () => <div>temp</div>;
 const Template = () => {
   return (
     <>
-      <Link to="login">로그인</Link>
       <Header />
-      <IssueListPage />
+      <Link to="login">로그인</Link>
+      <Switch>
+        <Route path="/mil" component={TempComponent} />
+        <Route path="/" component={IssueListPage} />
+      </Switch>
+      <UserStore />
     </>
   );
 };
@@ -36,9 +42,9 @@ const App = () => {
       <GlobalStyled />
       <BaseProvider>
         <Switch>
-          <Route exact path="/" component={Template} />
-          <Route exact path="/login" component={LoginPage} />
+          <Route path="/login" component={LoginPage} />
           <Route path="/oauth/callback" component={CallbackPage} />
+          <Route path="/" component={Template} />
         </Switch>
       </BaseProvider>
     </BrowserRouter>
