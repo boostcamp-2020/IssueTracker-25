@@ -3,11 +3,11 @@ import userApi from './user';
 import issueApi from './issue';
 import labelApi from './label';
 import milestoneApi from './milestone';
-import githubOAuthApi from './oauth';
+import OAuthApi from './oauth';
 
 const router = express.Router();
 
-router.use('/oauth/github', githubOAuthApi);
+router.use('/oauth', OAuthApi);
 router.use('/users', userApi);
 router.use('/issues', issueApi);
 router.use('/labels', labelApi);

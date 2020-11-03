@@ -18,3 +18,8 @@ export const GitHubConfig = {
     process.env.GITHUB_CALLBACK_URL ||
     'http://localhost:3000/oauth/github/callback',
 };
+
+export const JwtConfig = {
+  secret: process.env.JWT_SECRET || 'jwt_secret',
+  expiresIn: process.env.JWT_EXPIRES_IN || '24h',
+};
