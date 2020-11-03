@@ -3,12 +3,12 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import passport from 'passport';
-// import db from './models';
+import db from './models';
 import router from './routes';
-// import seedInit from './libs/seeders';
+import seedInit from './libs/seeders';
 import passportLoader from './libs/passport';
 
-// const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production';
 const app = express();
 app.use(logger('dev'));
 app.use(cors());
@@ -20,9 +20,9 @@ app.use(passport.initialize());
 app.use(router);
 passportLoader();
 
-// const syncOption = isProd ? {} : { alter: { drop: false } };
-// db.sequelize.sync(syncOption).then(async () => {
-//   if (!isProd) await seedInit();
-// });
+const syncOption = isProd ? {} : { alter: { drop: false } };
+db.sequelize.sync(syncOption).then(async () => {
+  if (!isProd) await seedInit();
+});
 
 export default app;
