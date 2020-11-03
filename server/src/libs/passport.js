@@ -1,7 +1,11 @@
 import { Strategy as GitHubStrategy } from 'passport-github2';
+import passportJwt from 'passport-jwt';
 import passport from 'passport';
-import { GitHubConfig } from '../config';
+import { GitHubConfig, JwtConfig } from '../config';
 import db from '../models';
+
+const { Strategy: JwtStrategy, ExtractJwt } = passportJwt;
+const { User: UserModel } = db.sequelize.models;
 
 const GitHubVerifyCallback = async (
   accessToken,
@@ -9,7 +13,6 @@ const GitHubVerifyCallback = async (
   profile,
   done,
 ) => {
-  const { User: UserModel } = db.sequelize.models;
   try {
     const [user] = await UserModel.findOrCreate({
       where: { uid: profile.id },
@@ -25,8 +28,28 @@ const GitHubVerifyCallback = async (
   }
 };
 
+const jwtVerifyCallback = async (jwtPayload, done) => {
+  try {
+    const { id } = jwtPayload;
+    const user = await UserModel.findByPk(+id);
+    if (!user) {
+      return done(null, false);
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err);
+  }
+};
+
+const jwtStrategyOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: JwtConfig.secret,
+};
+
 const githubStrategy = new GitHubStrategy(GitHubConfig, GitHubVerifyCallback);
+const jwtStrategy = new JwtStrategy(jwtStrategyOptions, jwtVerifyCallback);
 
 export default () => {
   passport.use(githubStrategy);
+  passport.use(jwtStrategy);
 };
