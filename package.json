@@ -19,7 +19,7 @@
     "format": "prettier --write .",
     "dev:server": "yarn workspace server dev",
     "dev:front": "yarn workspace front dev",
-    "dev": "run-s dev:server dev:front",
+    "dev": "run-p dev:server dev:front",
     "build:server": "yarn workspace server build",
     "build:front": "yarn workspace front build",
     "build": "run-p build:server build:front"
