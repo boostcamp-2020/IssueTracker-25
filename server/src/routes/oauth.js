@@ -10,7 +10,7 @@ const codeMap = new Map();
 
 const githubVerifyCallbackController = (req, res) => {
   const authCode = uuidv4();
-  codeMap.put(authCode, req.user);
+  codeMap.set(authCode, req.user);
   res.redirect(`${clientURL}/oauth/callback?code=${authCode}`);
 };
 
