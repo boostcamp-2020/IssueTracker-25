@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import config from '../config';
+import { DBConfig } from '../config';
 import User from './user';
 import Label from './label';
 import Issue from './issue';
@@ -9,7 +9,7 @@ import Milestone from './milestone';
 const models = [User, Label, Issue, Comment, Milestone];
 
 const sequelizeConfigs = {
-  ...config.db,
+  ...DBConfig,
   define: {
     engine: 'InnoDB',
     charset: 'utf8mb4',
