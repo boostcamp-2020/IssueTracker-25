@@ -1,7 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BaseProvider } from './routes/user-store/user-context';
 import IssueListPage from './routes/IssueList/IssueListPage';
 import Header from './components/Header';
+import LoginPage from './routes/Login/LoginPage';
+import CallbackPage from './routes/oauth/callback';
+import UserStore from './routes/user-store';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -17,13 +22,32 @@ const GlobalStyled = createGlobalStyle`
   }
 `;
 
-const App = () => {
+const TempComponent = () => <div>temp</div>;
+const Template = () => {
   return (
     <>
-      <GlobalStyled />
       <Header />
-      <IssueListPage />
+      <Link to="login">로그인</Link>
+      <Switch>
+        <Route path="/mil" component={TempComponent} />
+        <Route path="/" component={IssueListPage} />
+      </Switch>
+      <UserStore />
     </>
+  );
+};
+const App = () => {
+  return (
+    <BrowserRouter>
+      <GlobalStyled />
+      <BaseProvider>
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/oauth/callback" component={CallbackPage} />
+          <Route path="/" component={Template} />
+        </Switch>
+      </BaseProvider>
+    </BrowserRouter>
   );
 };
 export default App;

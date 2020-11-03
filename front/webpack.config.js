@@ -7,13 +7,17 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'bundle.[hash].js',
   },
   devServer: {
     host: 'localhost',
+    index: './public/index.html',
+    inline: true,
     port: 4000,
     hot: true,
     open: true,
+    historyApiFallback: true,
   },
   devtool: 'cheap-module-eval-source-map',
   module: {
