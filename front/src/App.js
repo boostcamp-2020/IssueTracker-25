@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import { createGlobalStyle } from 'styled-components';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import IssueListPage from './routes/IssueList/IssueListPage';
 import Header from './components/Header';
+import { BaseProvider } from './routes/base/user-context';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -17,13 +19,24 @@ const GlobalStyled = createGlobalStyle`
   }
 `;
 
-const App = () => {
+const Template = () => {
   return (
     <>
-      <GlobalStyled />
       <Header />
       <IssueListPage />
     </>
+  );
+};
+const App = () => {
+  return (
+    <BrowserRouter>
+      <GlobalStyled />
+      <BaseProvider>
+        <Switch>
+          <Route exact path="/" component={Template} />
+        </Switch>
+      </BaseProvider>
+    </BrowserRouter>
   );
 };
 export default App;
