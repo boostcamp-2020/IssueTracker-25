@@ -1,12 +1,10 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import { BaseProvider } from './routes/user-store/user-context';
-import IssueListPage from './routes/IssueList/IssueListPage';
-import Header from './components/Header';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { UserProvider } from './routes/user-store/user-context';
 import LoginPage from './routes/Login/LoginPage';
 import CallbackPage from './routes/oauth/callback';
-import UserStore from './routes/user-store';
+import MainPageTemplate from './routes/Main-page-template';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -17,36 +15,21 @@ const GlobalStyled = createGlobalStyle`
   }
   body{
     margin : 0 ; 
-
     font-family:'IBMPlexSansKR-Regular';
   }
 `;
 
-const TempComponent = () => <div>temp</div>;
-const Template = () => {
-  return (
-    <>
-      <Header />
-      <Link to="login">로그인</Link>
-      <Switch>
-        <Route path="/mil" component={TempComponent} />
-        <Route path="/" component={IssueListPage} />
-      </Switch>
-      <UserStore />
-    </>
-  );
-};
 const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyled />
-      <BaseProvider>
+      <UserProvider>
         <Switch>
           <Route path="/login" component={LoginPage} />
           <Route path="/oauth/callback" component={CallbackPage} />
-          <Route path="/" component={Template} />
+          <Route path="/" component={MainPageTemplate} />
         </Switch>
-      </BaseProvider>
+      </UserProvider>
     </BrowserRouter>
   );
 };

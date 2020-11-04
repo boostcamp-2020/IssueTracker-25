@@ -1,8 +1,10 @@
+import userContextTypes from './user-context-types';
+
 export default {
-  setUserInformation(information) {
+  setUserInfo(info) {
     return {
-      type: 'SET_USER_INFORMATION',
-      payload: information,
+      type: userContextTypes.setUserInfo,
+      payload: info,
     };
   },
 };

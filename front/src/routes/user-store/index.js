@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 
 const UserStore = () => {
   const history = useHistory();
-
   const login = async () => {
     history.push('/');
   };
