@@ -31,14 +31,14 @@ export async function up() {
   const bulkIssues = new Array(nRowInIssue)
     .fill()
     .reduce((issues, cur, idx) => {
-      const userId = utils.getValidData(userIds, idx);
+      const authorId = utils.getValidData(userIds, idx);
       const milestoneId = utils.getValidData(milestoneIds, idx);
       const closedStatus = idx % 2 === 0;
 
       const issue = {
         title: `${baseTitle} ${idx}`,
         contents: baseContents,
-        userId,
+        authorId,
         milestoneId,
         isClosed: closedStatus,
         closedAt: closedStatus
@@ -48,10 +48,10 @@ export async function up() {
       return [...issues, issue];
     }, []);
   const issues = await IssueModel.bulkCreate(bulkIssues, { returning: true });
-  await setAssociateDatas(issues);
+  await setAssociateData(issues);
 }
 
-async function setAssociateDatas(issues) {
+async function setAssociateData(issues) {
   issues.forEach(async (issue, idx) => {
     const [label, user] = await Promise.all([
       LabelModel.findOne({
@@ -62,7 +62,7 @@ async function setAssociateDatas(issues) {
       }),
     ]);
     issue.addLabel(label);
-    issue.addUser(user);
+    issue.addAssignee(user);
   });
 }
 
