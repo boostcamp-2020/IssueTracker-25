@@ -15,6 +15,7 @@ const issueController = IssueController(
   IssueService({ IssueModel, UserModel, LabelModel, MilestoneModel }),
 );
 
-router.get('/', issueController.readList);
+router.get('/', issueController.getIssueList);
+router.get('/:id', issueController.getIssue);
 
 export default router;
