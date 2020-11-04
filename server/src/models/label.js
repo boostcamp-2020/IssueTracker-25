@@ -21,6 +21,7 @@ const scheme = {
 };
 
 const initOptions = {
+  timestamps: false,
   tableName: 'labels',
 };
 

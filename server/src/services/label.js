@@ -1,6 +1,7 @@
-import labelDummy from './dummy/label';
+const LabelService = ({ LabelModel }) => ({
+  getLabelList() {
+    return LabelModel.findAll();
+  },
+});
 
-function getLabelList(req, res) {
-  res.json(labelDummy);
-}
-export default getLabelList;
+export default LabelService;
