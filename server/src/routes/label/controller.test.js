@@ -18,6 +18,10 @@ test('readList를 호출하였을 경우 응답 코드 200으로 list형태의 j
     },
   };
   const labelController = LabelController(LabelService({ LabelModel }));
-  const response = await labelController.readList(undefined, res, undefined);
+  const response = await labelController.getLabelList(
+    undefined,
+    res,
+    undefined,
+  );
   expect(response).toBe(JSON.stringify(desiredLabelList));
 });
