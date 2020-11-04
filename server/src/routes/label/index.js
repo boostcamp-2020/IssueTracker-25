@@ -1,5 +1,5 @@
 import express from 'express';
-import LabelController from './label-controller';
+import LabelController from './controller';
 import LabelService from '../../services/label';
 import LabelModel from '../../models/label';
 
