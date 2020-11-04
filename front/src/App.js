@@ -1,7 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import IssueListPage from './routes/IssueList/IssueListPage';
-import Header from './components/Header';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { UserProvider } from './routes/user-store/user-context';
+import LoginPage from './routes/Login/LoginPage';
+import CallbackPage from './routes/oauth/callback';
+import MainPageTemplate from './routes/Main-page-template';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -12,18 +15,22 @@ const GlobalStyled = createGlobalStyle`
   }
   body{
     margin : 0 ; 
-
     font-family:'IBMPlexSansKR-Regular';
   }
 `;
 
 const App = () => {
   return (
-    <>
+    <BrowserRouter>
       <GlobalStyled />
-      <Header />
-      <IssueListPage />
-    </>
+      <UserProvider>
+        <Switch>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/oauth/callback" component={CallbackPage} />
+          <Route path="/" component={MainPageTemplate} />
+        </Switch>
+      </UserProvider>
+    </BrowserRouter>
   );
 };
 export default App;

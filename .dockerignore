@@ -1,0 +1,9 @@
+.github
+.vscode
+data
+scripts
+
+**/node_modules
+
+**/*.md
+**/Dockerfile
