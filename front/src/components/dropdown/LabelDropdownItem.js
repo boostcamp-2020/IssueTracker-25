@@ -31,7 +31,7 @@ const LabelDropdownItem = ({ label }) => {
   return (
     <LabelDropdownItemContainer>
       <div className="dropdown-item dropdown-item-check dropdown-item-top">
-        <CheckInfoCompoent />
+        <CheckIconCompoent />
       </div>
 
       <div className="dropdown-item dropdown-item-top">
