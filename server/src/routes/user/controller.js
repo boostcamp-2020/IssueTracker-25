@@ -1,5 +1,5 @@
-const LabelController = (userService) => ({
-  async readList(req, res, next) {
+const UserController = (userService) => ({
+  async getUserList(req, res, next) {
     try {
       const users = await userService.getUserList();
       return res.status(200).json(users);
@@ -7,9 +7,9 @@ const LabelController = (userService) => ({
       return next(err);
     }
   },
-  readMe(req, res) {
+  getLoggedUserInfo(req, res) {
     res.json(req.user);
   },
 });
 
-export default LabelController;
+export default UserController;
