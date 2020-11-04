@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DropdownItemContainer from './DropdownItemContainer';
-import CheckInfoCompoent from '../CheckIconComponent';
+import CheckIconCompoent from '../CheckIconComponent';
 import color from '../../libs/color';
 
 const LabelDropdownItemContainer = styled(DropdownItemContainer)`
