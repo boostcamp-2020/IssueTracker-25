@@ -11,9 +11,6 @@ const UserDropdownItemContainer = styled(DropdownItemContainer)`
     height: 1.5rem;
     border-radius: 50%;
   }
-  span {
-    text-indent: 0.4rem;
-  }
 `;
 
 const UserDropdownItem = ({ userInfo }) => {

@@ -17,6 +17,9 @@ const DropdownItemContainer = styled.div`
     display: flex;
     align-items: center;
   }
+  span {
+    text-indent: 0.4rem;
+  }
 `;
 
 export default DropdownItemContainer;
