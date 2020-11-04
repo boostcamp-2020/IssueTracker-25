@@ -23,13 +23,12 @@ const scheme = {
   closedAt: {
     type: DataTypes.DATE,
   },
-  userId: {
+  authorId: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
   },
   milestoneId: {
     type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
   },
 };
 
@@ -43,10 +42,16 @@ class Issue extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User);
-    this.belongsTo(models.Milestone);
+    this.belongsTo(models.User, {
+      foreignKey: 'authorId',
+      as: 'Author',
+    });
+    this.belongsTo(models.Milestone, {
+      foreignKey: 'milestoneId',
+    });
     this.belongsToMany(models.User, {
       through: 'issue_assignees',
+      as: 'Assignees',
       timestamps: false,
       onDelete: 'cascade',
     });

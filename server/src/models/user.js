@@ -34,6 +34,7 @@ class User extends Model {
   static associate(models) {
     this.belongsToMany(models.Issue, {
       through: 'issue_assignees',
+      as: 'Assignees',
       timestamps: false,
     });
   }
