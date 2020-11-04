@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import DropdownItemContainer from './DropdownItemContainer';
-import { Check } from './UserDropdownItem';
+import CheckInfoCompoent from '../CheckIconComponent';
 import color from '../../libs/color';
 
 const LabelDropdownItemContainer = styled(DropdownItemContainer)`
   height: 3rem;
   .dropwdown-item-circle {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1rem;
+    height: 1rem;
     border-radius: 50%;
   }
   .dropdown-item-content {
@@ -17,21 +17,24 @@ const LabelDropdownItemContainer = styled(DropdownItemContainer)`
     > div {
       text-indent: 0.5rem;
     }
-    &__test {
-      color: ${color.lightGray};
+    &__description {
+      color: ${color.gray};
     }
+  }
+  .dropdown-item-top {
+    height: 1.5rem;
   }
 `;
 
-const LabelDropdownItem = ({ data }) => {
-  const { isCheck, name, dec, color: labelColor } = data;
+const LabelDropdownItem = ({ label }) => {
+  const { name, description, color: labelColor } = label;
   return (
     <LabelDropdownItemContainer>
-      <div className="dropdown-item dropdown-item-check">
-        {isCheck && <Check />}
+      <div className="dropdown-item dropdown-item-check dropdown-item-top">
+        <CheckInfoCompoent />
       </div>
 
-      <div className="dropdown-item ">
+      <div className="dropdown-item dropdown-item-top">
         <div
           className="dropwdown-item-circle"
           style={{ backgroundColor: labelColor }}
@@ -40,7 +43,7 @@ const LabelDropdownItem = ({ data }) => {
 
       <div className="dropdown-item dropdown-item-content">
         <div>{name}</div>
-        <div className="dropdown-item-content__test">{dec}</div>
+        <div className="dropdown-item-content__description">{description}</div>
       </div>
     </LabelDropdownItemContainer>
   );
