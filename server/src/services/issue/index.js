@@ -3,11 +3,16 @@ const IssueService = ({
   UserModel,
   LabelModel,
   MilestoneModel,
-}) => ({
-  getIssueList({ page }) {
-    const LIMIT = 15;
-    const offset = page * LIMIT;
-    const issues = IssueModel.findAll({
+}) => {
+  const getTotalIssueCount = async () => {
+    const totalIssueCount = await IssueModel.count();
+    return totalIssueCount;
+  };
+
+  const getPagedIssues = async ({ pageParams }) => {
+    const { page, LIMIT } = pageParams;
+    const offset = (page - 1) * LIMIT;
+    const issues = await IssueModel.findAll({
       attributes: {
         exclude: ['contents'],
       },
@@ -36,9 +41,26 @@ const IssueService = ({
         },
       ],
     });
+
     return issues;
-  },
-  async getIssue(id, loggedUserId) {
+  };
+
+  const getIssueList = async ({ page }) => {
+    const LIMIT = 15;
+    const [totalIssueCount, issues] = await Promise.all([
+      getTotalIssueCount(),
+      getPagedIssues({
+        pageParams: { page, LIMIT },
+      }),
+    ]);
+    const pagination = {
+      page,
+      lastPage: totalIssueCount / LIMIT + (totalIssueCount % LIMIT ? 1 : 0),
+    };
+    return { pagination, issues };
+  };
+
+  const getIssue = async (id, loggedUserId) => {
     const issue = await IssueModel.findByPk(id, {
       include: [
         {
@@ -62,7 +84,12 @@ const IssueService = ({
 
     issue.isAuthor = loggedUserId === issue.authorId;
     return issue;
-  },
-});
+  };
+
+  return {
+    getIssueList,
+    getIssue,
+  };
+};
 
 export default IssueService;
