@@ -81,8 +81,7 @@ const IssueService = ({
         },
       ],
     });
-
-    issue.isAuthor = loggedUserId === issue.authorId;
+    issue.setDataValue('isAuthor', loggedUserId === issue.authorId);
     return issue;
   };
 
