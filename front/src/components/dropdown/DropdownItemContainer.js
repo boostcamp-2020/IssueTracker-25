@@ -6,17 +6,17 @@ const DropdownItemContainer = styled.div`
   border-top: 1px solid ${color.lightGray};
   width: 18rem;
   padding: 0.2rem 1rem;
+  height: 1.5rem;
   &:hover {
     background: ${color.lightBlue};
   }
-  > div {
-    height: 1.5rem;
+  .dropdown-item-check {
+    width: 1.5rem;
   }
   .dropdown-item {
     display: flex;
     align-items: center;
   }
-  height: 1.5rem;
 `;
 
 export default DropdownItemContainer;

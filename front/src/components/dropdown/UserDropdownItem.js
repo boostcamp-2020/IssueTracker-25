@@ -15,7 +15,7 @@ const UserDropdownItemContainer = styled(DropdownItemContainer)`
   }
 `;
 
-const Check = () => {
+export const Check = () => {
   return (
     <svg
       className="octicon octicon-check SelectMenu-icon SelectMenu-icon--check"
