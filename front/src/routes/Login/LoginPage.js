@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import color from '../../libs/color';
 
-const GithubButton = styled.button`
+const GitHubButton = styled.button`
   display: flex;
   width: fit-content;
   height: 2rem;
@@ -43,7 +43,7 @@ function LoginPage() {
       <LoginTitle>이슈트랙커</LoginTitle>
       <LoginButtonContainer>
         <a href={loginUrl}>
-          <GithubButton type="button">Sign in with Github</GithubButton>
+          <GitHubButton type="button">Sign in with Github</GitHubButton>
         </a>
       </LoginButtonContainer>
     </Div>

@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import userContextTypes from './user-context-types';
 
 const initialState = {
   logged: false,
@@ -7,22 +8,24 @@ const initialState = {
   profileLink: '',
 };
 
-const store = createContext(initialState);
-const { Provider } = store;
+const userStore = createContext(initialState);
+const { Provider } = userStore;
 
-const BaseProvider = ({ children }) => {
-  const [state, dispatch] = useReducer((userInformationState, action) => {
-    switch (action.type) {
-      case 'SET_USER_INFOMATION': {
-        const { info } = action.payload;
-        return { ...state, ...info, logged: true };
-      }
-      default: {
-        return userInformationState;
-      }
+const userReducer = (userState, action) => {
+  switch (action.type) {
+    case userContextTypes.setUserInfo: {
+      const { info } = action.payload;
+      return { ...userState, ...info, logged: true };
     }
-  }, initialState);
+    default: {
+      return userStore;
+    }
+  }
+};
+
+const UserProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(userReducer, initialState);
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 };
 
-export { store, BaseProvider };
+export { userStore, UserProvider };
