@@ -9,11 +9,7 @@ const { User: UserModel } = db.sequelize.models;
 const router = express.Router();
 const userController = UserController(UserService({ UserModel }));
 
-router.get(
-  '/me',
-  passport.authenticate('jwt', { session: false }),
-  userController.readMe,
-);
 router.get('/', userController.readList);
+router.get('/me', userController.readMe);
 
 export default router;
