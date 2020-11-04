@@ -1,7 +1,7 @@
-import userDummy from './dummy/user';
+const UserService = ({ UserModel }) => ({
+  getUserList() {
+    return UserModel.findAll();
+  },
+});
 
-function getUserList(req, res) {
-  res.json(userDummy);
-}
-
-export default getUserList;
+export default UserService;
