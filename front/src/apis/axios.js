@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-const isProd = process.env.NODE_ENV === 'production';
-
 const instance = axios.create({
-  baseURL: isProd ? '/api' : 'http://localhost:3000',
+  baseURL: process.env.API_BASE_URL,
 });
 
 instance.interceptors.response.use(
