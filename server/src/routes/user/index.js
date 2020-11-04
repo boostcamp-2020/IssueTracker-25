@@ -9,5 +9,6 @@ const router = express.Router();
 const userController = UserController(UserService({ UserModel }));
 
 router.get('/', userController.readList);
+router.get('/me', userController.readMe);
 
 export default router;
