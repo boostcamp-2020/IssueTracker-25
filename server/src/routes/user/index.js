@@ -8,6 +8,7 @@ const { User: UserModel } = db.sequelize.models;
 const router = express.Router();
 const userController = UserController(UserService({ UserModel }));
 
-router.get('/', userController.readList);
+router.get('/', userController.getUserList);
+router.get('/me', userController.getLoggedUserInfo);
 
 export default router;

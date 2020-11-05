@@ -4,7 +4,7 @@ export default {
   setUserInfo(info) {
     return {
       type: userContextTypes.setUserInfo,
-      payload: info,
+      payload: { info },
     };
   },
 };
