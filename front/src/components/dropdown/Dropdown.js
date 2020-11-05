@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import color from '../libs/color';
+import color from '../../libs/color';
 
 const DropdownContainer = styled.div`
   display: inline-flex;
@@ -49,7 +49,7 @@ const DropdownOverlay = styled.div`
 const CloseButton = styled.div`
   width: fit-content;
   margin-left: 4rem;
-  &: hover {
+  &:hover {
     cursor: pointer;
   }
 `;
