@@ -1,5 +1,4 @@
 import React, { useReducer, useEffect } from 'react';
-import styled from 'styled-components';
 import queryString from 'query-string';
 import { useHistory } from 'react-router-dom';
 
@@ -12,9 +11,6 @@ import Pagination from '../../components/Pagination';
 
 const { FETCH_SUCCESS, FETCH_ERROR, ISSUE_LIST_PAGING } = actionType;
 
-const Div = styled.div`
-  padding: 2rem 5rem;
-`;
 function IssueListPage({ location }) {
   const [state, dispatch] = useReducer(reducer, {
     issues: undefined,
@@ -63,7 +59,7 @@ function IssueListPage({ location }) {
   };
 
   return (
-    <Div>
+    <>
       <IssueFilterContainer />
       <IssueListContainer
         issues={issues}
@@ -75,7 +71,7 @@ function IssueListPage({ location }) {
         lastPage={lastPage}
         clickHandler={paginantionClickHandler}
       />
-    </Div>
+    </>
   );
 }
 
