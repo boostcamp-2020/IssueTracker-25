@@ -11,10 +11,10 @@ const LabelItem = styled.div`
   color: white;
   mix-blend-mode: difference;
 `;
-function Label({ label }) {
+function Label({ label, children }) {
   return (
     <LabelItem className="Label" color={label.color}>
-      {label.name}
+      {children}
     </LabelItem>
   );
 }

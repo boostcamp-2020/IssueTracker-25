@@ -63,7 +63,9 @@ function LabelContainer({ labels }) {
   return (
     <>
       {labels.map((label) => (
-        <LabelItem key={label.id} id={label.id} label={label} />
+        <LabelItem key={label.id} id={label.id} label={label}>
+          {label.name}
+        </LabelItem>
       ))}
     </>
   );
