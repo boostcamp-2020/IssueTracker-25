@@ -16,7 +16,7 @@ export const UserProfileList = ({ users }) => {
         <UserProfile
           key={user.id}
           id={user.id}
-          src={user.profile_link}
+          src={user.profileLink}
           size="sm"
         />
       ))}
