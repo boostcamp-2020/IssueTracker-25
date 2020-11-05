@@ -7,4 +7,9 @@ export default {
       payload: { info },
     };
   },
+  resetUserInfo() {
+    return {
+      type: userContextTypes.resetUserInfo,
+    };
+  },
 };
