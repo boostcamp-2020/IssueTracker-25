@@ -1,5 +1,5 @@
 const LabelController = (labelService) => ({
-  async readList(req, res, next) {
+  async getLabelList(req, res, next) {
     try {
       const labels = await labelService.getLabelList();
       return res.status(200).json(labels);

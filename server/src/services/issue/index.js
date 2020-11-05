@@ -40,8 +40,9 @@ const IssueService = ({
           attributes: ['id', 'title'],
         },
       ],
+      raw: true,
+      nest: true,
     });
-
     return issues;
   };
 
@@ -80,8 +81,10 @@ const IssueService = ({
           model: MilestoneModel,
         },
       ],
+      raw: true,
+      nest: true,
     });
-    issue.setDataValue('isAuthor', loggedUserId === issue.authorId);
+    issue.isAuthor = loggedUserId === issue.authorId;
     return issue;
   };
 
