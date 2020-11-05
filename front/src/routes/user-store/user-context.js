@@ -17,6 +17,9 @@ const userReducer = (userState, action) => {
       const { info } = action.payload;
       return { ...userState, ...info, logged: true };
     }
+    case userContextTypes.resetUserInfo: {
+      return initialState;
+    }
     default: {
       return userStore;
     }
