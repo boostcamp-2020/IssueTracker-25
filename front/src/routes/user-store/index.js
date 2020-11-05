@@ -10,7 +10,6 @@ const UserStore = () => {
   const login = async (token) => {
     const userInfo = await userAPI.getMyInfo(token);
     dispatch(userContextActions.setUserInfo(userInfo));
-    history.push('/');
   };
   const initialLogin = () => {
     const token = localStorage.getItem('token');
