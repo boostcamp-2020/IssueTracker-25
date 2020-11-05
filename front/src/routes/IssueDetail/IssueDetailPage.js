@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CustomButton from '../../components/buttons/CustomButton';
 import color from '../../libs/color';
 import { UserProfile } from '../../components/UserProfile';
 import IssueStateComponent from './IssueStateComponent';
+import issueAPI from '../../apis/issue';
 
 const IssueDetailContainer = styled.div`
   display: grid;
@@ -63,7 +64,6 @@ const IssueDetailContainer = styled.div`
   .issue-detail-aside {
     grid-column: 2;
     grid-row: 2;
-    background: yellow;
   }
 
   .issue-detail-content {
@@ -72,6 +72,9 @@ const IssueDetailContainer = styled.div`
   }
 `;
 const CommentContainer = styled.div`
+  & + & {
+    margin-top: 2rem;
+  }
   display: flex;
   z-index: 1;
   .comment-profile {
@@ -122,8 +125,39 @@ const CommentContainer = styled.div`
     background: ${color.lightGray};
   }
 `;
-
-const IssueDetailPage = ({ data }) => {
+const initIssue = {
+  id: 0,
+  title: '',
+  contents: '',
+  isClosed: true,
+  closedAt: '',
+  authorId: 0,
+  isAuthor: true,
+  milestoneId: 0,
+  createdAt: '',
+  updatedAt: '',
+  Author: {
+    id: 0,
+    name: '',
+    uid: '',
+    profileLink: '',
+    createdAt: '',
+    updatedAt: '',
+  },
+  Labels: [],
+  Assignees: [],
+  Milestone: {
+    id: 0,
+    title: '',
+    description: '',
+    endDate: '',
+    createdAt: '',
+    updatedAt: '',
+  },
+  Comments: [],
+};
+const IssueDetailPage = () => {
+  const [issue, setIssue] = useState(initIssue);
   const {
     title,
     Author,
@@ -132,14 +166,21 @@ const IssueDetailPage = ({ data }) => {
     closedAt,
     contents,
     Comments,
-    countComment,
     isAuthor,
-  } = data;
+  } = issue;
+  const countComment = Comments.length;
   const issueState = `${Author.name} ${
     isClosed ? 'closed' : 'opend'
   } this issue ${isClosed ? closedAt : createdAt} ㆍ ${
     countComment || 0
   } comments`;
+  const getIssue = async () => {
+    const response = await issueAPI.getIssue(1);
+    setIssue(response);
+  };
+  useEffect(() => {
+    getIssue();
+  }, []);
   return (
     <IssueDetailContainer>
       <div className="issue-detail-header">

@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Header from '../../components/Header';
 import UserStore from '../user-store';
 import IssueListPage from '../IssueList/IssueListPage';
+import IssueDetailPage from '../IssueDetail/IssueDetailPage';
 
 const MainPageTemplate = () => {
   return (
@@ -10,7 +11,10 @@ const MainPageTemplate = () => {
       <Header />
       <UserStore />
       <Switch>
-        <Route path="/" component={IssueListPage} />
+        <main>
+          <Route exact path="/issues/:id" component={IssueDetailPage} />
+          <Route exact path="/" component={IssueListPage} />
+        </main>
       </Switch>
     </>
   );
