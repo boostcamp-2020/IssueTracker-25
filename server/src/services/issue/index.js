@@ -3,6 +3,7 @@ const IssueService = ({
   UserModel,
   LabelModel,
   MilestoneModel,
+  CommentModel,
 }) => {
   const getTotalIssueCount = async () => {
     const totalIssueCount = await IssueModel.count();
@@ -77,6 +78,15 @@ const IssueService = ({
         },
         {
           model: MilestoneModel,
+        },
+        {
+          model: CommentModel,
+          attributes: ['id', 'contents', 'createdAt', 'updatedAt'],
+          include: [
+            {
+              model: UserModel,
+            },
+          ],
         },
       ],
     });
