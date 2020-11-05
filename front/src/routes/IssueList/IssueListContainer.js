@@ -24,10 +24,13 @@ const IssueItemContainer = styled.li`
   padding: 1rem;
   justify-content: space-between;
 
-  & .issue-item__title {
+  .issue-item + .issue-item {
+    margin-left: 1rem;
+  }
+  .issue-item__title {
     font-weight: bold;
   }
-  & .issue-item__info-msg {
+  .issue-item__info-msg {
     color: ${color.Gray};
   }
 `;
@@ -101,19 +104,27 @@ function IssueItem({ issue, checkBoxClickHandler }) {
           onClick={checkBoxClickHandler}
           id={id}
         />
-        <span className="issue-item__title">{title}</span>
+        <span className="issue-item issue-item__title">{title}</span>
         {labels && <LabelContainer labels={labels} />}
         <div>
-          <span className="issue-item__info-msg">{issueInfoMsg}</span>
+          <span className="issue-item issue-item__info-msg">
+            {issueInfoMsg}
+          </span>
           {milestone && (
-            <span className="issue-item__milestone-title" id={milestone.id}>
+            <span
+              className="issue-item issue-item__milestone-title"
+              id={milestone.id}
+            >
               {milestone.title}
             </span>
           )}
         </div>
       </div>
       <UserProfileContainer>
-        <UserProfileList className="issue-item__assignee" users={assignees} />
+        <UserProfileList
+          className="issue-item issue-item__assignee"
+          users={assignees}
+        />
       </UserProfileContainer>
     </IssueItemContainer>
   );
