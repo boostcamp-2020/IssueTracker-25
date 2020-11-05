@@ -1,8 +1,7 @@
 import axios from './axios';
 
 export default {
-  getMyInfo: (token) => {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  getMyInfo: () => {
     return axios.get('/users/me');
   },
 };

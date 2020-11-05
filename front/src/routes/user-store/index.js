@@ -4,8 +4,8 @@ import { userStore } from './user-context';
 import userContextActions from './user-context-actions';
 import userAPI from '../../apis/user';
 
-const SUCCESS_LOGIN_URL = '/';
-const FALE_LOGIN_URL = '/login';
+const LOGIN_SUCCESS_URL = '/';
+const LOGIN_FAILURE_URL = '/login';
 const UserStore = () => {
   const { dispatch } = useContext(userStore);
   const history = useHistory();
@@ -13,15 +13,15 @@ const UserStore = () => {
     dispatch(action);
     history.push(redirectURL);
   };
-  const login = async (token) => {
+  const login = async () => {
     const flow = {};
     try {
-      const userInfo = await userAPI.getMyInfo(token);
+      const userInfo = await userAPI.getMyInfo();
       flow.action = userContextActions.setUserInfo(userInfo);
-      flow.redirectURL = SUCCESS_LOGIN_URL;
+      flow.redirectURL = LOGIN_SUCCESS_URL;
     } catch (error) {
       flow.action = userContextActions.resetUserInfo();
-      flow.redirectURL = FALE_LOGIN_URL;
+      flow.redirectURL = LOGIN_FAILURE_URL;
     }
     userFlowAction({ ...flow });
   };
@@ -31,9 +31,9 @@ const UserStore = () => {
     if (!token)
       userFlowAction({
         action: userContextActions.resetUserInfo(),
-        redirectURL: FALE_LOGIN_URL,
+        redirectURL: LOGIN_FAILURE_URL,
       });
-    else login(token);
+    else login();
   };
   useEffect(() => {
     initialLogin();

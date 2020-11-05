@@ -6,6 +6,9 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   (response) => {
+    if (response.data.token) {
+      instance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+    }
     return response.data;
   },
   (error) => {
