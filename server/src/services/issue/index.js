@@ -40,8 +40,6 @@ const IssueService = ({
           attributes: ['id', 'title'],
         },
       ],
-      raw: true,
-      nest: true,
     });
     return issues;
   };
@@ -81,11 +79,11 @@ const IssueService = ({
           model: MilestoneModel,
         },
       ],
-      raw: true,
-      nest: true,
     });
-    issue.isAuthor = loggedUserId === issue.authorId;
-    return issue;
+
+    const issueDto = issue.toJSON();
+    issueDto.isAuthor = loggedUserId === issue.authorId;
+    return issueDto;
   };
 
   return {
