@@ -1,18 +1,17 @@
 import React, { useReducer, useEffect } from 'react';
-import styled from 'styled-components';
+import queryString from 'query-string';
+import { useHistory } from 'react-router-dom';
 
 import issueApi from '../../apis/issue';
 import reducer from './reducer';
 import actionType from './action-type';
 import IssueListContainer from './IssueListContainer';
 import IssueFilterContainer from './IssueFilterContainer';
+import Pagination from '../../components/Pagination';
 
-const { FETCH_SUCCESS, FETCH_ERROR } = actionType;
+const { FETCH_SUCCESS, FETCH_ERROR, ISSUE_LIST_PAGING } = actionType;
 
-const Div = styled.div`
-  padding: 2rem 5rem;
-`;
-function IssueListPage() {
+function IssueListPage({ location }) {
   const [state, dispatch] = useReducer(reducer, {
     issues: undefined,
     page: undefined,
@@ -21,13 +20,16 @@ function IssueListPage() {
     error: undefined,
     loading: true,
   });
+  const history = useHistory();
 
   const fetchIssue = async () => {
+    const FIRST_PAGE = 1;
+    const { page: currentPage } = queryString.parse(location.search);
     try {
       const {
         pagination: { page, lastPage },
         issues,
-      } = await issueApi.getIssues();
+      } = await issueApi.getIssues(currentPage || FIRST_PAGE);
       dispatch({ type: FETCH_SUCCESS, issues, page, lastPage });
     } catch (e) {
       dispatch({ type: FETCH_ERROR, error: e.message });
@@ -36,9 +38,10 @@ function IssueListPage() {
 
   useEffect(() => {
     fetchIssue();
-  }, []);
+  }, [state.page]);
 
-  const { issues, checkAllIssue, error, loading } = state;
+  const { page, lastPage, issues, checkAllIssue, error, loading } = state;
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -48,15 +51,28 @@ function IssueListPage() {
   if (issues.length === 0) {
     return <div>No results matched your search.</div>;
   }
+
+  const paginationClickHandler = ({ target }) => {
+    const { page: moveTo } = target.dataset;
+    history.push(`/?page=${moveTo}`);
+    dispatch({ type: ISSUE_LIST_PAGING, moveTo });
+  };
+
   return (
-    <Div>
+    <>
       <IssueFilterContainer />
       <IssueListContainer
         issues={issues}
         checkAllIssue={checkAllIssue}
         dispatch={dispatch}
       />
-    </Div>
+      <Pagination
+        page={page}
+        lastPage={lastPage}
+        clickHandler={paginationClickHandler}
+      />
+    </>
   );
 }
+
 export default IssueListPage;
