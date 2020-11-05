@@ -3,6 +3,7 @@ const IssueService = ({
   UserModel,
   LabelModel,
   MilestoneModel,
+  CommentModel,
 }) => {
   const getTotalIssueCount = async () => {
     const totalIssueCount = await IssueModel.count();
@@ -40,8 +41,6 @@ const IssueService = ({
           attributes: ['id', 'title'],
         },
       ],
-      raw: true,
-      nest: true,
     });
     return issues;
   };
@@ -80,12 +79,21 @@ const IssueService = ({
         {
           model: MilestoneModel,
         },
+        {
+          model: CommentModel,
+          attributes: ['id', 'contents', 'createdAt', 'updatedAt'],
+          include: [
+            {
+              model: UserModel,
+            },
+          ],
+        },
       ],
-      raw: true,
-      nest: true,
     });
-    issue.isAuthor = loggedUserId === issue.authorId;
-    return issue;
+
+    const issueDto = issue.toJSON();
+    issueDto.isAuthor = loggedUserId === issue.authorId;
+    return issueDto;
   };
 
   return {

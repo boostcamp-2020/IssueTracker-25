@@ -60,6 +60,7 @@ class Issue extends Model {
       timestamps: false,
       onDelete: 'cascade',
     });
+    this.hasMany(models.Comment);
   }
 }
 
