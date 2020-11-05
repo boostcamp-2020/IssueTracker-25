@@ -4,16 +4,16 @@ import styled from 'styled-components';
 const NUM_OF_DISPLAY_PAGE = 10;
 const PaginationContainer = styled.div``;
 
-const PaginationItem = ({ page, children }) => {
+const PaginationItem = ({ moveTo, clickHandler, children }) => {
   return (
-    <button type="button">
-      <a href={`/issues?page=${page}`}>{children}</a>
+    <button type="button" data-page={moveTo} onClick={clickHandler}>
+      {children}
     </button>
   );
 };
 
-const PageButtonComponent = ({ curPage, lastPage }) => {
-  const startPage = curPage - (curPage % NUM_OF_DISPLAY_PAGE) + 1;
+const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
+  const startPage = page - (page % NUM_OF_DISPLAY_PAGE) + 1;
   const endPage = Math.min(lastPage, startPage + NUM_OF_DISPLAY_PAGE - 1);
   const pages = new Array(endPage - startPage + 1)
     .fill(startPage)
@@ -22,22 +22,36 @@ const PageButtonComponent = ({ curPage, lastPage }) => {
   return (
     <>
       {startPage > NUM_OF_DISPLAY_PAGE && (
-        <PaginationItem page={startPage - 1}>&lt;&lt;</PaginationItem>
+        <PaginationItem moveTo={startPage - 1} clickHandler={clickHandler}>
+          &lt;&lt;
+        </PaginationItem>
       )}
-      {pages.map((page) => (
-        <PaginationItem page={page}>{page}</PaginationItem>
+      {pages.map((curPage) => (
+        <PaginationItem
+          moveTo={curPage}
+          clickHandler={clickHandler}
+          key={`pagination-item_${curPage}`}
+        >
+          {curPage}
+        </PaginationItem>
       ))}
       {endPage < lastPage && (
-        <PaginationItem page={endPage + 1}>&gt;&gt;</PaginationItem>
+        <PaginationItem moveTo={endPage + 1} clickHandler={clickHandler}>
+          &gt;&gt;
+        </PaginationItem>
       )}
     </>
   );
 };
 
-const Pagination = ({ page, lastPage }) => {
+const Pagination = ({ page, lastPage, clickHandler }) => {
   return (
     <PaginationContainer>
-      <PageButtonComponent curPage={page} lastPage={lastPage} />
+      <PageButtonComponent
+        page={page}
+        lastPage={lastPage}
+        clickHandler={clickHandler}
+      />
     </PaginationContainer>
   );
 };

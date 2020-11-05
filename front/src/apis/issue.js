@@ -1,7 +1,7 @@
 import axios from './axios';
 
 export default {
-  getIssues: () => {
-    return axios.get('/issues');
+  getIssues: (page) => {
+    return axios.get(`/issues?page=${page}`);
   },
 };
