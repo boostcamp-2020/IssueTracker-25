@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
+    "moment": "^2.29.1",
     "open-color": "^1.7.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.6",

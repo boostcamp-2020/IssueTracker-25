@@ -2,9 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import color from '../../libs/color';
 import actionType from './action-type';
+import utils from '../../libs/utils';
 import ListHeader from '../../components/ListHeader';
 import { UserProfileList } from '../../components/UserProfile';
+import LabelItem from '../../components/Label';
 
+const { timeDiffFromNow } = utils;
 const { CHECK_ALL_ISSUE_HANDLER, CHECK_ISSUE_HANDLER } = actionType;
 const CustomCheckBoxButton = styled.button`
   width: 1rem;
@@ -16,8 +19,20 @@ const IssueList = styled.div`
   color: ${color.black};
 `;
 const IssueItemContainer = styled.li`
+  display: flex;
   border-top: 1px solid ${color.lightGray};
   padding: 1rem;
+  justify-content: space-between;
+
+  .issue-item + .issue-item {
+    margin-left: 1rem;
+  }
+  .issue-item__title {
+    font-weight: bold;
+  }
+  .issue-item__info-msg {
+    color: ${color.Gray};
+  }
 `;
 
 const Ul = styled.ul`
@@ -26,6 +41,12 @@ const Ul = styled.ul`
   list-style-type: none;
 `;
 
+const UserProfileContainer = styled.div`
+  display: flex;
+  width: 40%;
+  justify-content: center;
+  align-items: center;
+`;
 function IssueListHeader({ checkAllIssue, dispatch }) {
   const checkBoxClickHandler = () => {
     dispatch({ type: CHECK_ALL_ISSUE_HANDLER });
@@ -41,43 +62,70 @@ function IssueListHeader({ checkAllIssue, dispatch }) {
   );
 }
 
+function LabelContainer({ labels }) {
+  return (
+    <>
+      {labels.map((label) => (
+        <LabelItem key={label.id} id={label.id} label={label}>
+          {label.name}
+        </LabelItem>
+      ))}
+    </>
+  );
+}
+
 function IssueItem({ issue, checkBoxClickHandler }) {
   const {
     id,
     title,
-    writer,
-    milestoneTitle,
     checked,
     isClosed,
-    assigneeList,
+    createdAt,
+    closedAt,
+    Author: author,
+    Milestone: milestone,
+    Assignees: assignees,
+    Labels: labels,
   } = issue;
 
+  const openedInfoMsg = `#${id} opened ${timeDiffFromNow(createdAt)} by ${
+    author.name
+  }`;
+  const closedInfoMsg = `#${id} by ${author.name} was closed ${timeDiffFromNow(
+    closedAt,
+  )}`;
+  const issueInfoMsg = isClosed ? closedInfoMsg : openedInfoMsg;
   return (
     <IssueItemContainer id={id}>
-      <div>
+      <div className="issue-item__left-container">
         <CustomCheckBoxButton
           type="button"
           checked={checked}
           onClick={checkBoxClickHandler}
           id={id}
         />
-        <span className="issue-item__title">{title}</span>
-        <span className="issue-item__label">라벨</span>
+        <span className="issue-item issue-item__title">{title}</span>
+        {labels && <LabelContainer labels={labels} />}
+        <div>
+          <span className="issue-item issue-item__info-msg">
+            {issueInfoMsg}
+          </span>
+          {milestone && (
+            <span
+              className="issue-item issue-item__milestone-title"
+              id={milestone.id}
+            >
+              {milestone.title}
+            </span>
+          )}
+        </div>
       </div>
-      <div>
-        <span className="issue-item__issue-number">#{id}</span>
-        <span className="issue-item__date">
-          {isClosed ? 'closed' : 'opened'}
-        </span>
-        <span className="issue-item__writer">{writer}</span>
-        {milestoneTitle !== '' && (
-          <span className="issue-item__milestone-title">{milestoneTitle}</span>
-        )}
+      <UserProfileContainer>
         <UserProfileList
-          className="issue-item__assignee"
-          users={assigneeList}
+          className="issue-item issue-item__assignee"
+          users={assignees}
         />
-      </div>
+      </UserProfileContainer>
     </IssueItemContainer>
   );
 }
