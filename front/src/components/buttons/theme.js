@@ -27,6 +27,11 @@ const theme = {
     color: color.white,
     borderColor: color.lightGray,
   },
+  blue: {
+    background: color.blue,
+    color: color.white,
+    borderColor: 'transparent',
+  },
 };
 
 export default theme;

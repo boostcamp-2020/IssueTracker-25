@@ -5,6 +5,7 @@ const {
   FETCH_ERROR,
   CHECK_ALL_ISSUE_HANDLER,
   CHECK_ISSUE_HANDLER,
+  ISSUE_LIST_PAGING,
 } = actionType;
 
 export default function reducer(state, action) {
@@ -26,6 +27,13 @@ export default function reducer(state, action) {
         ...state,
         loading: false,
         error: action.error,
+      };
+    }
+    case ISSUE_LIST_PAGING: {
+      const { moveTo } = action;
+      return {
+        ...state,
+        page: moveTo,
       };
     }
     case CHECK_ALL_ISSUE_HANDLER: {
