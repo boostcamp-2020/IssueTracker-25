@@ -52,7 +52,7 @@ function IssueListPage({ location }) {
     return <div>No results matched your search.</div>;
   }
 
-  const paginantionClickHandler = ({ target }) => {
+  const paginationClickHandler = ({ target }) => {
     const { page: moveTo } = target.dataset;
     history.push(`/?page=${moveTo}`);
     dispatch({ type: ISSUE_LIST_PAGING, moveTo });
@@ -69,7 +69,7 @@ function IssueListPage({ location }) {
       <Pagination
         page={page}
         lastPage={lastPage}
-        clickHandler={paginantionClickHandler}
+        clickHandler={paginationClickHandler}
       />
     </>
   );
