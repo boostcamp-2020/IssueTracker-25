@@ -13,8 +13,8 @@ const PaginationItem = ({ moveTo, clickHandler, children }) => {
 };
 
 const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
-  const startPage = page - (page % NUM_OF_DISPLAY_PAGE) + 1;
-  const endPage = Math.min(lastPage, startPage + NUM_OF_DISPLAY_PAGE - 1);
+  const endPage = Math.ceil(page / NUM_OF_DISPLAY_PAGE) * NUM_OF_DISPLAY_PAGE;
+  const startPage = endPage - NUM_OF_DISPLAY_PAGE + 1;
   const pages = new Array(endPage - startPage + 1)
     .fill(startPage)
     .map((startOffset, idx) => startOffset + idx);
@@ -22,7 +22,10 @@ const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
   return (
     <>
       {startPage > NUM_OF_DISPLAY_PAGE && (
-        <PaginationItem moveTo={startPage - 1} clickHandler={clickHandler}>
+        <PaginationItem
+          moveTo={startPage - NUM_OF_DISPLAY_PAGE}
+          clickHandler={clickHandler}
+        >
           &lt;&lt;
         </PaginationItem>
       )}
