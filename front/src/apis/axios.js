@@ -4,11 +4,15 @@ const instance = axios.create({
   baseURL: process.env.API_BASE_URL,
 });
 
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  const configCopy = config;
+  if (token) configCopy.headers.common.Authorization = `Bearer ${token}`;
+  return configCopy;
+});
+
 instance.interceptors.response.use(
   (response) => {
-    if (response.data.token) {
-      instance.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-    }
     return response.data;
   },
   (error) => {
