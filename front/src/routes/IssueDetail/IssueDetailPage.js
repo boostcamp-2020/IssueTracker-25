@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import CustomButton from '../../components/buttons/CustomButton';
 import color from '../../libs/color';
+import { UserProfile } from '../../components/UserProfile';
+import IssueStateComponent from './IssueStateComponent';
 
 const IssueDetailContainer = styled.div`
   display: grid;
@@ -33,6 +35,23 @@ const IssueDetailContainer = styled.div`
   .issue-detail-subheader {
     display: flex;
     align-items: center;
+    .state-icon {
+      color: ${color.white};
+      display: flex;
+      border-radius: 20rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.4rem 0.6rem;
+      &__content {
+        text-indent: 0.5rem;
+      }
+    }
+    &--closed {
+      background: ${color.red};
+    }
+    &--open {
+      background: ${color.green};
+    }
   }
 
   .button-text {
@@ -50,15 +69,77 @@ const IssueDetailContainer = styled.div`
   .issue-detail-content {
     grid-column: 1;
     grid-row: 2;
-    background: red;
+  }
+`;
+const CommentContainer = styled.div`
+  display: flex;
+  z-index: 1;
+  .comment-profile {
+    display: flex;
+    justify: center;
+  }
+  .comment-container {
+    position: relative;
+    &::before {
+      width: 1rem;
+      z-index: -1;
+      height: 1rem;
+      content: '';
+      background: ${color.lightGray};
+      position: absolute;
+      transform: rotate(45deg);
+      left: -8px;
+      top: 9px;
+    }
+    flex: 1;
+    margin: 0 1.5rem;
+    border: 1px solid ${color.lightGray};
+    > div {
+      padding: 0.5rem;
+    }
+  }
+  .comment-header {
+    display: flex;
+    background: ${color.lightGray};
+  }
+  .comment-writer {
+    padding-right: 0.3rem;
+    font-weight: bolder;
+  }
+  .owner-container {
+    display: flex;
+    margin-left: auto;
+
+    .comment-owner {
+      margin: 0 0.5rem;
+      padding: 0 0.2rem;
+      border: 1px solid ${color.lightBlue};
+    }
+  }
+  .edit-button {
+    border: none;
+    outline: 0;
+    background: ${color.lightGray};
   }
 `;
 
 const IssueDetailPage = ({ data }) => {
-  const { title, userId, isClosed, createAt, closedAt, countComment } = data;
-  const issueState = `${userId} ${isClosed ? 'closed' : 'opend'} this issue ${
-    isClosed ? closedAt : createAt
-  } ㆍ ${countComment || 0} comments`;
+  const {
+    title,
+    Author,
+    isClosed,
+    createdAt,
+    closedAt,
+    contents,
+    Comments,
+    countComment,
+    isAuthor,
+  } = data;
+  const issueState = `${Author.name} ${
+    isClosed ? 'closed' : 'opend'
+  } this issue ${isClosed ? closedAt : createdAt} ㆍ ${
+    countComment || 0
+  } comments`;
   return (
     <IssueDetailContainer>
       <div className="issue-detail-header">
@@ -69,35 +150,55 @@ const IssueDetailPage = ({ data }) => {
             <CustomButton style={{ color: 'green' }}>New issue</CustomButton>
           </div>
         </div>
-        <div className="issue-detail-subheader">
-          <CustomButton
-            className="state-button"
-            type="button"
-            style={{ color: 'green' }}
-          >
-            <svg
-              height="16"
-              className="octicon octicon-issue-opened"
-              viewBox="0 0 16 16"
-              version="1.1"
-              width="16"
-              aria-hidden="true"
-              fill="white"
-            >
-              <path
-                fillRule="evenodd"
-                d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"
-              />
-            </svg>
-            <span className="button-text">Open</span>
-          </CustomButton>
-          <span className="state-message">{issueState}</span>
-        </div>
+        <IssueStateComponent isClosed={isClosed} issueState={issueState} />
         <div className="issue-detail-header__divider" />
       </div>
-      <div className="issue-detail-content" />
+      <div className="issue-detail-content">
+        <Comment
+          writer={Author}
+          createdAt={createdAt}
+          contents={contents}
+          isAuthor={isAuthor}
+        />
+        {Comments.map((comment) => {
+          return (
+            <Comment
+              writer={comment.User}
+              createdAt={comment.createdAt}
+              contents={comment.contents}
+            />
+          );
+        })}
+      </div>
       <div className="issue-detail-aside" />
     </IssueDetailContainer>
+  );
+};
+
+const OWNER = 'Owner';
+const Comment = ({ writer, createdAt, contents, isAuthor }) => {
+  const commented = `commented ${createdAt}`;
+  return (
+    <CommentContainer>
+      <div className="comment-profile">
+        <UserProfile className="profile-container" src={writer.profileLink} />
+      </div>
+      <div className="comment-container">
+        <div className="comment-header">
+          <div className="comment-writer">{writer.name}</div>
+          <div>{commented}</div>
+          {isAuthor && (
+            <div className="owner-container">
+              <div className="comment-owner">{OWNER}</div>
+              <button type="button" className="edit-button">
+                Edit
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="comment-content">{contents}</div>
+      </div>
+    </CommentContainer>
   );
 };
 

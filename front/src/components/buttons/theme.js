@@ -22,6 +22,11 @@ const theme = {
     color: color.red,
     borderColor: color.lightGray,
   },
+  redWhite: {
+    background: color.red,
+    color: color.white,
+    borderColor: color.lightGray,
+  },
 };
 
 export default theme;
