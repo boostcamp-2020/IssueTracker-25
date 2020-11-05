@@ -16,6 +16,9 @@ const GlobalStyled = createGlobalStyle`
   body{
     margin : 0 ; 
     font-family:'IBMPlexSansKR-Regular';
+    main{
+      margin: 100px 200px;
+    }
   }
 `;
 
