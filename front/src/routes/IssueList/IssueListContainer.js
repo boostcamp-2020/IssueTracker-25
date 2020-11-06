@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import color from '../../libs/color';
 import actionType from './action-type';
 import utils from '../../libs/utils';
@@ -23,7 +24,20 @@ const IssueItemContainer = styled.li`
   border-top: 1px solid ${color.lightGray};
   padding: 1rem;
   justify-content: space-between;
-
+  a {
+    &:link {
+      color: black;
+      text-decoration: none;
+    }
+    &:visited {
+      color: black;
+      text-decoration: none;
+    }
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
   .issue-item + .issue-item {
     margin-left: 1rem;
   }
@@ -104,7 +118,9 @@ function IssueItem({ issue, checkBoxClickHandler }) {
           onClick={checkBoxClickHandler}
           id={id}
         />
-        <span className="issue-item issue-item__title">{title}</span>
+        <Link to={`/issues/${id}`}>
+          <span className="issue-item issue-item__title">{title}</span>
+        </Link>
         {labels && <LabelContainer labels={labels} />}
         <div>
           <span className="issue-item issue-item__info-msg">
