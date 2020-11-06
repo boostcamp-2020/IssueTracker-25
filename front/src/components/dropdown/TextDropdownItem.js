@@ -1,12 +1,12 @@
 import React from 'react';
 import DropdownItemContainer from './DropdownItemContainer';
-import CheckIconComponent from '../CheckIconComponent';
+import * as Icon from '../Icon';
 
 const TextDropdownItem = ({ content }) => {
   return (
     <DropdownItemContainer>
       <div className="dropdown-item ">
-        <CheckIconComponent />
+        <Icon.CheckIconComponent />
       </div>
 
       <div className="dropdown-item ">
