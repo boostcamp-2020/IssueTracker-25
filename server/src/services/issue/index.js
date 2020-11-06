@@ -55,7 +55,7 @@ const IssueService = ({
     ]);
     const pagination = {
       page,
-      lastPage: totalIssueCount / LIMIT + (totalIssueCount % LIMIT ? 1 : 0),
+      lastPage: Math.ceil(totalIssueCount / LIMIT),
     };
     return { pagination, issues };
   };
