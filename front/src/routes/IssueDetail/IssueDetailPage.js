@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
 import CustomButton from '../../components/buttons/CustomButton';
 import color from '../../libs/color';
 import { UserProfile } from '../../components/UserProfile';
@@ -158,6 +159,7 @@ const initIssue = {
 };
 const IssueDetailPage = () => {
   const [issue, setIssue] = useState(initIssue);
+  const { id } = useParams();
   const {
     title,
     Author,
@@ -175,12 +177,12 @@ const IssueDetailPage = () => {
     countComment || 0
   } comments`;
   const getIssue = async () => {
-    const response = await issueAPI.getIssue(1);
+    const response = await issueAPI.getIssue(id);
     setIssue(response);
   };
   useEffect(() => {
     getIssue();
-  }, []);
+  }, [issue]);
   return (
     <IssueDetailContainer>
       <div className="issue-detail-header">
