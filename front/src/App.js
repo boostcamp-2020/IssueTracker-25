@@ -19,6 +19,20 @@ const GlobalStyled = createGlobalStyle`
     main{
       margin: 100px 200px;
     }
+    a {
+    &:link {
+      color: black;
+      text-decoration: none;
+    }
+    &:visited {
+      color: black;
+      text-decoration: none;
+    }
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
   }
 `;
 

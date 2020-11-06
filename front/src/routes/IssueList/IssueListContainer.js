@@ -2,37 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import color from '../../libs/color';
 import actionType from './action-type';
-import utils from '../../libs/utils';
 import ListHeader from '../../components/ListHeader';
-import { UserProfileList } from '../../components/UserProfile';
-import LabelItem from '../../components/Label';
+import IssueListItem from './IssueListItem';
+import CustomCheckBoxButton from '../../components/buttons/CustomCheckBoxButton';
+import Dropdown from '../../components/dropdown/Dropdown';
+import UserDropDownItem from '../../components/dropdown/UserDropdownItem';
 
-const { timeDiffFromNow } = utils;
 const { CHECK_ALL_ISSUE_HANDLER, CHECK_ISSUE_HANDLER } = actionType;
-const CustomCheckBoxButton = styled.button`
-  width: 1rem;
-  height: 1rem;
-  background-color: ${({ checked }) => (checked ? color.blue : color.white)};
-`;
+
 const IssueList = styled.div`
   border: 1px solid ${color.lightGray};
   color: ${color.black};
-`;
-const IssueItemContainer = styled.li`
-  display: flex;
-  border-top: 1px solid ${color.lightGray};
-  padding: 1rem;
-  justify-content: space-between;
-
-  .issue-item + .issue-item {
-    margin-left: 1rem;
-  }
-  .issue-item__title {
-    font-weight: bold;
-  }
-  .issue-item__info-msg {
-    color: ${color.Gray};
-  }
 `;
 
 const Ul = styled.ul`
@@ -40,93 +20,65 @@ const Ul = styled.ul`
   padding: 0;
   list-style-type: none;
 `;
+// For demo
+const userInfo = [
+  {
+    name: 'yejineee',
+    profileLink: 'https://avatars2.githubusercontent.com/u/43772082?s=64&v=4',
+  },
+  {
+    name: 'rolled-potatoes',
+    profileLink: 'https://avatars2.githubusercontent.com/u/44409642?s=64&v=4',
+  },
+  {
+    name: 'LeeSuKyeong',
+    profileLink: 'https://avatars1.githubusercontent.com/u/46044132?s=460&v=4',
+  },
+  {
+    name: 'changheedev',
+    profileLink:
+      'https://avatars1.githubusercontent.com/u/17294694?s=460&u=ff808a49e15ba27ba7c8e0a960aa44a78c9b672b&v=4',
+  },
+];
 
-const UserProfileContainer = styled.div`
-  display: flex;
-  width: 40%;
-  justify-content: center;
-  align-items: center;
-`;
+const IssueListHeaderContainer = styled.div``;
 function IssueListHeader({ checkAllIssue, dispatch }) {
   const checkBoxClickHandler = () => {
     dispatch({ type: CHECK_ALL_ISSUE_HANDLER });
   };
   return (
-    <>
+    <IssueListHeaderContainer>
       <CustomCheckBoxButton
         type="button"
         checked={checkAllIssue}
         onClick={checkBoxClickHandler}
       />
-    </>
-  );
-}
 
-function LabelContainer({ labels }) {
-  return (
-    <>
-      {labels.map((label) => (
-        <LabelItem key={label.id} id={label.id} label={label}>
-          {label.name}
-        </LabelItem>
-      ))}
-    </>
-  );
-}
-
-function IssueItem({ issue, checkBoxClickHandler }) {
-  const {
-    id,
-    title,
-    checked,
-    isClosed,
-    createdAt,
-    closedAt,
-    Author: author,
-    Milestone: milestone,
-    Assignees: assignees,
-    Labels: labels,
-  } = issue;
-
-  const openedInfoMsg = `#${id} opened ${timeDiffFromNow(createdAt)} by ${
-    author.name
-  }`;
-  const closedInfoMsg = `#${id} by ${author.name} was closed ${timeDiffFromNow(
-    closedAt,
-  )}`;
-  const issueInfoMsg = isClosed ? closedInfoMsg : openedInfoMsg;
-  return (
-    <IssueItemContainer id={id}>
-      <div className="issue-item__left-container">
-        <CustomCheckBoxButton
-          type="button"
-          checked={checked}
-          onClick={checkBoxClickHandler}
-          id={id}
-        />
-        <span className="issue-item issue-item__title">{title}</span>
-        {labels && <LabelContainer labels={labels} />}
-        <div>
-          <span className="issue-item issue-item__info-msg">
-            {issueInfoMsg}
-          </span>
-          {milestone && (
-            <span
-              className="issue-item issue-item__milestone-title"
-              id={milestone.id}
-            >
-              {milestone.title}
-            </span>
-          )}
-        </div>
-      </div>
-      <UserProfileContainer>
-        <UserProfileList
-          className="issue-item issue-item__assignee"
-          users={assignees}
-        />
-      </UserProfileContainer>
-    </IssueItemContainer>
+      <Dropdown
+        className="issue-list-header__dropdown"
+        headerText="Filter by author"
+        button={<div>Author</div>}
+      >
+        {userInfo.map((user) => {
+          return <UserDropDownItem userInfo={user} />;
+        })}
+      </Dropdown>
+      <Dropdown
+        className="issue-list-header__dropdown"
+        headerText="Filter by label"
+        button={<div>Label</div>}
+      />
+      <Dropdown
+        className="issue-list-header__dropdown"
+        headerText="Filter by milestone"
+        button={<div>Milestones</div>}
+      />
+      <Dropdown
+        className="issue-list-header__dropdown"
+        headerText="Filter by who's assigned"
+        button={<div>Assignee</div>}
+      />
+    </IssueListHeaderContainer>
   );
 }
 
@@ -139,7 +91,7 @@ function IssueListBody({ issues, dispatch }) {
   return (
     <Ul>
       {issues.map((issue) => (
-        <IssueItem
+        <IssueListItem
           key={issue.id}
           issue={issue}
           checkBoxClickHandler={checkBoxClickHandler}

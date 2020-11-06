@@ -21,7 +21,8 @@ const PaginationButton = styled.button`
 `;
 
 const PaginationItem = ({ page, moveTo, clickHandler, children }) => {
-  const style = page === moveTo ? ButtonTheme.blue : ButtonTheme.default;
+  const style =
+    page && page === moveTo ? ButtonTheme.blue : ButtonTheme.default;
   return (
     <PaginationButton style={style} data-page={moveTo} onClick={clickHandler}>
       {children}
@@ -32,7 +33,8 @@ const PaginationItem = ({ page, moveTo, clickHandler, children }) => {
 const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
   const endPage = Math.ceil(page / NUM_OF_DISPLAY_PAGE) * NUM_OF_DISPLAY_PAGE;
   const startPage = endPage - NUM_OF_DISPLAY_PAGE + 1;
-  const pages = new Array(endPage - startPage + 1)
+  const adjustedEndPage = Math.min(lastPage, endPage);
+  const pages = new Array(adjustedEndPage - startPage + 1)
     .fill(startPage)
     .map((startOffset, idx) => startOffset + idx);
 
@@ -56,8 +58,11 @@ const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
           {curPage}
         </PaginationItem>
       ))}
-      {endPage < lastPage && (
-        <PaginationItem moveTo={endPage + 1} clickHandler={clickHandler}>
+      {adjustedEndPage < lastPage && (
+        <PaginationItem
+          moveTo={adjustedEndPage + 1}
+          clickHandler={clickHandler}
+        >
           Next &gt;
         </PaginationItem>
       )}
