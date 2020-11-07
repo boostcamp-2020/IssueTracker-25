@@ -9,7 +9,7 @@ const IssueInfoText = styled.span`
 const IssueDetailHeaderInfo = ({ issue }) => {
   const { isClosed } = issue;
 
-  const generateIssueTitle = () => {
+  const generateIssueInfo = () => {
     return `${issue.Author.name} ${
       issue.isClosed ? 'closed' : 'opend'
     } this issue ${issue.isClosed ? issue.closedAt : issue.createdAt} ㆍ ${
@@ -20,7 +20,7 @@ const IssueDetailHeaderInfo = ({ issue }) => {
   return (
     <>
       <IssueStateIcon isClosed={isClosed} />
-      <IssueInfoText>{generateIssueTitle()}</IssueInfoText>
+      <IssueInfoText>{generateIssueInfo()}</IssueInfoText>
     </>
   );
 };
