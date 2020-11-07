@@ -4,7 +4,7 @@ import Comment from './Comment';
 
 const IssueDetailBodyContainer = styled.div`
   display: flex;
-  flex-direction: column !important;
+  flex-direction: column;
 
   .issue-detail-content {
     width: 100%;
@@ -15,7 +15,7 @@ const IssueDetailBodyContainer = styled.div`
   }
 
   @media (min-width: 768px) {
-    flex-direction: row !important;
+    flex-direction: row;
 
     .issue-detail-content {
       width: 75%;
