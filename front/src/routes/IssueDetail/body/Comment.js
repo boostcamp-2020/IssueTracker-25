@@ -60,8 +60,8 @@ const CommentContainer = styled.div`
   }
 `;
 
-export default function Comment({ writer, createdAt, contents, isAuthor }) {
-  const commented = `commented ${createdAt}`;
+const Comment = ({ writer, createdAt, contents, isAuthor }) => {
+  const commentedAt = `commented ${createdAt}`;
   return (
     <CommentContainer>
       <div className="comment-profile">
@@ -70,7 +70,7 @@ export default function Comment({ writer, createdAt, contents, isAuthor }) {
       <div className="comment-container">
         <div className="comment-header">
           <div className="comment-writer">{writer.name}</div>
-          <div>{commented}</div>
+          <div>{commentedAt}</div>
           {isAuthor && (
             <div className="owner-container">
               <div className="comment-owner">{OWNER}</div>
@@ -84,4 +84,6 @@ export default function Comment({ writer, createdAt, contents, isAuthor }) {
       </div>
     </CommentContainer>
   );
-}
+};
+
+export default Comment;

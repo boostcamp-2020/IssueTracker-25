@@ -22,7 +22,7 @@ const StateIconText = styled.span`
   margin-left: 0.5rem;
 `;
 
-export default function IssueStateIcon({ isClosed }) {
+const IssueStateIcon = ({ isClosed }) => {
   const className = isClosed ? 'closed' : 'open';
   const stateText = isClosed ? 'Closed' : 'Open';
   return (
@@ -31,4 +31,6 @@ export default function IssueStateIcon({ isClosed }) {
       <StateIconText>{stateText}</StateIconText>
     </StateIconContainer>
   );
-}
+};
+
+export default IssueStateIcon;
