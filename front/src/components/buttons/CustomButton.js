@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import buttonTheme from './theme';
 
 const Button = styled.button`
@@ -21,9 +20,4 @@ function CustomButton({ handleClick, children, style = {} }) {
   );
 }
 
-CustomButton.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
-  style: PropTypes.objectOf(PropTypes.object).isRequired,
-};
 export default CustomButton;
