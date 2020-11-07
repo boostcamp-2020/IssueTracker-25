@@ -7,7 +7,7 @@ import IssueListPage from '../IssueList/IssueListPage';
 import IssueDetailPage from '../IssueDetail/IssueDetailPage';
 
 const MainContainer = styled.div`
-  margin: 100px 200px;
+  padding: 2rem;
 `;
 
 const MainPageTemplate = () => {
