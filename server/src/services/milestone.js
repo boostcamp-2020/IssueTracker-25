@@ -1,7 +1,7 @@
-import milestoneDummy from './dummy/milestone';
+const MilestoneService = ({ MilestoneModel }) => ({
+  getMilestoneList() {
+    return MilestoneModel.findAll();
+  },
+});
 
-function getMilestoneList(req, res) {
-  res.json(milestoneDummy);
-}
-
-export default getMilestoneList;
+export default MilestoneService;
