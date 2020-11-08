@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import color from '../../libs/color';
+import { CloseButtonIconComponent } from '../Icon';
 
 const DropdownContainer = styled.div`
   display: inline-flex;
@@ -85,11 +86,7 @@ const DropdownHeader = ({ headerText, toggleHandler }) => {
     <Header>
       <div className="header-title">{headerText}</div>
       <CloseButton className="dropdown-button-close" onClick={toggleHandler}>
-        <img
-          className="button-image"
-          src="https://img.icons8.com/material-rounded/24/000000/delete-sign.png"
-          alt="close"
-        />
+        <CloseButtonIconComponent />
       </CloseButton>
     </Header>
   );
