@@ -30,7 +30,7 @@ const DropdownBody = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0.3rem;
+  padding: 0.2rem 1rem;
   font-weight: bolder;
   .header-title {
     min-width: max-content;
@@ -48,7 +48,7 @@ const DropdownOverlay = styled.div`
 
 const CloseButton = styled.div`
   width: fit-content;
-  margin-left: 4rem;
+  margin-left: auto;
   &:hover {
     cursor: pointer;
   }
@@ -83,7 +83,7 @@ const Dropdown = ({ headerText, button, children }) => {
 const DropdownHeader = ({ headerText, toggleHandler }) => {
   return (
     <Header>
-      <div className="dropdown-header">{headerText}</div>
+      <div className="header-title">{headerText}</div>
       <CloseButton className="dropdown-button-close" onClick={toggleHandler}>
         <img
           className="button-image"
