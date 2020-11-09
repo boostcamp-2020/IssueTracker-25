@@ -5,22 +5,29 @@ import color from '../../libs/color';
 const Header = styled.div`
   position: relative;
   &::before {
-    width: 1rem;
-    z-index: -1;
-    height: 1rem;
+    width: 0.8rem;
+    height: 0.8rem;
     content: '';
-    background: ${color.lightGray};
+    background: ${(prop) =>
+      prop.background ? prop.background : color.lightGray};
     position: absolute;
     transform: rotate(45deg);
     left: -8px;
     top: 9px;
+    border-left: 1px solid ${color.lightGray};
+    border-bottom: 1px solid ${color.lightGray};
   }
   flex: 1;
-  margin-left: 1.5rem;
-  border: 1px solid ${color.lightGray};
+  background: ${(prop) =>
+    prop.background ? prop.background : color.lightGray};
+  border-bottom: 1px solid ${color.lightGray};
 `;
-const ArrowHeader = ({ children }) => {
-  return <Header>{children}</Header>;
+const ArrowHeader = ({ children, className, background }) => {
+  return (
+    <Header className={className || ''} background={background}>
+      {children}
+    </Header>
+  );
 };
 
 export default ArrowHeader;
