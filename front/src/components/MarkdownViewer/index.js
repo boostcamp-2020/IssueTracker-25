@@ -9,10 +9,10 @@ const ViewerContainer = styled.div`
   padding: 0.25rem 0.25rem 1rem;
 `;
 
-const MarkdownViewer = ({ markdown }) => {
+const MarkdownViewer = ({ children }) => {
   return (
     <ViewerContainer>
-      <ReactMarkDown plugins={[gfm]}>{markdown}</ReactMarkDown>
+      <ReactMarkDown plugins={[gfm]}>{children}</ReactMarkDown>
     </ViewerContainer>
   );
 };
