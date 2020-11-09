@@ -13,6 +13,9 @@ const GlobalStyled = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
+  * {
+    box-sizing: border-box;
+  }
   body{
     margin: 0; 
     font-family:'IBMPlexSansKR-Regular';
