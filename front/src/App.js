@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { UserProvider } from './routes/user-store/user-context';
 import LoginPage from './routes/Login/LoginPage';
 import CallbackPage from './routes/oauth/callback';
-import MainPageTemplate from './routes/Main-page-template';
+import MainPageTemplate from './routes/MainPageTemplate';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -14,12 +14,10 @@ const GlobalStyled = createGlobalStyle`
     font-style: normal;
   }
   body{
-    margin : 0 ; 
+    margin: 0; 
     font-family:'IBMPlexSansKR-Regular';
-    main{
-      margin: 100px 200px;
-    }
-    a {
+  }
+  a {
     &:link {
       color: black;
       text-decoration: none;
@@ -32,7 +30,6 @@ const GlobalStyled = createGlobalStyle`
       color: black;
       text-decoration: none;
     }
-  }
   }
 `;
 
