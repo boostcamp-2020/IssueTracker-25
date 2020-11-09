@@ -9,10 +9,10 @@ const Button = styled.button`
   border: transparent;
   background-color: white;
   text-align: center;
-  /* &: hover {
+  &:hover {
     background-color: whitesmoke;
     cursor: pointer;
-  } */
+  }
 `;
 
 const Counter = styled.span`

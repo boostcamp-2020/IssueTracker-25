@@ -2,7 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import { useHistory } from 'react-router-dom';
 import { useAsync } from '../../../hooks/useAsync';
-import * as IssueListCompoents from '../../../components/issue/list';
+import * as IssueListComponents from '../../../components/issue/list';
 import Pagination from '../../../components/commons/Pagination';
 import issueApi from '../../../apis/issue';
 import reducer from './reducer';
@@ -62,8 +62,8 @@ const IssueList = ({ location }) => {
 
   return (
     <>
-      <IssueListCompoents.IssueFilterContainer />
-      <IssueListCompoents.IssueListContainer
+      <IssueListComponents.IssueFilterContainer />
+      <IssueListComponents.IssueListContainer
         issues={issues}
         checkAllIssue={checkAllIssue}
         checkBoxClickHandler={checkBoxClickHandler}
