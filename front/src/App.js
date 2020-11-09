@@ -5,6 +5,7 @@ import { UserProvider } from './routes/user-store/user-context';
 import LoginPage from './routes/Login/LoginPage';
 import CallbackPage from './routes/oauth/callback';
 import MainPageTemplate from './routes/MainPageTemplate';
+import color from './libs/color';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -19,6 +20,7 @@ const GlobalStyled = createGlobalStyle`
   body{
     margin: 0; 
     font-family:'IBMPlexSansKR-Regular';
+    color: ${color.gray};
   }
   a {
     &:link {
