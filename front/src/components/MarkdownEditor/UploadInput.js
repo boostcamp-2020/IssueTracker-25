@@ -25,15 +25,17 @@ const Label = styled.label`
   position: relative;
   display: block;
   width: 100%;
-  padding: 7px 10px;
+  padding: 0.5rem 0.6rem;
   color: ${color.gray};
 `;
 
 const Input = styled.input`
-  width: 100%;
+  width: calc(100% - 1.2rem);
   min-height: 0;
   opacity: 0.01;
   position: absolute;
+  top: 0.5rem;
+  left: 0.6rem;
   cursor: pointer;
 `;
 
