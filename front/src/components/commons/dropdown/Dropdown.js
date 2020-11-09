@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import color from '../../../libs/color';
-import { CloseButtonIconComponent } from '../../Icon';
+import { CloseButtonIcon } from '../../icons';
 
 const DropdownContainer = styled.div`
   display: inline-flex;
@@ -86,7 +86,7 @@ const DropdownHeader = ({ headerText, toggleHandler }) => {
     <Header>
       <div className="header-title">{headerText}</div>
       <CloseButton className="dropdown-button-close" onClick={toggleHandler}>
-        <CloseButtonIconComponent />
+        <CloseButtonIcon />
       </CloseButton>
     </Header>
   );

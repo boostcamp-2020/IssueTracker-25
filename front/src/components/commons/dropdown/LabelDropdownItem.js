@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DropdownItemContainer from './DropdownItemContainer';
-import * as Icon from '../../Icon';
+import * as Icons from '../../icons';
 import color from '../../../libs/color';
 
 const LabelDropdownItemContainer = styled(DropdownItemContainer)`
@@ -31,7 +31,7 @@ const LabelDropdownItem = ({ label }) => {
   return (
     <LabelDropdownItemContainer>
       <div className="dropdown-item dropdown-item-check dropdown-item-top">
-        <Icon.CheckIconComponent />
+        <Icons.CheckIcon />
       </div>
 
       <div className="dropdown-item dropdown-item-top">

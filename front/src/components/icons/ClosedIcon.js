@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClosedIconComponent = () => {
+const ClosedIcon = () => {
   return (
     <svg
       fill="white"
@@ -18,4 +18,4 @@ const ClosedIconComponent = () => {
   );
 };
 
-export default ClosedIconComponent;
+export default ClosedIcon;

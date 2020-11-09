@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GearIconComponent = () => {
+const GearIcon = () => {
   return (
     <svg
       className="octicon octicon-gear"
@@ -18,4 +18,4 @@ const GearIconComponent = () => {
   );
 };
 
-export default GearIconComponent;
+export default GearIcon;

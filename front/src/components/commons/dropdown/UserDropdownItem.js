@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DropdownItemContainer from './DropdownItemContainer';
-import * as Icon from '../../Icon';
+import * as Icons from '../../icons';
 
 const UserDropdownItemContainer = styled(DropdownItemContainer)`
   .dropdown-item-check {
@@ -18,7 +18,7 @@ const UserDropdownItem = ({ userInfo }) => {
   return (
     <UserDropdownItemContainer>
       <div className="dropdown-item dropdown-item-check">
-        <Icon.CheckIconComponent />
+        <Icons.CheckIcon />
       </div>
       <div className="dropdown-item">
         <img src={profileLink} alt="profile" />

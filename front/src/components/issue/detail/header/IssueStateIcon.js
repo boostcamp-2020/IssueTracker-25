@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as Icon from '../../../Icon';
+import * as Icons from '../../../icons';
 import color from '../../../../libs/color';
 
 const StateIconContainer = styled.div`
@@ -27,7 +27,7 @@ const IssueStateIcon = ({ isClosed }) => {
   const stateText = isClosed ? 'Closed' : 'Open';
   return (
     <StateIconContainer className={className}>
-      {isClosed ? <Icon.ClosedIconComponent /> : <Icon.OpenIconComponent />}
+      {isClosed ? <Icons.ClosedIcon /> : <Icons.OpenIcon />}
       <StateIconText>{stateText}</StateIconText>
     </StateIconContainer>
   );

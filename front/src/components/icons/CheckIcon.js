@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CheckIconComponent = () => {
+const CheckIcon = () => {
   return (
     <svg
       viewBox="0 0 16 16"
@@ -22,4 +22,4 @@ const CheckIconComponent = () => {
   );
 };
 
-export default CheckIconComponent;
+export default CheckIcon;

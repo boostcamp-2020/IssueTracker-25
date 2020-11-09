@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CloseButtonIconComponent = () => {
+const CloseButtonIcon = () => {
   return (
     <svg
       aria-label="Close menu"
@@ -19,4 +19,4 @@ const CloseButtonIconComponent = () => {
   );
 };
 
-export default CloseButtonIconComponent;
+export default CloseButtonIcon;

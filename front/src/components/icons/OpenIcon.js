@@ -1,6 +1,6 @@
 import React from 'react';
 
-const OpenIconComponent = () => {
+const OpenIcon = () => {
   return (
     <svg
       height="16"
@@ -18,4 +18,4 @@ const OpenIconComponent = () => {
   );
 };
 
-export default OpenIconComponent;
+export default OpenIcon;
