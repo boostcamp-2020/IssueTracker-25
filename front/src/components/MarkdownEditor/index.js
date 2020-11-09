@@ -11,10 +11,26 @@ const EditorContainer = styled.div`
   background: ${color.lightBlue};
 `;
 
-const MarkdownEditor = () => {
+const EditorInputContainer = styled.div`
+  position: relative;
+
+  .markdown-editor__content-length {
+    position: absolute;
+    bottom: 0.8rem;
+    right: 1rem;
+  }
+`;
+
+const MarkdownEditor = ({ onChange }) => {
+  const updateContents = (newContents) => {
+    onChange(newContents);
+  };
+
   return (
     <EditorContainer>
-      <CustomTextarea />
+      <EditorInputContainer>
+        <CustomTextarea onChange={updateContents} />
+      </EditorInputContainer>
       <UploadInput />
     </EditorContainer>
   );
