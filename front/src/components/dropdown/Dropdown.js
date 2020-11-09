@@ -18,7 +18,7 @@ const DropdownMenu = styled.div`
   flex-direction: column;
   margin-top: 1.8rem;
   position: absolute;
-  border: 1px solid ${color.boldBlue};
+  border: 1px solid ${color.lightGray};
   border-radius: 0.2rem;
   background-color: white;
   z-index: 11;
