@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import color from '../libs/color';
 
 const HeaderDiv = styled.div`
-  height: 2rem;
   padding: 1rem;
-
   background-color: ${color.lightBlue};
 `;
 
