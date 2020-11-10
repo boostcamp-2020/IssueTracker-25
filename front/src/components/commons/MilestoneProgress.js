@@ -17,13 +17,10 @@ const ProgressBar = styled.div`
     border-radius: 0.4rem 0 0 0.4rem;
   }
 `;
-const dummy = {
-  createdAt: '2020-10-10 09:00:00',
-  endDate: '2020-12-10 21:55:03',
-};
 
-const MilestoneProgress = () => {
-  const progressRate = utils.getProgressRate(dummy.createdAt, dummy.endDate);
+const MilestoneProgress = ({ createdAt, endDate }) => {
+  const progressRate = utils.getProgressRate(createdAt, endDate);
+  console.log(progressRate);
   return (
     <>
       <ProgressBar progressRate={progressRate}>
