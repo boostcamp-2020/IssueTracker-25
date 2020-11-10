@@ -15,12 +15,8 @@ const selectedLabels = new Set([1, 2, 4]);
 const Sidebar = ({ handlers }) => {
   const { updateMilestone, updateLabel, updateAssignee } = handlers;
 
-  const getLabelsApi = () => labelApi.getLabels();
-  const getMilestonesApi = () => milestoneApi.getMilestones();
-  const getAssgineesApi = () => usersApi.getUsers();
-
   const { state: labelState, fetchStatus: labelFetchStatus } = useAsync({
-    api: getLabelsApi,
+    api: labelApi.getLabels,
     reducer: labelReducer,
     deps: [],
     initialState: [],
@@ -28,7 +24,7 @@ const Sidebar = ({ handlers }) => {
 
   const { state: milestoneState, fetchStatus: milestoneFetchStatus } = useAsync(
     {
-      api: getMilestonesApi,
+      api: milestoneApi.getMilestones,
       reducer: milestoneReducer,
       deps: [],
       initialState: [],
@@ -36,7 +32,7 @@ const Sidebar = ({ handlers }) => {
   );
 
   const { state: assigneeState, fetchStatus: assigneeFetchStatus } = useAsync({
-    api: getAssgineesApi,
+    api: usersApi.getUsers,
     reducer: assigneeReducer,
     deps: [],
     initialState: [],
