@@ -20,7 +20,6 @@ const ProgressBar = styled.div`
 
 const MilestoneProgress = ({ createdAt, endDate }) => {
   const progressRate = utils.getProgressRate(createdAt, endDate);
-  console.log(progressRate);
   return (
     <>
       <ProgressBar progressRate={progressRate}>
