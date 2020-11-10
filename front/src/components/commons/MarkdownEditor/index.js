@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CustomTextarea from './CustomTextarea';
 import UploadInput from './UploadInput';
 import ContentsLengthLayer from './ContentsLengthLayer';
-import color from '../../libs/color';
+import color from '../../../libs/color';
 
 const DELAY = 2000;
 

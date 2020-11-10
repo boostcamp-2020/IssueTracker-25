@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import color from '../../libs/color';
+import color from '../../../libs/color';
 
 const TextArea = styled.textarea`
   width: 100%;
