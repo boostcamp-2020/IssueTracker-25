@@ -16,7 +16,9 @@ const SidebarSubContainer = styled.div`
   align-items: stretch;
   width: 100%;
   padding: 0.5rem 0;
-  border: 1px solid green;
+  & + & {
+    border-top: 1px solid ${color.lightGray};
+  }
 `;
 const ButtonContainer = styled.div`
   flex: 1;

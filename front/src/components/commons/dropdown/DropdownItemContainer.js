@@ -4,14 +4,15 @@ import color from '../../../libs/color';
 const DropdownItemContainer = styled.button`
   display: flex;
   border: none;
-  border-top: 1px solid ${color.lightGray};
-  padding: 0.2rem 1rem;
-  width: 18rem;
-  height: 3rem;
+  padding: 0.5rem 0.5rem;
+  width: 100%;
   background: transparent;
+  cursor: pointer;
+  & + & {
+    border-top: 1px solid ${color.lightGray};
+  }
   &:hover {
     background: ${color.lightBlue};
-    cursor: pointer;
   }
   .dropdown-item-check {
     width: 1.5rem;
