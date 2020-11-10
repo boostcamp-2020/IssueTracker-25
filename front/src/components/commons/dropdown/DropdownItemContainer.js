@@ -1,14 +1,17 @@
 import styled from 'styled-components';
 import color from '../../../libs/color';
 
-const DropdownItemContainer = styled.div`
+const DropdownItemContainer = styled.button`
   display: flex;
+  border: none;
   border-top: 1px solid ${color.lightGray};
-  width: 18rem;
   padding: 0.2rem 1rem;
-  height: 1.5rem;
+  width: 18rem;
+  height: 3rem;
+  background: transparent;
   &:hover {
     background: ${color.lightBlue};
+    cursor: pointer;
   }
   .dropdown-item-check {
     width: 1.5rem;
