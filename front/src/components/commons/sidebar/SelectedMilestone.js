@@ -1,11 +1,8 @@
 import React from 'react';
 import MilestoneProgress from '../MilestoneProgress';
 
-const SelectedMilestone = ({ selectedMilestone, milestones = [], message }) => {
-  const assignedMilestone = milestones.find(
-    (milestone) => +milestone.id === selectedMilestone,
-  );
-  return assignedMilestone ? (
+const SelectedMilestoneContainer = ({ assignedMilestone }) => {
+  return (
     <>
       <MilestoneProgress
         createdAt={assignedMilestone.createdAt}
@@ -13,6 +10,15 @@ const SelectedMilestone = ({ selectedMilestone, milestones = [], message }) => {
       />
       <div>{assignedMilestone.title}</div>
     </>
+  );
+};
+
+const SelectedMilestone = ({ selectedMilestone, milestones = [], message }) => {
+  const assignedMilestone = milestones.find(
+    (milestone) => +milestone.id === selectedMilestone,
+  );
+  return assignedMilestone ? (
+    <SelectedMilestoneContainer assignedMilestone={assignedMilestone} />
   ) : (
     <>{message}</>
   );

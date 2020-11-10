@@ -1,6 +1,29 @@
 import React from 'react';
 import { UserProfile } from '../UserProfile';
 
+const SelectedAssigneeItem = ({ assignedUser }) => {
+  return (
+    <div>
+      <UserProfile src={assignedUser.profileLink} size="sm" />
+      <span>{assignedUser.name}</span>
+    </div>
+  );
+};
+
+const SelectedAssigneeContainer = ({ selectedAssignees, assignees }) => {
+  return (
+    <div>
+      {[...selectedAssignees].map((selectedAssigneeId) => {
+        const assignedUser = assignees.find(
+          (assignee) => +assignee.id === +selectedAssigneeId,
+        );
+        return (
+          assignedUser && <SelectedAssigneeItem assignedUser={assignedUser} />
+        );
+      })}
+    </div>
+  );
+};
 const SelectedAssignee = ({
   assignees,
   selectedAssignees,
@@ -10,21 +33,10 @@ const SelectedAssignee = ({
   return (
     <>
       {selectedAssignees.size ? (
-        <div>
-          {[...selectedAssignees].map((selectedAssigneeId) => {
-            const assignedUser = assignees.find(
-              (assignee) => +assignee.id === +selectedAssigneeId,
-            );
-            return (
-              assignedUser && (
-                <div>
-                  <UserProfile src={assignedUser.profileLink} size="sm" />
-                  <span>{assignedUser.name}</span>
-                </div>
-              )
-            );
-          })}
-        </div>
+        <SelectedAssigneeContainer
+          selectedAssignees={selectedAssignees}
+          assignees={assignees}
+        />
       ) : (
         <button
           type="button"
