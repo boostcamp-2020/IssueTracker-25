@@ -33,7 +33,7 @@ export async function up() {
     .reduce((issues, cur, idx) => {
       const authorId = utils.getValidData(userIds, idx);
       const milestoneId = utils.getValidData(milestoneIds, idx);
-      const closedStatus = idx % 2 === 0;
+      const closedStatus = Math.floor(Math.random() * 2) === 0;
 
       const issue = {
         title: `${baseTitle} ${idx}`,
