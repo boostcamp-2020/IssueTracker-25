@@ -3,6 +3,8 @@ import IssueController from './controller';
 import IssueService from '../../services/issue';
 import db from '../../models';
 
+const { Sequelize } = db;
+
 const {
   Issue: IssueModel,
   User: UserModel,
@@ -19,10 +21,12 @@ const issueController = IssueController(
     LabelModel,
     MilestoneModel,
     CommentModel,
+    Sequelize,
   }),
 );
 
 router.get('/', issueController.getIssueList);
 router.get('/:id', issueController.getIssue);
+router.post('/', issueController.registerIssue);
 
 export default router;

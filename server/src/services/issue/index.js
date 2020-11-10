@@ -4,7 +4,10 @@ const IssueService = ({
   LabelModel,
   MilestoneModel,
   CommentModel,
+  Sequelize,
 }) => {
+  const { Op } = Sequelize;
+
   const getTotalIssueCount = async () => {
     const totalIssueCount = await IssueModel.count();
     return totalIssueCount;
@@ -96,9 +99,60 @@ const IssueService = ({
     return issueDto;
   };
 
+  const getAssociatedLabels = async (labels) => {
+    if (!labels) {
+      return null;
+    }
+    const associatedLabels = await LabelModel.findAll({
+      where: {
+        id: {
+          [Op.in]: labels,
+        },
+      },
+    });
+    return associatedLabels;
+  };
+
+  const getAssociatedAssignees = async (assignees) => {
+    if (!assignees) {
+      return null;
+    }
+    const associatedAssignees = await UserModel.findAll({
+      where: {
+        id: {
+          [Op.in]: assignees,
+        },
+      },
+    });
+    return associatedAssignees;
+  };
+
+  const registerIssue = async (payload, loggedUserId) => {
+    const { title, contents, milestoneId } = payload;
+    const newIssue = {
+      title,
+      contents,
+      milestoneId,
+      authorId: loggedUserId,
+    };
+    const issue = await IssueModel.create(newIssue);
+    const [labels, assignees] = await Promise.all([
+      getAssociatedLabels(payload.labels),
+      getAssociatedAssignees(payload.assignees),
+    ]);
+    if (labels) {
+      issue.addLabels(labels);
+    }
+    if (assignees) {
+      issue.addAssignees(assignees);
+    }
+    return issue.id;
+  };
+
   return {
     getIssueList,
     getIssue,
+    registerIssue,
   };
 };
 
