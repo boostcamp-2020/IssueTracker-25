@@ -9,6 +9,7 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownButton = styled.button`
+  flex: 1;
   background: transparent;
   border: none;
 `;
