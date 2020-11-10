@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from '../../components/Header';
-import UserStore from '../user-store';
-import IssueListPage from '../IssueList/IssueListPage';
-import IssueDetailPage from '../IssueDetail/IssueDetailPage';
+import Header from '../../components/commons/Header';
+import UserIdentifier from '../../models/user';
+import IssueList from '../../models/issue/list';
+import IssueDetail from '../../models/issue/detail';
 
 const MainContainer = styled.div`
   padding: 2rem;
@@ -14,11 +14,11 @@ const MainPageTemplate = () => {
   return (
     <>
       <Header />
-      <UserStore />
+      <UserIdentifier />
       <Switch>
         <MainContainer>
-          <Route exact path="/issues/:id" component={IssueDetailPage} />
-          <Route exact path="/" component={IssueListPage} />
+          <Route exact path="/issues/:id" component={IssueDetail} />
+          <Route exact path="/" component={IssueList} />
         </MainContainer>
       </Switch>
     </>
