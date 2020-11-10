@@ -1,10 +1,11 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { UserProvider } from './routes/user-store/user-context';
-import LoginPage from './routes/Login/LoginPage';
-import CallbackPage from './routes/oauth/callback';
+import { UserProvider } from './contexts/user';
+import LoginPage from './routes/LoginPage';
+import CallbackPage from './routes/CallbackPage';
 import MainPageTemplate from './routes/MainPageTemplate';
+import color from './libs/color';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -13,9 +14,13 @@ const GlobalStyled = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
+  * {
+    box-sizing: border-box;
+  }
   body{
     margin: 0; 
     font-family:'IBMPlexSansKR-Regular';
+    color: ${color.gray};
   }
   a {
     &:link {
@@ -39,8 +44,8 @@ const App = () => {
       <GlobalStyled />
       <UserProvider>
         <Switch>
-          <Route path="/login" component={LoginPage} />
-          <Route path="/oauth/callback" component={CallbackPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/oauth/callback" component={CallbackPage} />
           <Route path="/" component={MainPageTemplate} />
         </Switch>
       </UserProvider>
