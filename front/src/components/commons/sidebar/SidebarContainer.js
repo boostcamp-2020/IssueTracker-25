@@ -4,8 +4,11 @@ import color from '../../../libs/color';
 import Dropdown from '../dropdown/Dropdown';
 import { GearIcon } from '../../icons';
 import LabelDropdownItem from '../dropdown/LabelDropdownItem';
-import TextDropdownItem from '../dropdown/TextDropdownItem';
+import MilestoneDropdownItem from '../dropdown/MilestoneDropdownItem';
 import UserDropdownItem from '../dropdown/UserDropdownItem';
+import SelectedAssignee from './SelectedAssignee';
+import SelectedMilestone from './SelectedMilestone';
+import SelectedLabel from './SelectedLabel';
 
 const SidebarSubContainer = styled.div`
   display: flex;
@@ -40,78 +43,7 @@ const buttonWithGearIcon = (buttonName) => {
     </ButtonContainer>
   );
 };
-const assignees = [
-  {
-    id: 1,
 
-    name: 'yejineee',
-    profileLink: 'https://avatars2.githubusercontent.com/u/43772082?s=64&v=4',
-  },
-  {
-    id: 2,
-
-    name: 'rolled-potatoes',
-    profileLink: 'https://avatars2.githubusercontent.com/u/44409642?s=64&v=4',
-  },
-  {
-    id: 3,
-
-    name: 'LeeSuKyeong',
-    profileLink: 'https://avatars1.githubusercontent.com/u/46044132?s=460&v=4',
-  },
-  {
-    id: 4,
-
-    name: 'changheedev',
-    profileLink:
-      'https://avatars1.githubusercontent.com/u/17294694?s=460&u=ff808a49e15ba27ba7c8e0a960aa44a78c9b672b&v=4',
-  },
-];
-const labels = [
-  {
-    id: 1,
-    name: 'bug',
-    color: 'red',
-    description: "something isn't working",
-  },
-  {
-    id: 2,
-
-    name: 'good first issue',
-    color: 'blue',
-    description: 'good for newcomers',
-  },
-  {
-    id: 3,
-
-    name: 'invalid',
-    color: 'yellow',
-    description: "This doesn't seem right",
-  },
-];
-const milestones = [
-  {
-    id: 1,
-    title: 'week1',
-    description: 'week1 desc',
-    endDate: '2020-12-31 09:00:00',
-    createdAt: '2020-11-01 00:00:00',
-  },
-  {
-    id: 2,
-    title: 'week2',
-    description: 'week2 desc',
-    endDate: '2020-12-31 09:00:00',
-    createdAt: '2020-11-01 00:00:00',
-  },
-  {
-    id: 3,
-    title: 'week3',
-    description: 'week3 desc',
-    endDate: '2020-12-31 09:00:00',
-    createdAt: '2020-11-01 00:00:00',
-  },
-];
 const sidebarInfo = {
   assignee: {
     buttonName: 'Assignees',
@@ -129,7 +61,17 @@ const sidebarInfo = {
     message: 'no milestone',
   },
 };
-const SidebarContainer = () => {
+const SidebarContainer = ({
+  labels,
+  milestones,
+  assignees,
+  selectedAssignees,
+  selectedMilestone,
+  selectedLabels,
+  assigneeSelectHandler,
+  milestoneSelectHandler,
+  labelSelectHandler,
+}) => {
   return (
     <div>
       <SidebarSubContainer>
@@ -137,17 +79,21 @@ const SidebarContainer = () => {
           headerText={sidebarInfo.assignee.headerText}
           button={buttonWithGearIcon(sidebarInfo.assignee.buttonName)}
         >
-          {assignees.map((user) => {
-            return (
-              <UserDropdownItem
-                key={`sidebar-user-id-${user.id}`}
-                data-user-id={user.id}
-                userInfo={user}
-              />
-            );
-          })}
+          {assignees.map((assignee) => (
+            <UserDropdownItem
+              key={`sidebar-assignee-id-${assignee.id}`}
+              userInfo={assignee}
+              onClick={assigneeSelectHandler}
+              selected={selectedAssignees.has(assignee.id)}
+            />
+          ))}
         </Dropdown>
-        <button type="button">{sidebarInfo.assignee.message}</button>
+        <SelectedAssignee
+          selectedAssignees={selectedAssignees}
+          assignees={assignees}
+          assigneeSelectHandler={assigneeSelectHandler}
+          message={sidebarInfo.assignee.message}
+        />
       </SidebarSubContainer>
       <SidebarSubContainer>
         <Dropdown
@@ -157,12 +103,17 @@ const SidebarContainer = () => {
           {labels.map((label) => (
             <LabelDropdownItem
               key={`sidebar-label-id-${label.id}`}
-              data-label-id={label.id}
               label={label}
+              onClick={labelSelectHandler}
+              selected={selectedLabels.has(label.id)}
             />
           ))}
         </Dropdown>
-        <div>{sidebarInfo.label.message}</div>
+        <SelectedLabel
+          selectedLabels={selectedLabels}
+          labels={labels}
+          message={sidebarInfo.label.message}
+        />
       </SidebarSubContainer>
       <SidebarSubContainer>
         <Dropdown
@@ -170,14 +121,19 @@ const SidebarContainer = () => {
           button={buttonWithGearIcon(sidebarInfo.milestone.buttonName)}
         >
           {milestones.map((milestone) => (
-            <TextDropdownItem
+            <MilestoneDropdownItem
               key={`sidebar-milestone-id-${milestone.id}`}
-              data-milestone-id={milestone.id}
-              content={milestone.title}
+              milestone={milestone}
+              onClick={milestoneSelectHandler}
+              selected={milestone.id === selectedMilestone}
             />
           ))}
         </Dropdown>
-        <div>{sidebarInfo.milestone.message}</div>
+        <SelectedMilestone
+          message={sidebarInfo.milestone.message}
+          selectedMilestone={selectedMilestone}
+          milestones={milestones}
+        />
       </SidebarSubContainer>
     </div>
   );
