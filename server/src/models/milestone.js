@@ -32,7 +32,7 @@ class Milestone extends Model {
   static associate(models) {
     this.hasMany(models.Issue, {
       foreignKey: 'milestoneId',
-      as: 'Issue',
+      as: 'Issues',
     });
   }
 }

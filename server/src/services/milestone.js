@@ -1,29 +1,24 @@
-const MilestoneService = ({
-  MilestoneModel,
-  IssueModel,
-  sequelize,
-  Sequelize,
-}) => {
-  const countOfIssueByMilestone = async () => {
-    const count = await IssueModel.findAll({
-      attributes: [
-        'milestoneId',
-        'isClosed',
-        [sequelize.fn('COUNT', sequelize.col('id')), 'count'],
-      ],
-      where: {
-        milestoneId: {
-          [Sequelize.Op.not]: null,
-        },
-      },
-      group: ['milestoneId', 'isClosed'],
-    });
-    return count;
+const MilestoneService = ({ MilestoneModel, sequelize }) => {
+  const query = (isClosed) => {
+    return `(
+    SELECT COUNT(*)
+    FROM issues AS issue
+    WHERE
+        issue.milestone_id = milestone.id
+        AND
+        issue.is_closed = ${isClosed}
+    )`;
   };
   const getMilestoneList = async () => {
-    const milestones = await MilestoneModel.findAll();
-    const counts = await countOfIssueByMilestone();
-    return { milestones, counts };
+    const milestones = await MilestoneModel.findAll({
+      attributes: {
+        include: [
+          [sequelize.literal(query(true)), 'closedCount'],
+          [sequelize.literal(query(false)), 'openedCount'],
+        ],
+      },
+    });
+    return milestones;
   };
 
   return { getMilestoneList };
