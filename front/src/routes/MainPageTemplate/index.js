@@ -6,6 +6,7 @@ import UserIdentifier from '../../models/user';
 import IssueList from '../../models/issue/list';
 import IssueDetail from '../../models/issue/detail';
 import IssueRegister from '../../models/issue/new';
+import routeUrl from '../../libs/routeUrl';
 
 const MainContainer = styled.div`
   padding: 2rem;
@@ -16,13 +17,17 @@ const MainPageTemplate = () => {
     <>
       <Header />
       <UserIdentifier />
-      <Switch>
-        <MainContainer>
-          <Route exact path="/new" component={IssueRegister} />
-          <Route exact path="/issues/:id" component={IssueDetail} />
-          <Route exact path="/" component={IssueList} />
-        </MainContainer>
-      </Switch>
+      <MainContainer>
+        <Switch>
+          <Route exact path={routeUrl.NEW_ISSUES} component={IssueRegister} />
+          <Route
+            exact
+            path={`${routeUrl.ISSUES}/:id`}
+            component={IssueDetail}
+          />
+          <Route exact path={routeUrl.MAIN} component={IssueList} />
+        </Switch>
+      </MainContainer>
     </>
   );
 };
