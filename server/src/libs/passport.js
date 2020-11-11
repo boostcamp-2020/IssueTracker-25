@@ -19,7 +19,7 @@ const GitHubVerifyCallback = async (
       defaults: {
         uid: profile.id,
         name: profile.username,
-        profileLink: profile.profileUrl,
+        profileLink: profile.photos[0].value,
       },
     });
     return done(null, user);

@@ -18,6 +18,19 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
+  async registerIssue(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const registerPayload = req.body;
+      const newIssueId = await issueService.registerIssue(
+        registerPayload,
+        userId,
+      );
+      return res.status(200).json({ id: newIssueId });
+    } catch (err) {
+      return next(err);
+    }
+  },
 });
 
 export default IssueController;
