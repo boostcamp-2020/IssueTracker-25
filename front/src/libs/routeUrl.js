@@ -3,5 +3,5 @@ export default {
   LOGIN: '/login',
   OAUTH_CALLBACK: '/oauth/callback',
   NEW_ISSUES: '/issues/new',
-  ISSUES_DETAIL: '/issues/:id',
+  ISSUES: '/issues',
 };

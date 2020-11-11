@@ -20,7 +20,11 @@ const MainPageTemplate = () => {
       <MainContainer>
         <Switch>
           <Route exact path={routeUrl.NEW_ISSUES} component={IssueRegister} />
-          <Route exact path={routeUrl.ISSUES_DETAIL} component={IssueDetail} />
+          <Route
+            exact
+            path={`${routeUrl.ISSUES}/:id`}
+            component={IssueDetail}
+          />
           <Route exact path={routeUrl.MAIN} component={IssueList} />
         </Switch>
       </MainContainer>
