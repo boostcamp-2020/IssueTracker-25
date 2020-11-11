@@ -1,8 +1,9 @@
 import React from 'react';
 import Comment from './Comment';
 import SidebarLayout from '../../../commons/SidebarLayout';
+import Sidebar from '../../../../models/sidebar';
 
-const IssueDetailBody = ({ issue }) => {
+const IssueDetailBody = ({ issue, handlers, seletedState }) => {
   return (
     <SidebarLayout.BaseLayout>
       <SidebarLayout.Content>
@@ -25,7 +26,9 @@ const IssueDetailBody = ({ issue }) => {
           })}
         </>
       </SidebarLayout.Content>
-      <SidebarLayout.Sidebar>sidebar</SidebarLayout.Sidebar>
+      <SidebarLayout.Sidebar>
+        <Sidebar selected={seletedState} handlers={handlers} />
+      </SidebarLayout.Sidebar>
     </SidebarLayout.BaseLayout>
   );
 };

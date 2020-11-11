@@ -8,6 +8,7 @@ import {
 import issueAPI from '../../../apis/issue';
 import utils from '../../../libs/utils';
 import { useAsync } from '../../../hooks/useAsync';
+import useSidebar from '../../../hooks/useSidebar';
 import reducer from './reducer';
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
 const IssueDetailPage = () => {
   const { id } = useParams();
   const getIssueApi = () => issueAPI.getIssue(id);
+  const { state: seletedState, handlers } = useSidebar();
   const { state, fetchStatus } = useAsync({
     api: getIssueApi,
     reducer,
@@ -38,7 +40,11 @@ const IssueDetailPage = () => {
     !utils.isEmpty(issue) && (
       <>
         <IssueDetailHeader issue={issue} />
-        <IssueDetailBody issue={issue} />
+        <IssueDetailBody
+          issue={issue}
+          seletedState={seletedState}
+          handlers={handlers}
+        />
       </>
     )
   );
