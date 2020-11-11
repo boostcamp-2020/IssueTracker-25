@@ -16,6 +16,7 @@ const DropdownButton = styled.button`
 
 const DropdownMenu = styled.div`
   display: flex;
+  width: max-content;
   flex-direction: column;
   margin-top: 1.8rem;
   position: absolute;

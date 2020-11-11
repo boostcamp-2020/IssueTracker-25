@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CustomButton from '../../commons/buttons/CustomButton';
 import MovePageButton from '../../commons/buttons/MovePageButton';
+import IssueFilterButton from './IssueFilterButton';
 
 const Div = styled.div`
   margin: 2rem 0;
@@ -14,7 +15,7 @@ const Nav = styled.nav`
 function IssueFilterContainer() {
   return (
     <Div>
-      <CustomButton>Filters</CustomButton>
+      <IssueFilterButton />
       <input
         name="issue-filter"
         type="text"
