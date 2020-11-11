@@ -104,6 +104,16 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
+  async modifyLabels(req, res, next) {
+    const { id: issueId } = req.params;
+    const { labels } = req.body;
+    try {
+      await issueService.modifyLabels(issueId, labels);
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
 });
 
 export default IssueController;
