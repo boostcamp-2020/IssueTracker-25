@@ -7297,11 +7297,6 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-melter@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/melter/-/melter-0.0.1.tgz#935675a2d3ba709eb4d2ec94242e91c3b1f21c33"
-  integrity sha512-h0Q3AtSw6C/uk6QLfBKacQdVIPJWqnmOgQ3KaMYQZhswRLw/LP/CNPUd0zQaNS5JrA0F4O6Vz0j6apiilrN2xQ==
-
 mem@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/mem/-/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
