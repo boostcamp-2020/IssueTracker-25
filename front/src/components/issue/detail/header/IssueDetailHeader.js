@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import color from '../../../../libs/color';
 import CustomButton from '../../../commons/buttons/CustomButton';
 import IssueDetailHeaderInfo from './IssueDetailHeaderInfo';
+import routeUrl from '../../../../libs/routeUrl';
 
 const IssueDetailHeaderContainer = styled.div`
   margin-bottom: 1rem;
@@ -38,6 +40,7 @@ const IssueDetailHeader = ({ issue }) => {
         <div className="issue-detail-header__title">{issue.title}</div>
         <div className="issue-detail-header__buttons">
           <CustomButton style={{ color: 'default' }}>Edit</CustomButton>
+          <Link to={routeUrl.NEW_ISSUES}>asd</Link>
           <CustomButton style={{ color: 'green' }}>New issue</CustomButton>
         </div>
       </div>
