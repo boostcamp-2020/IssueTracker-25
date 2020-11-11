@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import utils from '../libs/utils';
 
 const initialSideState = {
   milestoneId: null,
@@ -9,9 +10,12 @@ const initialSideState = {
 const useSidebar = () => {
   const [state, setState] = useState(initialSideState);
   const updateMilestone = (id) => {
-    const { milestoneId } = state;
-    if (milestoneId === id) setState({ ...state, milestoneId: null });
-    else setState({ ...state, milestoneId: id });
+    utils.toggleStateIfEqual({
+      state,
+      setState,
+      value: id,
+      key: 'milestoneId',
+    });
   };
   const updateSet = ({ type, id }) => {
     const target = state[type];

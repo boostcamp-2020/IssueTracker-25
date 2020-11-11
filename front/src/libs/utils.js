@@ -35,4 +35,11 @@ export default {
     }
     return true;
   },
+  toggleStateIfEqual({ state, setState, value, key }) {
+    if (state[key] === value) {
+      setState({ ...state, [key]: null });
+    } else {
+      setState({ ...state, [key]: value });
+    }
+  },
 };

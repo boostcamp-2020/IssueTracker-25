@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import utils from '../libs/utils';
 
 const initialSideState = {
   milestoneId: null,
@@ -10,19 +11,18 @@ const initialSideState = {
 const useFilter = () => {
   const [state, setState] = useState(initialSideState);
   const updateMilestone = (id) => {
-    const { milestoneId } = state;
-    if (milestoneId === id) setState({ ...state, milestoneId: null });
-    else setState({ ...state, milestoneId: id });
+    utils.toggleStateIfEqual({
+      state,
+      setState,
+      value: id,
+      key: 'milestoneId',
+    });
   };
   const updateAuthor = (id) => {
-    const { authorId } = state;
-    if (authorId === id) setState({ ...state, authorId: null });
-    else setState({ ...state, authorId: id });
+    utils.toggleStateIfEqual({ state, setState, value: id, key: 'authorId' });
   };
   const updateAssignee = (id) => {
-    const { assigneeId } = state;
-    if (assigneeId === id) setState({ ...state, assigneeId: null });
-    else setState({ ...state, assigneeId: id });
+    utils.toggleStateIfEqual({ state, setState, value: id, key: 'assigneeId' });
   };
 
   const updateSet = ({ type, id }) => {
