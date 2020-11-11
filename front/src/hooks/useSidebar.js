@@ -6,7 +6,7 @@ const initialSideState = {
   labels: new Set(),
 };
 
-const useSide = () => {
+const useSidebar = () => {
   const [state, setState] = useState(initialSideState);
   const updateMilestone = (id) => {
     const { milestoneId } = state;
@@ -38,4 +38,4 @@ const useSide = () => {
   };
 };
 
-export default useSide;
+export default useSidebar;
