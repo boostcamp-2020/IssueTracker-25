@@ -29,7 +29,12 @@ class Milestone extends Model {
     return super.init(scheme, { sequelize, ...initOptions });
   }
 
-  static associate() {}
+  static associate(models) {
+    this.hasMany(models.Issue, {
+      foreignKey: 'milestoneId',
+      as: 'Issues',
+    });
+  }
 }
 
 export default Milestone;
