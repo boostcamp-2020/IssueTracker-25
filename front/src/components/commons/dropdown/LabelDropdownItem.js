@@ -26,12 +26,12 @@ const LabelDropdownItemContainer = styled(DropdownItemContainer)`
   }
 `;
 
-const LabelDropdownItem = ({ selected, label, onClick }) => {
-  const { id, name, description, color: labelColor } = label;
+const LabelDropdownItem = ({ label }) => {
+  const { name, description, color: labelColor } = label;
   return (
-    <LabelDropdownItemContainer onClick={() => onClick(id)}>
+    <LabelDropdownItemContainer>
       <div className="dropdown-item dropdown-item-check dropdown-item-top">
-        {selected && <Icons.CheckIcon />}
+        <Icons.CheckIcon />
       </div>
 
       <div className="dropdown-item dropdown-item-top">

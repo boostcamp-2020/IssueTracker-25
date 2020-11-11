@@ -7,6 +7,12 @@ const {
   Label: LabelModel,
   User: UserModel,
 } = db.sequelize.models;
+const getRandomDate = (start, end) => {
+  const date = new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
+  );
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+};
 
 export async function up() {
   const {
@@ -36,7 +42,7 @@ export async function up() {
         milestoneId,
         isClosed: closedStatus,
         closedAt: closedStatus
-          ? utils.getRandomDate(new Date(), new Date(2020, 11, 31))
+          ? getRandomDate(new Date(), new Date(2020, 11, 31))
           : null,
       };
       return [...issues, issue];

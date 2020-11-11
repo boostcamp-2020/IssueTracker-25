@@ -47,4 +47,3 @@ const IssueDetailHeader = ({ issue }) => {
 };
 
 export default IssueDetailHeader;
-
