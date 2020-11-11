@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import color from '../../../../libs/color';
 import { UserProfile } from '../../../commons/UserProfile';
-import ArrowHeader from '../../../commons/ArrowHeader';
+import ArrowContainerStyle from '../../../commons/ArrowContainerStyle';
 
 const OWNER = 'Owner';
 
-const CommentContainer = styled.div`
+const CommentContainer = styled(ArrowContainerStyle)`
   & + & {
     margin-top: 2rem;
   }
@@ -59,7 +59,7 @@ const Comment = ({ writer, createdAt, contents, isAuthor }) => {
         <UserProfile className="profile-container" src={writer.profileLink} />
       </div>
       <div className="comment__container">
-        <ArrowHeader className="comment__header">
+        <div className="comment__header">
           <div className="comment__writer">{writer.name}</div>
           <div>{commentedAt}</div>
           {isAuthor && (
@@ -70,7 +70,7 @@ const Comment = ({ writer, createdAt, contents, isAuthor }) => {
               </button>
             </div>
           )}
-        </ArrowHeader>
+        </div>
         <div className="comment__content">{contents}</div>
       </div>
     </CommentContainer>
