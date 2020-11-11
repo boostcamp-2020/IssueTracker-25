@@ -64,6 +64,7 @@ const sidebarInfo = {
   },
 };
 const SidebarContainer = ({
+  userId,
   labels,
   milestones,
   assignees,
@@ -91,6 +92,7 @@ const SidebarContainer = ({
           ))}
         </Dropdown>
         <SelectedAssignee
+          userId={userId}
           selectedAssignees={selectedAssignees}
           assignees={assignees}
           assigneeSelectHandler={assigneeSelectHandler}
