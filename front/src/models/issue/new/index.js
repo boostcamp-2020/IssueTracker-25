@@ -5,7 +5,7 @@ import IssueRegisterBody from '../../../components/issue/new';
 
 const IssueRegisterModel = () => {
   const [title, setTitle] = useState('');
-  const [contents, setContents] = useState('');
+  const [, setContents] = useState('');
   const history = useHistory();
   const { state } = useContext(userContext);
   const { profileLink } = state;
@@ -19,10 +19,7 @@ const IssueRegisterModel = () => {
     setContents(newContents);
   };
   const onSave = () => {
-    setTimeout(() => {
-      console.log(contents);
-      history.push('/issues/30');
-    }, 1000);
+    history.push('/issues/1');
   };
 
   return (
