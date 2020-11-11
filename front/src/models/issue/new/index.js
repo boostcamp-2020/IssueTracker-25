@@ -4,6 +4,7 @@ import { userContext } from '../../../contexts/user';
 import IssueRegisterBody from '../../../components/issue/new';
 import useSidebar from '../../../hooks/useSidebar';
 import issueApi from '../../../apis/issue';
+import routeUrl from '../../../libs/routeUrl';
 
 const IssueRegisterModel = () => {
   const [title, setTitle] = useState('');
@@ -35,7 +36,7 @@ const IssueRegisterModel = () => {
 
     try {
       const { id } = await issueApi.postIssue({ issue: newIssue });
-      history.push(`/issues/${id}`);
+      history.push(`${routeUrl.ISSUES}/${id}`);
     } catch (e) {
       alert('^ㅡ^');
     }
