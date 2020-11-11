@@ -6,6 +6,7 @@ import utils from '../../../libs/utils';
 import LabelItem from '../../commons/Label';
 import { UserProfileList } from '../../commons/UserProfile';
 import CustomCheckBoxButton from '../../commons/buttons/CustomCheckBoxButton';
+import routeUrl from '../../../libs/routeUrl';
 
 const { timeDiffFromNow } = utils;
 const IssueListItemContainer = styled.li`
@@ -72,7 +73,7 @@ function IssueListItem({ issue, checkBoxClickHandler }) {
           onClick={checkBoxClickHandler}
           id={id}
         />
-        <Link to={`/issues/${id}`}>
+        <Link to={`${routeUrl.ISSUES}/${id}`}>
           <span className="issue-item issue-item__title">{title}</span>
         </Link>
         {labels && <LabelContainer labels={labels} />}

@@ -24,17 +24,17 @@ const useSidebar = () => {
       setState({ ...state, [type]: new Set([...target, id]) });
     }
   };
-  const updateAssignees = (id) => {
+  const updateAssignee = (id) => {
     const type = 'assignees';
     updateSet({ type, id });
   };
-  const updatelabels = (id) => {
+  const updateLabel = (id) => {
     const type = 'labels';
     updateSet({ type, id });
   };
   return {
     state,
-    handlers: { updateAssignees, updateMilestone, updatelabels },
+    handlers: { updateAssignee, updateMilestone, updateLabel },
   };
 };
 
