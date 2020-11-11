@@ -31,11 +31,11 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
-  async modifyMilestone(req, res, next) {
+  async updateMilestone(req, res, next) {
     const { id: issueId } = req.params;
     const { milestoneId } = req.body;
     try {
-      await issueService.modifyMilestone(issueId, milestoneId);
+      await issueService.updateMilestone(issueId, milestoneId);
       return res.end();
     } catch (err) {
       return next(err);
@@ -55,11 +55,11 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
-  async modifyLabels(req, res, next) {
+  async updateLabels(req, res, next) {
     const { id: issueId } = req.params;
     const { labels } = req.body;
     try {
-      await issueService.modifyLabels(issueId, labels);
+      await issueService.updateLabels(issueId, labels);
       return res.end();
     } catch (err) {
       return next(err);

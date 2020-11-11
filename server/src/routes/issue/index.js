@@ -28,8 +28,8 @@ const issueController = IssueController(
 router.get('/', issueController.getIssueList);
 router.get('/:id', issueController.getIssue);
 router.post('/', issueController.registerIssue);
-router.put('/:id/milestones', issueController.modifyMilestone);
-router.put('/:id/labels', issueController.modifyLabels);
+router.put('/:id/milestones', issueController.updateMilestone);
+router.put('/:id/labels', issueController.updateLabels);
 router.put('/:id/title', issueController.updateTitle);
 router.put('/:id/contents', issueController.updateContents);
 export default router;

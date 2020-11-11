@@ -152,13 +152,13 @@ const IssueService = ({
     }
     return issue.id;
   };
-  const modifyMilestone = async (issueId, milestoneId) => {
+  const updateMilestone = async (issueId, milestoneId) => {
     const issue = await IssueModel.findByPk(issueId);
     const id = issue.milestoneId === milestoneId ? null : milestoneId;
     issue.milestoneId = id;
     await issue.save();
   };
-  const modifyLabels = async (issueId, labels) => {
+  const updateLabels = async (issueId, labels) => {
     const issue = await IssueModel.findByPk(issueId, {
       include: {
         model: LabelModel,
@@ -211,8 +211,8 @@ const IssueService = ({
     getIssueList,
     getIssue,
     registerIssue,
-    modifyMilestone,
-    modifyLabels,
+    updateMilestone,
+    updateLabels,
     updateTitle,
     updateContents,
   };
