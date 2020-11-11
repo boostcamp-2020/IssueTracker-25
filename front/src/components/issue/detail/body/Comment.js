@@ -3,47 +3,58 @@ import styled from 'styled-components';
 import color from '../../../../libs/color';
 import { UserProfile } from '../../../commons/UserProfile';
 import ArrowContainerStyle from '../../../commons/ArrowContainerStyle';
+import MarkdownViewer from '../../../commons/MarkdownViewer';
 
 const OWNER = 'Owner';
 
-const CommentContainer = styled(ArrowContainerStyle)`
+const CommentContainer = styled.div`
   & + & {
     margin-top: 2rem;
   }
   display: flex;
-  z-index: 1;
-  .comment {
-    &__profile {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+`;
+
+const ProfileContainer = styled.div`
+  flex: 0;
+  margin-right: 0.5rem;
+`;
+
+const CommentDetailContainer = styled.div`
+  flex: 1 1 auto;
+  border: 1px solid ${color.lightGray};
+  border-radius: 0.3rem;
+
+  @media (min-width: 768px) {
+    margin-left: 1rem;
+  }
+`;
+
+const CommentDetailHeader = styled(ArrowContainerStyle)`
+  display: flex;
+  background: ${color.lightBlue};
+  padding: 0.5rem 1rem;
+
+  .comment-header {
+    &__text {
+      flex: 1 1 auto;
     }
-    &__header {
-      display: flex;
-    }
+
     &__writer {
-      padding-right: 0.3rem;
-      font-weight: bolder;
+      font-weight: border;
     }
+
+    &__datetime {
+      margin-left: 0.3rem;
+    }
+
     &__owner {
-      margin: 0 0.5rem;
-      padding: 0 0.2rem;
-      border: 1px solid ${color.lightBlue};
-    }
-    &__container {
-      flex: 1;
-      margin-left: 1.5rem;
+      margin-right: 0.5rem;
+      padding: 0.2rem 0.3rem;
       border: 1px solid ${color.lightGray};
-      > div {
-        padding: 0.5rem;
-      }
+      border-radius: 0.5rem;
     }
   }
 
-  .owner-container {
-    display: flex;
-    margin-left: auto;
-  }
   .edit-button {
     border: none;
     outline: 0;
@@ -55,24 +66,29 @@ const Comment = ({ writer, createdAt, contents, isAuthor }) => {
   const commentedAt = `commented ${createdAt}`;
   return (
     <CommentContainer>
-      <div className="comment__profile">
-        <UserProfile className="profile-container" src={writer.profileLink} />
-      </div>
-      <div className="comment__container">
-        <div className="comment__header">
-          <div className="comment__writer">{writer.name}</div>
-          <div>{commentedAt}</div>
+      <ProfileContainer className="pc-only">
+        <UserProfile src={writer.profileLink} />
+      </ProfileContainer>
+      <CommentDetailContainer>
+        <CommentDetailHeader>
+          <ProfileContainer className="mobile-only">
+            <UserProfile src={writer.profileLink} size="sm" />
+          </ProfileContainer>
+          <div className="comment-header__text">
+            <span className="comment-header__writer">{writer.name}</span>
+            <span className="comment-header__datetime">{commentedAt}</span>
+          </div>
           {isAuthor && (
-            <div className="owner-container">
-              <div className="comment__owner">{OWNER}</div>
+            <>
+              <div className="comment-header__owner">{OWNER}</div>
               <button type="button" className="edit-button">
                 Edit
               </button>
-            </div>
+            </>
           )}
-        </div>
-        <div className="comment__content">{contents}</div>
-      </div>
+        </CommentDetailHeader>
+        <MarkdownViewer>{contents}</MarkdownViewer>
+      </CommentDetailContainer>
     </CommentContainer>
   );
 };
