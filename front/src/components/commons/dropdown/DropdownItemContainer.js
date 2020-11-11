@@ -4,7 +4,7 @@ import color from '../../../libs/color';
 const DropdownItemContainer = styled.button`
   display: flex;
   border: none;
-  padding: 0.5rem 0.5rem;
+  padding: 0.3rem 0.5rem;
   width: 100%;
   background: transparent;
   cursor: pointer;
