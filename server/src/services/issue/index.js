@@ -13,15 +13,10 @@ const IssueService = ({
     ACCESS_DENIED: '접근 권한이 없습니다.',
   };
 
-  const getTotalIssueCount = async () => {
-    const totalIssueCount = await IssueModel.count();
-    return totalIssueCount;
-  };
-
   const getPagedIssues = async ({ pageParams }) => {
     const { page, LIMIT } = pageParams;
     const offset = (page - 1) * LIMIT;
-    const issues = await IssueModel.findAll({
+    const issues = await IssueModel.findAndCountAll({
       attributes: {
         exclude: ['contents'],
       },
@@ -55,15 +50,12 @@ const IssueService = ({
 
   const getIssueList = async ({ page }) => {
     const LIMIT = 15;
-    const [totalIssueCount, issues] = await Promise.all([
-      getTotalIssueCount(),
-      getPagedIssues({
-        pageParams: { page, LIMIT },
-      }),
-    ]);
+    const { count, rows: issues } = await getPagedIssues({
+      pageParams: { page, LIMIT },
+    });
     const pagination = {
       page,
-      lastPage: Math.ceil(totalIssueCount / LIMIT),
+      lastPage: Math.ceil(count / LIMIT),
     };
     return { pagination, issues };
   };
