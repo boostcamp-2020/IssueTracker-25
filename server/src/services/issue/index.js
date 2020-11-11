@@ -12,13 +12,14 @@ const IssueService = ({
     ACCESS_DENIED: '접근 권한이 없습니다.',
   };
 
-  const getPagedIssues = async ({ pageParams }) => {
+  const getPagedIssues = async ({ pageParams, whereOption }) => {
     const { page, LIMIT } = pageParams;
     const offset = (page - 1) * LIMIT;
     const issues = await IssueModel.findAndCountAll({
       attributes: {
         exclude: ['contents'],
       },
+      where: whereOption.open,
       offset,
       limit: LIMIT,
       order: [['id', 'DESC']],
@@ -27,30 +28,37 @@ const IssueService = ({
           model: UserModel,
           as: 'Author',
           attributes: ['id', 'name'],
+          where: whereOption.author,
         },
         {
           model: LabelModel,
           through: { attributes: [] },
+          where: whereOption.label,
         },
         {
           model: UserModel,
           as: 'Assignees',
           attributes: ['id', 'profileLink'],
           through: { attributes: [] },
+          where: whereOption.assignee,
         },
         {
           model: MilestoneModel,
           attributes: ['id', 'title'],
+          where: whereOption.milestone,
         },
       ],
     });
     return issues;
   };
-
-  const getIssueList = async ({ page }) => {
+  const getUserbyName = (name) => {
+    return UserModel.findOne({ where: { name } });
+  };
+  const getIssueList = async ({ page, whereOption }) => {
     const LIMIT = 15;
     const { count, rows: issues } = await getPagedIssues({
       pageParams: { page, LIMIT },
+      whereOption,
     });
     const pagination = {
       page,
@@ -207,6 +215,7 @@ const IssueService = ({
     updateLabels,
     updateTitle,
     updateContents,
+    getUserbyName,
   };
 };
 
