@@ -25,6 +25,7 @@ const SelectedAssigneeContainer = ({ selectedAssignees, assignees }) => {
   );
 };
 const SelectedAssignee = ({
+  userId,
   assignees,
   selectedAssignees,
   assigneeSelectHandler,
@@ -38,11 +39,7 @@ const SelectedAssignee = ({
           assignees={assignees}
         />
       ) : (
-        <button
-          type="button"
-          data-user-id={null}
-          onClick={assigneeSelectHandler}
-        >
+        <button type="button" onClick={() => assigneeSelectHandler(userId)}>
           {message}
         </button>
       )}

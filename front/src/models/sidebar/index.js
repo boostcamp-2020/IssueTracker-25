@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useAsync } from '../../hooks/useAsync';
+import { userContext } from '../../contexts/user';
 import labelReducer from './label-reducer';
 import milestoneReducer from './milestone-reducer';
 import assigneeReducer from './assignee-reducer';
@@ -8,12 +9,16 @@ import milestoneApi from '../../apis/milestone';
 import usersApi from '../../apis/user';
 import SidebarContainer from '../../components/commons/sidebar/SidebarContainer';
 
-const selectedAssignees = new Set([1, 2]);
-const selectedMilestone = 1;
-const selectedLabels = new Set([1, 2, 4]);
-
-const Sidebar = ({ handlers }) => {
+const Sidebar = ({ handlers, selected }) => {
+  const {
+    state: { id: userId },
+  } = useContext(userContext);
   const { updateMilestone, updateLabel, updateAssignee } = handlers;
+  const {
+    milestoneId: selectedMilestone,
+    assignees: selectedAssignees,
+    labels: selectedLabels,
+  } = selected;
 
   const { state: labelState, fetchStatus: labelFetchStatus } = useAsync({
     api: labelApi.getLabels,
@@ -55,6 +60,7 @@ const Sidebar = ({ handlers }) => {
 
   return (
     <SidebarContainer
+      userId={userId}
       labels={labelState}
       milestones={milestoneState}
       assignees={assigneeState}

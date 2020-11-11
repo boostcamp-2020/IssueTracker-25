@@ -6,6 +6,7 @@ import LoginPage from './routes/LoginPage';
 import CallbackPage from './routes/CallbackPage';
 import MainPageTemplate from './routes/MainPageTemplate';
 import color from './libs/color';
+import routeUrl from './libs/routeUrl';
 
 const GlobalStyled = createGlobalStyle`
   @font-face {
@@ -36,6 +37,18 @@ const GlobalStyled = createGlobalStyle`
       text-decoration: none;
     }
   }
+
+  @media (max-width: 767.98px) {
+    .pc-only {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .mobile-only {
+      display: none;
+    }
+  }
 `;
 
 const App = () => {
@@ -44,9 +57,13 @@ const App = () => {
       <GlobalStyled />
       <UserProvider>
         <Switch>
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/oauth/callback" component={CallbackPage} />
-          <Route path="/" component={MainPageTemplate} />
+          <Route exact path={routeUrl.LOGIN} component={LoginPage} />
+          <Route
+            exact
+            path={routeUrl.OAUTH_CALLBACK}
+            component={CallbackPage}
+          />
+          <Route path={routeUrl.MAIN} component={MainPageTemplate} />
         </Switch>
       </UserProvider>
     </BrowserRouter>
