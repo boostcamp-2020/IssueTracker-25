@@ -24,3 +24,11 @@ export const JwtConfig = {
   secret: process.env.JWT_SECRET || 'jwt_secret',
   expiresIn: process.env.JWT_EXPIRES_IN || '24h',
 };
+
+export const S3Config = {
+  accessKey: process.env.AWS_ACCESSKEY || 'access_key',
+  secretKey: process.env.AWS_SECRETKEY || 'secret_key',
+  region: process.env.AWS_REGION || 'region',
+  endpoint: process.env.S3_ENDPOINT || 'http://s3-endpoint.com',
+  bucket: process.env.S3_BUCKET || 'bucket_name',
+};
