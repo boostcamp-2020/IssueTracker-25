@@ -7,6 +7,10 @@ const IssueService = ({
   Sequelize,
 }) => {
   const { Op } = Sequelize;
+  const messages = {
+    NOT_FOUND: '등록되지 않은 이슈 id 입니다.',
+    ACCESS_DENIED: '접근 권한이 없습니다.',
+  };
 
   const getTotalIssueCount = async () => {
     const totalIssueCount = await IssueModel.count();
@@ -149,10 +153,32 @@ const IssueService = ({
     return issue.id;
   };
 
+  const checkIsAuthor = (issue, loggedUserId) => {
+    if (issue.authorId === loggedUserId) {
+      return true;
+    }
+    return false;
+  };
+
+  const updateTitle = async (payload, loggedUserId) => {
+    const { id, title } = payload;
+
+    const issue = await IssueModel.findByPk(id);
+    if (!issue) {
+      throw new Error(messages.NOT_FOUND);
+    }
+    if (!checkIsAuthor(issue, loggedUserId)) {
+      throw new Error(messages.ACCESS_DENIED);
+    }
+    issue.title = title;
+    await issue.save();
+  };
+
   return {
     getIssueList,
     getIssue,
     registerIssue,
+    updateTitle,
   };
 };
 
