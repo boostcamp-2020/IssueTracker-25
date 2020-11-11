@@ -60,13 +60,6 @@ const IssueListHeader = ({
     milestoneFetchStatus.loading ||
     labelFetchStatus.loading
   ) {
-    return <div>로딩중</div>;
-  }
-  if (
-    userFetchStatus.loading ||
-    milestoneFetchStatus.loading ||
-    labelFetchStatus.loading
-  ) {
     return null;
   }
 
