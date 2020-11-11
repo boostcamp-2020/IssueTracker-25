@@ -9,6 +9,7 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownButton = styled.button`
+  flex: 1;
   background: transparent;
   border: none;
 `;
@@ -31,9 +32,11 @@ const DropdownBody = styled.div`
 const Header = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0.2rem 1rem;
+  border-bottom: 1px solid ${color.lightGray};
+  padding: 0.5rem 1rem;
   font-weight: bolder;
   .header-title {
+    margin-right: 1rem;
     min-width: max-content;
   }
 `;

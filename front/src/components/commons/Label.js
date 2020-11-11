@@ -5,10 +5,12 @@ const LabelItem = styled.div`
   display: inline-block;
   margin: 0 0.5rem;
   padding: 0.2rem 0.5rem;
+  width: fit-content;
   border-radius: 1rem;
 
   background: ${({ color }) => color};
   color: white;
+  font-size: small;
   mix-blend-mode: difference;
 `;
 function Label({ label, children }) {
