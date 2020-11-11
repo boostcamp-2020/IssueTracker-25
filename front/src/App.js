@@ -36,6 +36,18 @@ const GlobalStyled = createGlobalStyle`
       text-decoration: none;
     }
   }
+
+  @media (max-width: 767.98px) {
+    .pc-only {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .mobile-only {
+      display: none;
+    }
+  }
 `;
 
 const App = () => {
