@@ -144,10 +144,10 @@ const IssueService = ({
         getAssociatedAssignees(payload.assignees),
       ]);
       if (labels) {
-        issue.addLabels(labels, { transaction });
+        await issue.addLabels(labels, { transaction });
       }
       if (assignees) {
-        issue.addAssignees(assignees, { transaction });
+        await issue.addAssignees(assignees, { transaction });
       }
       await transaction.commit();
       return issue.id;
