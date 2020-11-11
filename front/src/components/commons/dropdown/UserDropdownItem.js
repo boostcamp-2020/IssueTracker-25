@@ -13,12 +13,12 @@ const UserDropdownItemContainer = styled(DropdownItemContainer)`
   }
 `;
 
-const UserDropdownItem = ({ userInfo }) => {
-  const { name, profileLink } = userInfo;
+const UserDropdownItem = ({ selected, userInfo, onClick }) => {
+  const { id, name, profileLink } = userInfo;
   return (
-    <UserDropdownItemContainer>
+    <UserDropdownItemContainer onClick={() => onClick(id)}>
       <div className="dropdown-item dropdown-item-check">
-        <Icons.CheckIcon />
+        {selected && <Icons.CheckIcon />}
       </div>
       <div className="dropdown-item">
         <img src={profileLink} alt="profile" />
