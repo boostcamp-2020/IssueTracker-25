@@ -10,7 +10,7 @@ const IssueController = (issueService) => ({
   },
   async getIssue(req, res, next) {
     try {
-      const issueId = req.params.id;
+      const { id: issueId } = req.params;
       const userId = req.user.id;
       const issue = await issueService.getIssue(issueId, userId);
       return res.status(200).json(issue);
@@ -31,23 +31,13 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
-  async updateMilestone(req, res, next) {
-    const { id: issueId } = req.params;
-    const { milestoneId } = req.body;
-    try {
-      await issueService.updateMilestone(issueId, milestoneId);
-      return res.end();
-    } catch (err) {
-      return next(err);
-    }
-  },
   async updateTitle(req, res, next) {
     try {
+      const { id: issueId } = req.params;
       const userId = req.user.id;
-      const issueId = req.params.id;
       const updateTitlePayload = req.body;
       await issueService.updateTitle(
-        { id: issueId, ...updateTitlePayload },
+        { issueId, ...updateTitlePayload },
         userId,
       );
       return res.end();
@@ -55,11 +45,24 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
+  async updateMilestone(req, res, next) {
+    const { id: issueId } = req.params;
+    const updateMilestonePayload = req.body;
+    try {
+      await issueService.updateMilestone({
+        issueId,
+        ...updateMilestonePayload,
+      });
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
   async updateLabels(req, res, next) {
     const { id: issueId } = req.params;
-    const { labels } = req.body;
+    const updateLabelsPayload = req.body;
     try {
-      await issueService.updateLabels(issueId, labels);
+      await issueService.updateLabels({ issueId, ...updateLabelsPayload });
       return res.end();
     } catch (err) {
       return next(err);
@@ -68,10 +71,10 @@ const IssueController = (issueService) => ({
   async updateContents(req, res, next) {
     try {
       const userId = req.user.id;
-      const issueId = req.params.id;
+      const { id: issueId } = req.params;
       const updateContentsPayload = req.body;
       await issueService.updateContents(
-        { id: issueId, ...updateContentsPayload },
+        { issueId, ...updateContentsPayload },
         userId,
       );
       return res.end();
@@ -81,10 +84,10 @@ const IssueController = (issueService) => ({
   },
   async updateAssignees(req, res, next) {
     try {
-      const issueId = req.params.id;
+      const { id: issueId } = req.params;
       const updateAssigneesPayload = req.body;
       await issueService.updateAssignees({
-        id: issueId,
+        issueId,
         ...updateAssigneesPayload,
       });
       return res.end();

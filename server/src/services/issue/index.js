@@ -5,6 +5,7 @@ const IssueService = ({
   MilestoneModel,
   CommentModel,
   Sequelize,
+  sequelize,
 }) => {
   const { Op } = Sequelize;
   const messages = {
@@ -67,8 +68,8 @@ const IssueService = ({
     return { pagination, issues };
   };
 
-  const getIssue = async (id, loggedUserId) => {
-    const issue = await IssueModel.findByPk(id, {
+  const getIssue = async (issueId, loggedUserId) => {
+    const issue = await IssueModel.findByPk(issueId, {
       include: [
         {
           model: UserModel,
@@ -152,26 +153,6 @@ const IssueService = ({
     }
     return issue.id;
   };
-  const updateMilestone = async (issueId, milestoneId) => {
-    const issue = await IssueModel.findByPk(issueId);
-    const id = issue.milestoneId === milestoneId ? null : milestoneId;
-    issue.milestoneId = id;
-    await issue.save();
-  };
-  const updateLabels = async (issueId, labels) => {
-    const issue = await IssueModel.findByPk(issueId, {
-      include: {
-        model: LabelModel,
-        through: { attributes: [] },
-      },
-    });
-    await issue.removeLabels(issue.Labels);
-    const associatedLabels = await getAssociatedLabels(labels);
-    if (associatedLabels) {
-      await issue.addLabels(associatedLabels);
-    }
-    return issue;
-  };
 
   const checkIsAuthor = (issue, loggedUserId) => {
     if (issue.authorId === loggedUserId) {
@@ -192,37 +173,83 @@ const IssueService = ({
   };
 
   const updateTitle = async (payload, loggedUserId) => {
-    const { id, title } = payload;
-
-    const issue = await getValidIssue(id, loggedUserId);
+    const { issueId, title } = payload;
+    const issue = await getValidIssue(issueId, loggedUserId);
     issue.title = title;
     await issue.save();
+    return issue;
   };
 
   const updateContents = async (payload, loggedUserId) => {
-    const { id, contents } = payload;
+    const { issueId, contents } = payload;
 
-    const issue = await getValidIssue(id, loggedUserId);
+    const issue = await getValidIssue(issueId, loggedUserId);
     issue.contents = contents;
     await issue.save();
+    return issue;
+  };
+
+  const updateMilestone = async (payload) => {
+    const { issueId, milestoneId } = payload;
+    const issue = await IssueModel.findByPk(issueId);
+    const newMilestoneId =
+      issue.milestoneId === milestoneId ? null : milestoneId;
+    issue.milestoneId = newMilestoneId;
+    await issue.save();
+    return issue;
+  };
+
+  const updateLabels = async (payload) => {
+    const { issueId, labels } = payload;
+    const transaction = await sequelize.transaction();
+    try {
+      const issue = await IssueModel.findByPk(issueId, {
+        include: {
+          model: LabelModel,
+          through: { attributes: [] },
+        },
+        transaction,
+      });
+      if (!issue) {
+        throw new Error(messages.NOT_FOUND);
+      }
+      await issue.removeLabels(issue.Labels, transaction);
+      const associatedLabels = await getAssociatedLabels(labels);
+      if (associatedLabels) {
+        await issue.addLabels(associatedLabels, transaction);
+      }
+      await transaction.commit();
+      return issue;
+    } catch (err) {
+      await transaction.rollback();
+      throw err;
+    }
   };
 
   const updateAssignees = async (payload) => {
-    const { id, assignees: newAssignees } = payload;
-    const issue = await IssueModel.findByPk(id, {
-      include: {
-        model: UserModel,
-        as: 'Assignees',
-        through: { attributes: [] },
-      },
-    });
-    if (!issue) {
-      throw new Error(messages.NOT_FOUND);
-    }
-    const assignees = await getAssociatedAssignees(newAssignees);
-    if (assignees) {
+    const { issueId, assignees } = payload;
+    const transaction = await sequelize.transaction();
+    try {
+      const issue = await IssueModel.findByPk(issueId, {
+        include: {
+          model: UserModel,
+          as: 'Assignees',
+          through: { attributes: [] },
+        },
+      });
+      if (!issue) {
+        throw new Error(messages.NOT_FOUND);
+      }
       await issue.removeAssignees(issue.Assignees);
-      await issue.addAssignees(assignees);
+      const associatedAssignees = await getAssociatedAssignees(assignees);
+      if (associatedAssignees) {
+        await issue.addAssignees(associatedAssignees);
+      }
+      await transaction.commit();
+      return issue;
+    } catch (err) {
+      await transaction.rollback();
+      throw err;
     }
   };
 
@@ -230,10 +257,10 @@ const IssueService = ({
     getIssueList,
     getIssue,
     registerIssue,
-    updateMilestone,
-    updateLabels,
     updateTitle,
     updateContents,
+    updateMilestone,
+    updateLabels,
     updateAssignees,
   };
 };

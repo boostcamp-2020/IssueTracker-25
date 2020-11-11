@@ -3,7 +3,7 @@ import IssueController from './controller';
 import IssueService from '../../services/issue';
 import db from '../../models';
 
-const { Sequelize } = db;
+const { Sequelize, sequelize } = db;
 
 const {
   Issue: IssueModel,
@@ -22,6 +22,7 @@ const issueController = IssueController(
     MilestoneModel,
     CommentModel,
     Sequelize,
+    sequelize,
   }),
 );
 
