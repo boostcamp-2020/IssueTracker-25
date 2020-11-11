@@ -41,11 +41,39 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
+  async updateTitle(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const issueId = req.params.id;
+      const updateTitlePayload = req.body;
+      await issueService.updateTitle(
+        { id: issueId, ...updateTitlePayload },
+        userId,
+      );
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
   async modifyLabels(req, res, next) {
     const { id: issueId } = req.params;
     const { labels } = req.body;
     try {
       await issueService.modifyLabels(issueId, labels);
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
+  async updateContents(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const issueId = req.params.id;
+      const updateContentsPayload = req.body;
+      await issueService.updateContents(
+        { id: issueId, ...updateContentsPayload },
+        userId,
+      );
       return res.end();
     } catch (err) {
       return next(err);
