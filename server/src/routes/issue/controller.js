@@ -114,6 +114,20 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
+  async updateTitle(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const issueId = req.params.id;
+      const updateTitlePayload = req.body;
+      await issueService.updateTitle(
+        { id: issueId, ...updateTitlePayload },
+        userId,
+      );
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
 });
 
 export default IssueController;
