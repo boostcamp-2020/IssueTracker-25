@@ -41,7 +41,7 @@ const IssueListHeader = ({
             return (
               <UserDropdownItem
                 key={`filter-author-id-${user.id}`}
-                userInfo={users}
+                userInfo={user}
                 onClick={authorSelectHandler}
                 selected={selectedAuthorId === user.id}
               />
@@ -98,7 +98,7 @@ const IssueListHeader = ({
             return (
               <UserDropdownItem
                 key={`filter-assignee-id-${user.id}`}
-                userInfo={users}
+                userInfo={user}
                 onClick={assigneeSelectHandler}
                 selected={selectedAssigneeId === user.id}
               />
