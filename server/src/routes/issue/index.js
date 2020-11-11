@@ -29,4 +29,5 @@ router.get('/', issueController.getIssueList);
 router.get('/:id', issueController.getIssue);
 router.post('/', issueController.registerIssue);
 router.put('/:id/milestones', issueController.modifyMilestone);
+router.put('/:id/labels', issueController.modifyMilestone);
 export default router;
