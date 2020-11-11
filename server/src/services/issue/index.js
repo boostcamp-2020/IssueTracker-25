@@ -160,12 +160,32 @@ const IssueService = ({
       throw err;
     }
   };
+<<<<<<< HEAD
 
   const updateCloseStatus = async (issueId) => {
+=======
+  const updateMilestone = async (issueId, milestoneId) => {
+>>>>>>> Style : 함수 이름 변경
     const issue = await IssueModel.findByPk(issueId);
     issue.isClosed = !issue.isClosed;
     if (issue.isClosed) issue.closedAt = new Date();
     await issue.save();
+<<<<<<< HEAD
+=======
+  };
+  const updateLabels = async (issueId, labels) => {
+    const issue = await IssueModel.findByPk(issueId, {
+      include: {
+        model: LabelModel,
+        through: { attributes: [] },
+      },
+    });
+    await issue.removeLabels(issue.Labels);
+    const associatedLabels = await getAssociatedLabels(labels);
+    if (associatedLabels) {
+      await issue.addLabels(associatedLabels);
+    }
+>>>>>>> Style : 함수 이름 변경
     return issue;
   };
 
