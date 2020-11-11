@@ -35,6 +35,8 @@ function IssueListContainer({
   checkAllIssue,
   checkBoxClickHandler,
   allCheckBoxClickHandler,
+  filterState,
+  filterHandler,
 }) {
   return (
     <>
@@ -43,6 +45,8 @@ function IssueListContainer({
           <IssueListHeader
             checkAllIssue={checkAllIssue}
             allCheckBoxClickHandler={allCheckBoxClickHandler}
+            filterHandler={filterHandler}
+            filterState={filterState}
           />
         </ListHeader>
         <IssueListBody

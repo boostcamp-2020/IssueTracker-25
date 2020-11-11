@@ -6,13 +6,24 @@ import milestoneApi from '../../../../apis/milestone';
 import usersApi from '../../../../apis/user';
 import IssueListHeaderContainer from '../../../../components/issue/list/header';
 
-const selectedAssignee = 1;
-const selectedAuthor = 1;
-const selectedMilestone = 1;
-const selectedLabels = new Set([1, 2]);
-
-const IssueListHeader = ({ checkAllIssue, allCheckBoxClickHandler }) => {
-  // const { updateMilestone, updateLabel, updateAssignee } = handlers;
+const IssueListHeader = ({
+  checkAllIssue,
+  allCheckBoxClickHandler,
+  filterState,
+  filterHandler,
+}) => {
+  const {
+    updateMilestone,
+    updateLabel,
+    updateAssignee,
+    updateAuthor,
+  } = filterHandler;
+  const {
+    milestoneId: selectedMilestoneId,
+    authorId: selectedAuthorId,
+    assigneeId: selectedAssigneeId,
+    labels: selectedLabelSet,
+  } = filterState;
 
   const { state: labelState, fetchStatus: labelFetchStatus } = useAsync({
     api: labelApi.getLabels,
@@ -59,9 +70,6 @@ const IssueListHeader = ({ checkAllIssue, allCheckBoxClickHandler }) => {
     return null;
   }
 
-  const handler = (id) => {
-    alert(`click ${id}`);
-  };
   return (
     <IssueListHeaderContainer
       checkAllIssue={checkAllIssue}
@@ -69,14 +77,14 @@ const IssueListHeader = ({ checkAllIssue, allCheckBoxClickHandler }) => {
       labels={labelState}
       milestones={milestoneState}
       users={userState}
-      selectedAssigneeId={selectedAssignee}
-      selectedAuthorId={selectedAuthor}
-      selectedMilestoneId={selectedMilestone}
-      selectedLabelSet={selectedLabels}
-      milestoneSelectHandler={handler}
-      labelSelectHandler={handler}
-      assigneeSelectHandler={handler}
-      authorSelectHandler={handler}
+      selectedAssigneeId={selectedAssigneeId}
+      selectedAuthorId={selectedAuthorId}
+      selectedMilestoneId={selectedMilestoneId}
+      selectedLabelSet={selectedLabelSet}
+      milestoneSelectHandler={updateMilestone}
+      labelSelectHandler={updateLabel}
+      assigneeSelectHandler={updateAssignee}
+      authorSelectHandler={updateAuthor}
     />
   );
 };
