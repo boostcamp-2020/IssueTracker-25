@@ -188,8 +188,14 @@ const IssueService = ({
   };
 
   const updateTitle = async (payload, loggedUserId) => {
+<<<<<<< HEAD
     const { issueId, title } = payload;
     const issue = await getValidIssue(issueId, loggedUserId);
+=======
+    const { id, title } = payload;
+
+    const issue = await getValidIssue(id, loggedUserId);
+>>>>>>> Feat: 이슈 내용 변경 API 구현 (#145)
     issue.title = title;
     await issue.save();
     return issue;
@@ -266,6 +272,14 @@ const IssueService = ({
       await transaction.rollback();
       throw err;
     }
+  };
+
+  const updateContents = async (payload, loggedUserId) => {
+    const { id, contents } = payload;
+
+    const issue = await getValidIssue(id, loggedUserId);
+    issue.contents = contents;
+    await issue.save();
   };
 
   return {
