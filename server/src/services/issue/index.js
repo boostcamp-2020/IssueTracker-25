@@ -160,17 +160,30 @@ const IssueService = ({
     return false;
   };
 
-  const updateTitle = async (payload, loggedUserId) => {
-    const { id, title } = payload;
-
-    const issue = await IssueModel.findByPk(id);
+  const getValidIssue = async (issueId, loggedUserId) => {
+    const issue = await IssueModel.findByPk(issueId);
     if (!issue) {
       throw new Error(messages.NOT_FOUND);
     }
     if (!checkIsAuthor(issue, loggedUserId)) {
       throw new Error(messages.ACCESS_DENIED);
     }
+    return issue;
+  };
+
+  const updateTitle = async (payload, loggedUserId) => {
+    const { id, title } = payload;
+
+    const issue = await getValidIssue(id, loggedUserId);
     issue.title = title;
+    await issue.save();
+  };
+
+  const updateContents = async (payload, loggedUserId) => {
+    const { id, contents } = payload;
+
+    const issue = await getValidIssue(id, loggedUserId);
+    issue.contents = contents;
     await issue.save();
   };
 
@@ -179,6 +192,7 @@ const IssueService = ({
     getIssue,
     registerIssue,
     updateTitle,
+    updateContents,
   };
 };
 
