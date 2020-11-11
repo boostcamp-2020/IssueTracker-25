@@ -5,7 +5,7 @@ import * as Icons from '../../icons';
 import color from '../../../libs/color';
 
 const LabelDropdownItemContainer = styled(DropdownItemContainer)`
-  height: 3rem;
+  height: ${({ isDescription }) => (isDescription ? '3rem' : '1.7rem')};
   .dropwdown-item-circle {
     width: 1rem;
     height: 1rem;
@@ -29,16 +29,21 @@ const LabelDropdownItemContainer = styled(DropdownItemContainer)`
 const LabelDropdownItem = ({ selected, label, onClick }) => {
   const { id, name, description, color: labelColor } = label;
   return (
-    <LabelDropdownItemContainer onClick={() => onClick(id)}>
+    <LabelDropdownItemContainer
+      onClick={() => onClick(id)}
+      isDescription={description}
+    >
       <div className="dropdown-item dropdown-item-check dropdown-item-top">
         {selected && <Icons.CheckIcon />}
       </div>
 
       <div className="dropdown-item dropdown-item-top">
-        <div
-          className="dropwdown-item-circle"
-          style={{ backgroundColor: labelColor }}
-        />
+        {labelColor && (
+          <div
+            className="dropwdown-item-circle"
+            style={{ backgroundColor: labelColor }}
+          />
+        )}
       </div>
 
       <div className="dropdown-item dropdown-item-content">

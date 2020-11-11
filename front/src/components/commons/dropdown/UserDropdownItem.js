@@ -20,9 +20,11 @@ const UserDropdownItem = ({ selected, userInfo, onClick }) => {
       <div className="dropdown-item dropdown-item-check">
         {selected && <Icons.CheckIcon />}
       </div>
-      <div className="dropdown-item">
-        <img src={profileLink} alt="profile" />
-      </div>
+      {profileLink && (
+        <div className="dropdown-item">
+          <img src={profileLink} alt="profile" />
+        </div>
+      )}
       <div className="dropdown-item">
         <span>{name}</span>
       </div>
