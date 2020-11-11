@@ -30,4 +30,5 @@ router.get('/:id', issueController.getIssue);
 router.post('/', issueController.registerIssue);
 router.put('/:id/title', issueController.updateTitle);
 router.put('/:id/contents', issueController.updateContents);
+router.put('/:id/assignees', issueController.updateAssignees);
 export default router;

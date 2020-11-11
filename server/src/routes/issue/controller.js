@@ -59,6 +59,19 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
+  async updateAssignees(req, res, next) {
+    try {
+      const issueId = req.params.id;
+      const updateAssigneesPayload = req.body;
+      await issueService.updateAssignees({
+        id: issueId,
+        ...updateAssigneesPayload,
+      });
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
 });
 
 export default IssueController;
