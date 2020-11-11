@@ -40,9 +40,8 @@ const IssueDetailHeader = ({ issue }) => {
         <div className="issue-detail-header__title">{issue.title}</div>
         <div className="issue-detail-header__buttons">
           <CustomButton style={{ color: 'default' }}>Edit</CustomButton>
-          <Link to={routeUrl.NEW_ISSUES}>
-            <CustomButton style={{ color: 'green' }}>New issue</CustomButton>
-          </Link>
+          <Link to={routeUrl.NEW_ISSUES}>asd</Link>
+          <CustomButton style={{ color: 'green' }}>New issue</CustomButton>
         </div>
       </div>
       <IssueDetailHeaderInfo issue={issue} />

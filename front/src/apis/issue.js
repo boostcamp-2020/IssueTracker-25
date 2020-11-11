@@ -1,6 +1,6 @@
 import axios from './axios';
+import { ISSUES_URL } from '../libs/apiUrl';
 
-const ISSUES_URL = '/issues';
 export default {
   getIssues: (page) => {
     return axios.get(`${ISSUES_URL}?page=${page}`);
