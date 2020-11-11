@@ -187,12 +187,32 @@ const IssueService = ({
     await issue.save();
   };
 
+  const updateAssignees = async (payload) => {
+    const { id, assignees: newAssignees } = payload;
+    const issue = await IssueModel.findByPk(id, {
+      include: {
+        model: UserModel,
+        as: 'Assignees',
+        through: { attributes: [] },
+      },
+    });
+    if (!issue) {
+      throw new Error(messages.NOT_FOUND);
+    }
+    const assignees = await getAssociatedAssignees(newAssignees);
+    if (assignees) {
+      await issue.removeAssignees(issue.Assignees);
+      await issue.addAssignees(assignees);
+    }
+  };
+
   return {
     getIssueList,
     getIssue,
     registerIssue,
     updateTitle,
     updateContents,
+    updateAssignees,
   };
 };
 
