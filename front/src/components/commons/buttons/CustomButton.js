@@ -7,22 +7,14 @@ const Button = styled.button`
   border: 0.1rem solid;
   border-radius: 0.4rem;
   padding: 0.5rem;
-  cursor: pointer;
   ${(props) => props.style};
-  &:disabled {
-    opacity: 0.7;
-  }
 `;
 
-function CustomButton({ handleClick, children, style = {}, disabled = false }) {
+function CustomButton({ handleClick, children, style = {} }) {
   const colorStyle = buttonTheme[style.color] || buttonTheme.default;
   const fontSize = style.size === 'sm' ? '0.8rem' : '1rem';
   return (
-    <Button
-      style={{ fontSize, ...colorStyle }}
-      onClick={handleClick}
-      disabled={disabled}
-    >
+    <Button style={{ fontSize, ...colorStyle }} onClick={handleClick}>
       {children}
     </Button>
   );
