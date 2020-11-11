@@ -31,6 +31,16 @@ const IssueController = (issueService) => ({
       return next(err);
     }
   },
+  async modifyMilestone(req, res, next) {
+    const { id: issueId } = req.params;
+    const { milestoneId } = req.body;
+    try {
+      await issueService.modifyMilestone(issueId, milestoneId);
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
 });
 
 export default IssueController;

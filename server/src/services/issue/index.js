@@ -148,11 +148,17 @@ const IssueService = ({
     }
     return issue.id;
   };
-
+  const modifyMilestone = async (issueId, milestoneId) => {
+    const issue = await IssueModel.findByPk(issueId);
+    const id = issue.milestoneId === milestoneId ? null : milestoneId;
+    issue.milestoneId = id;
+    await issue.save();
+  };
   return {
     getIssueList,
     getIssue,
     registerIssue,
+    modifyMilestone,
   };
 };
 
