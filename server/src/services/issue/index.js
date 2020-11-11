@@ -152,6 +152,26 @@ const IssueService = ({
     }
     return issue.id;
   };
+  const updateMilestone = async (issueId, milestoneId) => {
+    const issue = await IssueModel.findByPk(issueId);
+    const id = issue.milestoneId === milestoneId ? null : milestoneId;
+    issue.milestoneId = id;
+    await issue.save();
+  };
+  const updateLabels = async (issueId, labels) => {
+    const issue = await IssueModel.findByPk(issueId, {
+      include: {
+        model: LabelModel,
+        through: { attributes: [] },
+      },
+    });
+    await issue.removeLabels(issue.Labels);
+    const associatedLabels = await getAssociatedLabels(labels);
+    if (associatedLabels) {
+      await issue.addLabels(associatedLabels);
+    }
+    return issue;
+  };
 
   const checkIsAuthor = (issue, loggedUserId) => {
     if (issue.authorId === loggedUserId) {
@@ -210,6 +230,8 @@ const IssueService = ({
     getIssueList,
     getIssue,
     registerIssue,
+    updateMilestone,
+    updateLabels,
     updateTitle,
     updateContents,
     updateAssignees,
