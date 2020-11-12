@@ -35,7 +35,7 @@ const IssueController = (issueService) => ({
     try {
       const { id: issueId } = req.params;
       const issue = await issueService.updateCloseStatus(issueId);
-      return res.status(200).json({ change: issue });
+      return res.status(200).json(issue);
     } catch (err) {
       return next(err);
     }
