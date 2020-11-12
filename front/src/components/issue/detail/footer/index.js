@@ -10,6 +10,7 @@ const IssueDetailFooterContainer = styled.div`
 `;
 
 const IssueDetailFooter = ({
+  inputState,
   profileLink,
   isClosed,
   onInputComment,
@@ -20,6 +21,7 @@ const IssueDetailFooter = ({
   return (
     <IssueDetailFooterContainer>
       <CommentInput
+        value={inputState}
         profileLink={profileLink}
         isClosed={isClosed}
         onInputComment={onInputComment}

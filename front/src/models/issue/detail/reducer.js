@@ -2,6 +2,7 @@ import actionType from './action-type';
 
 const {
   FETCH_SUCCESS,
+  REGISTER_COMMENT,
   SUCCESS_UPDATE_TITLE,
   UPDATE_ONE_STATE,
   SUCCESS_UPDATE_CONTENTS,
@@ -31,6 +32,16 @@ export default function reducer(state, action) {
         issue: { ...state.issue, title: state.newTitle },
         newTitle: '',
         showEditIssueHeader: false,
+      };
+    }
+    case REGISTER_COMMENT: {
+      const { issue } = state;
+      return {
+        ...state,
+        issue: {
+          ...issue,
+          Comments: [...issue.Comments, action.comment],
+        },
       };
     }
     case SUCCESS_UPDATE_CONTENTS: {
