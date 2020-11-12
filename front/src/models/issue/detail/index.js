@@ -21,8 +21,10 @@ import actions from './actions';
 const initialState = {
   issue: {},
   newTitle: '',
+  newContents: '',
   countOfComments: undefined,
   showEditIssueHeader: false,
+  showEditIssueDetail: false,
 };
 
 const IssueDetailPage = () => {
@@ -39,14 +41,33 @@ const IssueDetailPage = () => {
     state: { profileLink },
   } = useContext(userContext);
 
-  const { issue, showEditIssueHeader } = detailState;
+  const {
+    issue,
+    showEditIssueHeader,
+    showEditIssueDetail,
+    countOfComments,
+  } = detailState;
   const { error, loading } = fetchStatus;
 
   const editTitleClickHandler = () => {
-    dispatch(actions.showEditIssueHeader(true));
+    dispatch(actions.updateOneState('showEditIssueHeader', true));
   };
   const cancelTitleClickHandler = () => {
-    dispatch(actions.showEditIssueHeader(false));
+    dispatch(actions.updateOneState('showEditIssueHeader', false));
+  };
+  const editContentsClickHandler = () => {
+    dispatch(actions.updateOneState('showEditIssueDetail', true));
+  };
+  const cancelContentsClickHandler = () => {
+    dispatch(actions.updateOneState('showEditIssueDetail', false));
+  };
+
+  const updateTitle = (newTitle) => {
+    dispatch(actions.updateOneState('newTitle', newTitle));
+  };
+
+  const updateContents = (newContents) => {
+    dispatch(actions.updateOneState('newContents', newContents));
   };
 
   const onTitleSave = async () => {
@@ -64,10 +85,6 @@ const IssueDetailPage = () => {
     }
   };
 
-  const updateTitle = (newTitle) => {
-    dispatch(actions.updateTitle(newTitle));
-  };
-
   const registerComment = async () => {
     const payload = {
       issueId: issue.id,
@@ -76,6 +93,20 @@ const IssueDetailPage = () => {
     const newComment = await commentAPI.registerComment(payload);
     dispatch(actions.updateComment(newComment));
     setCommentInput('');
+  }
+
+  const onContentsSave = async () => {
+    const {
+      issue: { id: issueId },
+      newContents,
+    } = detailState;
+    try {
+      await issueAPI.updateContents({ id: issueId, contents: newContents });
+      dispatch(actions.successUpdateContents());
+      return true;
+    } catch (updateContentsError) {
+      return <div>{updateContentsError}</div>;
+    }
   };
 
   if (error) {
@@ -97,14 +128,23 @@ const IssueDetailPage = () => {
                   updateTitle={updateTitle}
                   onTitleSave={onTitleSave}
                   cancelTitleClickHandler={cancelTitleClickHandler}
+                  countOfComments={countOfComments}
                 />
               ) : (
                 <IssueDetailHeader
+                  countOfComments={countOfComments}
                   issue={issue}
                   editTitleClickHandler={editTitleClickHandler}
                 />
               )}
-              <IssueDetailBody issue={issue} />
+              <IssueDetailBody
+                issue={issue}
+                showEditIssueDetail={showEditIssueDetail}
+                onChange={updateContents}
+                onContentsSave={onContentsSave}
+                editContentsClickHandler={editContentsClickHandler}
+                cancelContentsClickHandler={cancelContentsClickHandler}
+              />
               <IssueDetailFooter
                 inputState={commentInput}
                 isClosed={issue.isClosed}

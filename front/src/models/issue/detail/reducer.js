@@ -2,10 +2,10 @@ import actionType from './action-type';
 
 const {
   FETCH_SUCCESS,
-  SHOW_EDIT_ISSUE_HEADER,
-  UPDATE_TITLE,
-  SUCCESS_UPDATE_TITLE,
   REGISTER_COMMENT,
+  SUCCESS_UPDATE_TITLE,
+  UPDATE_ONE_STATE,
+  SUCCESS_UPDATE_CONTENTS,
 } = actionType;
 
 export default function reducer(state, action) {
@@ -19,18 +19,11 @@ export default function reducer(state, action) {
         countOfComments: data.Comments.length,
       };
     }
-    case SHOW_EDIT_ISSUE_HEADER: {
-      const { showStatus } = action;
+    case UPDATE_ONE_STATE: {
+      const { newValue, targetState } = action;
       return {
         ...state,
-        showEditIssueHeader: showStatus,
-      };
-    }
-    case UPDATE_TITLE: {
-      const { newTitle } = action;
-      return {
-        ...state,
-        newTitle,
+        [targetState]: newValue,
       };
     }
     case SUCCESS_UPDATE_TITLE: {
@@ -49,6 +42,14 @@ export default function reducer(state, action) {
           ...issue,
           Comments: [...issue.Comments, action.comment],
         },
+      };
+    }
+    case SUCCESS_UPDATE_CONTENTS: {
+      return {
+        ...state,
+        issue: { ...state.issue, contents: state.newContents },
+        newContents: '',
+        showEditIssueDetail: false,
       };
     }
     default:

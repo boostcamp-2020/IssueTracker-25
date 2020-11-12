@@ -2,11 +2,12 @@ import actionType from './action-type';
 
 const {
   FETCH_SUCCESS,
-  SHOW_EDIT_ISSUE_HEADER,
-  UPDATE_TITLE,
-  SUCCESS_UPDATE_TITLE,
   REGISTER_COMMENT,
+  SUCCESS_UPDATE_TITLE,
+  UPDATE_ONE_STATE,
+  SUCCESS_UPDATE_CONTENTS,
 } = actionType;
+
 export default {
   fetchSuccess(data) {
     return {
@@ -14,16 +15,11 @@ export default {
       data,
     };
   },
-  showEditIssueHeader(showStatus) {
+  updateOneState(targetState, newValue) {
     return {
-      type: SHOW_EDIT_ISSUE_HEADER,
-      showStatus,
-    };
-  },
-  updateTitle(newTitle) {
-    return {
-      type: UPDATE_TITLE,
-      newTitle,
+      type: UPDATE_ONE_STATE,
+      newValue,
+      targetState,
     };
   },
   successUpdateTitle() {
@@ -35,6 +31,11 @@ export default {
     return {
       type: REGISTER_COMMENT,
       comment,
+    };
+  },
+  successUpdateContents() {
+    return {
+      type: SUCCESS_UPDATE_CONTENTS,
     };
   },
 };

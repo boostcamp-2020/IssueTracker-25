@@ -1,7 +1,7 @@
 import React from 'react';
 import Comment from './Comment';
 
-const IssueDetailBody = ({ issue }) => {
+const IssueDetailBody = ({ issue, editContentsClickHandler, ...restProps }) => {
   return (
     <>
       <Comment
@@ -9,6 +9,8 @@ const IssueDetailBody = ({ issue }) => {
         createdAt={issue.createdAt}
         contents={issue.contents}
         isAuthor={issue.isAuthor}
+        editContentsClickHandler={editContentsClickHandler}
+        {...restProps}
       />
       {issue.Comments.map((comment) => {
         return (

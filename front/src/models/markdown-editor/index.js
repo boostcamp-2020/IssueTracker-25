@@ -6,8 +6,8 @@ const DELAY = 2000;
 
 let debounceTimer;
 
-const MarkdownEditor = ({ onChange }) => {
-  const [contents, setContents] = useState('');
+const MarkdownEditor = ({ onChange, initialContents = '' }) => {
+  const [contents, setContents] = useState(initialContents);
   const [contentsLength, setContentsLength] = useState(0);
   const [showContentsLength, setShowContentsLength] = useState(false);
 

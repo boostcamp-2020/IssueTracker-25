@@ -161,6 +161,14 @@ const IssueService = ({
     }
   };
 
+  const updateCloseStatus = async (issueId) => {
+    const issue = await IssueModel.findByPk(issueId);
+    issue.isClosed = !issue.isClosed;
+    if (issue.isClosed) issue.closedAt = new Date();
+    await issue.save();
+    return issue;
+  };
+
   const checkIsAuthor = (issue, loggedUserId) => {
     if (issue.authorId === loggedUserId) {
       return true;
@@ -264,6 +272,7 @@ const IssueService = ({
     getIssueList,
     getIssue,
     registerIssue,
+    updateCloseStatus,
     updateTitle,
     updateContents,
     updateMilestone,
