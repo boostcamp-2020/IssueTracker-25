@@ -6,18 +6,21 @@ const DELAY = 2000;
 let debounceTimer;
 
 const MarkdownEditor = ({ onChange }) => {
+  const [contents, setContents] = useState('');
   const [contentsLength, setContentsLength] = useState(0);
   const [showContentsLength, setShowContentsLength] = useState(false);
+
+  useEffect(() => {
+    onChange(contents);
+    setShowContentsLengthDebounce(contents.length);
+    return clearTimer;
+  }, [contents]);
 
   const clearTimer = () => {
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
   };
-
-  useEffect(() => {
-    return clearTimer;
-  }, []);
 
   const setHideContentsLengthTimer = () => {
     setTimeout(() => {
@@ -31,18 +34,17 @@ const MarkdownEditor = ({ onChange }) => {
       setContentsLength(newContentsLength);
       setHideContentsLengthTimer();
     };
-
     clearTimer();
     debounceTimer = setTimeout(debounceCallback, DELAY);
   };
 
   const updateContents = (newContents) => {
-    onChange(newContents);
-    setShowContentsLengthDebounce(newContents.length);
+    setContents(newContents);
   };
 
   return (
     <MarkdownEditorComponent
+      value={contents}
       onChange={updateContents}
       showContentsLength={showContentsLength}
       contentsLength={contentsLength}
