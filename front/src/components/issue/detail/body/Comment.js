@@ -85,12 +85,14 @@ const Comment = ({
           {isAuthor && (
             <>
               <div className="comment-header__owner">{OWNER}</div>
-              <CustomButton
-                style={{ color: 'grayBlack' }}
-                handleClick={editContentsClickHandler}
-              >
-                Edit
-              </CustomButton>
+              {!showEditIssueDetail && (
+                <CustomButton
+                  style={{ color: 'grayBlack' }}
+                  handleClick={editContentsClickHandler}
+                >
+                  Edit
+                </CustomButton>
+              )}
             </>
           )}
         </CommentDetailHeader>
