@@ -102,6 +102,7 @@ const IssueList = ({ location }) => {
       <Pagination
         page={getPage(location)}
         lastPage={lastPage}
+        search={decodeFilter(search)}
         clickHandler={paginationClickHandler}
       />
     </>
