@@ -2,4 +2,7 @@ import { FETCH_SUCCESS } from '../../../hooks/useAsync';
 
 export default {
   FETCH_SUCCESS,
+  SHOW_EDIT_ISSUE_HEADER: 'SHOW_EDIT_ISSUE_HEADER',
+  UPDATE_TITLE: 'UPDATE_TITLE',
+  SUCCESS_UPDATE_TITLE: 'SUCCESS_UPDATE_TITLE',
 };

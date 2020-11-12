@@ -9,32 +9,63 @@ import {
 import SidebarLayout from '../../../components/commons/SidebarLayout';
 import Sidebar from '../../sidebar';
 import { userContext } from '../../../contexts/user';
+import IssueEditHeader from '../../../components/issue/edit/header';
 import issueAPI from '../../../apis/issue';
 import utils from '../../../libs/utils';
 import { useAsync } from '../../../hooks/useAsync';
 import useSidebar from '../../../hooks/useSidebar';
 import reducer from './reducer';
+import actions from './actions';
 
 const initialState = {
   issue: {},
+  newTitle: '',
   countOfComments: undefined,
+  showEditIssueHeader: false,
 };
 
 const IssueDetailPage = () => {
   const { id } = useParams();
   const getIssueApi = () => issueAPI.getIssue(id);
   const { state: seletedState, handlers } = useSidebar();
-  const { state, fetchStatus } = useAsync({
+  const { state: detailState, fetchStatus, dispatch } = useAsync({
     api: getIssueApi,
     reducer,
     initialState,
   });
+
   const {
     state: { profileLink },
   } = useContext(userContext);
 
-  const { issue } = state;
+  const { issue, showEditIssueHeader } = detailState;
   const { error, loading } = fetchStatus;
+
+  const editTitleClickHandler = () => {
+    dispatch(actions.showEditIssueHeader(true));
+  };
+  const cancelTitleClickHandler = () => {
+    dispatch(actions.showEditIssueHeader(false));
+  };
+
+  const onTitleSave = async () => {
+    const {
+      issue: { id: issueId },
+      newTitle,
+    } = detailState;
+    if (!newTitle.length) return false;
+    try {
+      await issueAPI.updateTitle({ id: issueId, title: newTitle });
+      dispatch(actions.successUpdateTitle());
+      return true;
+    } catch (updateError) {
+      return <div>{updateError}</div>;
+    }
+  };
+
+  const updateTitle = (newTitle) => {
+    dispatch(actions.updateTitle(newTitle));
+  };
 
   if (error) {
     return <div>{error}</div>;
@@ -49,7 +80,19 @@ const IssueDetailPage = () => {
         <SidebarLayout.BaseLayout>
           <SidebarLayout.Content>
             <>
-              <IssueDetailHeader issue={issue} />
+              {showEditIssueHeader ? (
+                <IssueEditHeader
+                  issue={issue}
+                  updateTitle={updateTitle}
+                  onTitleSave={onTitleSave}
+                  cancelTitleClickHandler={cancelTitleClickHandler}
+                />
+              ) : (
+                <IssueDetailHeader
+                  issue={issue}
+                  editTitleClickHandler={editTitleClickHandler}
+                />
+              )}
               <IssueDetailBody issue={issue} />
               <IssueDetailFooter
                 isClosed={issue.isClosed}

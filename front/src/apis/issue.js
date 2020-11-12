@@ -11,4 +11,7 @@ export default {
   postIssue: ({ issue }) => {
     return axios.post(`${ISSUES_URL}`, issue);
   },
+  updateTitle: ({ title, id }) => {
+    return axios.put(`${ISSUES_URL}/${id}/title`, { title });
+  },
 };
