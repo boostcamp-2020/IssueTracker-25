@@ -6,11 +6,13 @@ import db from '../../models';
 const router = express.Router();
 const { sequelize } = db;
 
-const { Comment: CommentModel } = sequelize.models;
+const { Comment: CommentModel, User: UserModel } = sequelize.models;
 
 const commentController = CommentController(
   CommentService({
     CommentModel,
+    UserModel,
+    sequelize,
   }),
 );
 
