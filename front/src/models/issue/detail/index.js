@@ -53,6 +53,14 @@ const IssueDetailPage = () => {
     dispatch(actions.updateOneState('showEditIssueDetail', true));
   };
 
+  const updateTitle = (newTitle) => {
+    dispatch(actions.updateOneState('newTitle', newTitle));
+  };
+
+  const updateContents = (newContents) => {
+    dispatch(actions.updateOneState('newContents', newContents));
+  };
+
   const onTitleSave = async () => {
     const {
       issue: { id: issueId },
@@ -68,12 +76,18 @@ const IssueDetailPage = () => {
     }
   };
 
-  const updateTitle = (newTitle) => {
-    dispatch(actions.updateOneState('newTitle', newTitle));
-  };
-
-  const updateContents = (newContents) => {
-    dispatch(actions.updateOneState('newContents', newContents));
+  const onContentsSave = async () => {
+    const {
+      issue: { id: issueId },
+      newContents,
+    } = detailState;
+    try {
+      await issueAPI.updateContents({ id: issueId, contents: newContents });
+      dispatch(actions.successUpdateContents());
+      return true;
+    } catch (updateContentsError) {
+      return <div>{updateContentsError}</div>;
+    }
   };
 
   if (error) {
@@ -106,6 +120,7 @@ const IssueDetailPage = () => {
                 issue={issue}
                 showEditIssueDetail={showEditIssueDetail}
                 onChange={updateContents}
+                onContentsSave={onContentsSave}
                 editContentsClickHandler={editContentsClickHandler}
               />
               <IssueDetailFooter

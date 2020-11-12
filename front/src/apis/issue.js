@@ -14,4 +14,7 @@ export default {
   updateTitle: ({ title, id }) => {
     return axios.put(`${ISSUES_URL}/${id}/title`, { title });
   },
+  updateContents: ({ contents, id }) => {
+    return axios.put(`${ISSUES_URL}/${id}/contents`, { contents });
+  },
 };

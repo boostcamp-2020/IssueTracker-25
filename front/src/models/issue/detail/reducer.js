@@ -1,6 +1,11 @@
 import actionType from './action-type';
 
-const { FETCH_SUCCESS, SUCCESS_UPDATE_TITLE, UPDATE_ONE_STATE } = actionType;
+const {
+  FETCH_SUCCESS,
+  SUCCESS_UPDATE_TITLE,
+  UPDATE_ONE_STATE,
+  SUCCESS_UPDATE_CONTENTS,
+} = actionType;
 
 export default function reducer(state, action) {
   const { type } = action;
@@ -26,6 +31,14 @@ export default function reducer(state, action) {
         issue: { ...state.issue, title: state.newTitle },
         newTitle: '',
         showEditIssueHeader: false,
+      };
+    }
+    case SUCCESS_UPDATE_CONTENTS: {
+      return {
+        ...state,
+        issue: { ...state.issue, contents: state.newContents },
+        newContents: '',
+        showEditIssueDetail: false,
       };
     }
     default:
