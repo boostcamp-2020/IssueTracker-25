@@ -2,6 +2,7 @@ import actionType from './action-type';
 
 const {
   FETCH_SUCCESS,
+  REGISTER_COMMENT,
   SUCCESS_UPDATE_TITLE,
   UPDATE_ONE_STATE,
   SUCCESS_UPDATE_CONTENTS,
@@ -24,6 +25,12 @@ export default {
   successUpdateTitle() {
     return {
       type: SUCCESS_UPDATE_TITLE,
+    };
+  },
+  updateComment(comment) {
+    return {
+      type: REGISTER_COMMENT,
+      comment,
     };
   },
   successUpdateContents() {

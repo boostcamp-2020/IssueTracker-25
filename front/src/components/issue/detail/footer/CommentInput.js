@@ -51,7 +51,8 @@ const InputButtonGroup = styled.div`
   }
 `;
 
-const Comment = ({
+const CommentInput = ({
+  value,
   profileLink,
   isClosed,
   onInputComment,
@@ -67,7 +68,7 @@ const Comment = ({
       <InputContainer>
         <InputHeader />
         <InputBody>
-          <MarkdownEditor onChange={onInputComment} />
+          <MarkdownEditor value={value} onChange={onInputComment} />
           <InputButtonGroup>
             {isClosed ? (
               <CustomButton handleClick={onReopenIssue}>
@@ -89,4 +90,4 @@ const Comment = ({
   );
 };
 
-export default Comment;
+export default CommentInput;
