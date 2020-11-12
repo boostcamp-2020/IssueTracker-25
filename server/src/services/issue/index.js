@@ -157,10 +157,19 @@ const IssueService = ({
     }
   };
 
+  const updateCloseStatus = async (issueId) => {
+    const issue = await IssueModel.findByPk(issueId);
+    issue.isClosed = !issue.isClosed;
+    if (issue.isClosed) issue.closedAt = new Date();
+    await issue.save();
+    return issue;
+  };
+
   return {
     getIssueList,
     getIssue,
     registerIssue,
+    updateCloseStatus,
   };
 };
 

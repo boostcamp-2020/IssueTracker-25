@@ -29,5 +29,5 @@ const issueController = IssueController(
 router.get('/', issueController.getIssueList);
 router.get('/:id', issueController.getIssue);
 router.post('/', issueController.registerIssue);
-
+router.put('/:id/is-closed', issueController.updateIssueCloseStatus);
 export default router;
