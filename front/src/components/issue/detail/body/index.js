@@ -1,20 +1,17 @@
 import React from 'react';
 import Comment from './Comment';
-import MarkdownEditor from '../../../../models/markdown-editor';
+import { IssueEditBody } from '../../edit';
 
 const IssueDetailBody = ({
   issue,
   showEditIssueDetail,
-  onChange,
   editContentsClickHandler,
+  ...restProps
 }) => {
   return (
     <>
       {showEditIssueDetail ? (
-        <MarkdownEditor
-          onChange={(value) => onChange(value)}
-          initialContents={issue.contents}
-        />
+        <IssueEditBody initialContents={issue.contents} {...restProps} />
       ) : (
         <Comment
           writer={issue.Author}
