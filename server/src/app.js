@@ -18,11 +18,17 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 app.use(router);
+
 passportLoader();
 
 const syncOption = isProd ? {} : { alter: { drop: false } };
 db.sequelize.sync(syncOption).then(async () => {
   if (!isProd) await seedInit();
+});
+
+app.use(function (err, req, res) {
+  res.status(err.status || 500);
+  res.json({ error: err.message });
 });
 
 export default app;
