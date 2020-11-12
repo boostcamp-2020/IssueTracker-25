@@ -9,7 +9,7 @@ const filterDropdownItemContent = [
   'Open issues and pull requests',
   'Your issues',
   'Your pull requests',
-  'Everything assgined to you',
+  'Everything assigned to you',
   'Everything mentioning you',
 ];
 

@@ -92,7 +92,7 @@ const IssueListHeader = ({
         headerText="Filter by who's assigned"
         button={<div>Assignee</div>}
       >
-        <UserDropdownItem userInfo={{ id: 0, name: 'Assgined to nobody' }} />
+        <UserDropdownItem userInfo={{ id: 0, name: 'Assigned to nobody' }} />
         {users &&
           users.map((user) => {
             return (
