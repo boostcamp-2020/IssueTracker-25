@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as Icons from '../../../icons';
-import color from '../../../../libs/color';
+import * as Icons from '../../icons';
+import color from '../../../libs/color';
 
 const StateIconContainer = styled.div`
   display: inline-flex;
