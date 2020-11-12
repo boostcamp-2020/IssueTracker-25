@@ -4,6 +4,7 @@ import color from '../../../../libs/color';
 import { UserProfile } from '../../../commons/UserProfile';
 import ArrowContainerStyle from '../../../commons/ArrowContainerStyle';
 import MarkdownViewer from '../../../commons/MarkdownViewer';
+import CustomButton from '../../../commons/buttons/CustomButton';
 
 const OWNER = 'Owner';
 
@@ -54,15 +55,15 @@ const CommentDetailHeader = styled(ArrowContainerStyle)`
       border-radius: 0.5rem;
     }
   }
-
-  .edit-button {
-    border: none;
-    outline: 0;
-    background: ${color.lightGray};
-  }
 `;
 
-const Comment = ({ writer, createdAt, contents, isAuthor }) => {
+const Comment = ({
+  writer,
+  createdAt,
+  contents,
+  isAuthor,
+  editContentsClickHandler,
+}) => {
   const commentedAt = `commented ${createdAt}`;
   return (
     <CommentContainer>
@@ -81,9 +82,12 @@ const Comment = ({ writer, createdAt, contents, isAuthor }) => {
           {isAuthor && (
             <>
               <div className="comment-header__owner">{OWNER}</div>
-              <button type="button" className="edit-button">
+              <CustomButton
+                style={{ color: 'grayBlack' }}
+                handleClick={editContentsClickHandler}
+              >
                 Edit
-              </button>
+              </CustomButton>
             </>
           )}
         </CommentDetailHeader>
