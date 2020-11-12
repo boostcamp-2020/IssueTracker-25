@@ -13,8 +13,13 @@ const TextArea = styled.textarea`
   vertical-align: top;
 `;
 
-const CustomTextarea = ({ onChange }) => {
-  return <TextArea onChange={({ target: { value } }) => onChange(value)} />;
+const CustomTextarea = ({ value, onChange }) => {
+  return (
+    <TextArea
+      value={value}
+      onChange={({ target: { value: newValue } }) => onChange(newValue)}
+    />
+  );
 };
 
 export default CustomTextarea;

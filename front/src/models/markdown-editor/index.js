@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MarkdownEditorComponent from '../../components/commons/MarkdownEditor';
+import uploadApi from '../../apis/upload';
 
 const DELAY = 2000;
 
@@ -42,10 +43,18 @@ const MarkdownEditor = ({ onChange }) => {
     setContents(newContents);
   };
 
+  const uploadFile = async (files) => {
+    const uploadResponse = await uploadApi.uploadFile(files);
+    const { filename, url: fileAccessUrl } = uploadResponse;
+    const imageMarkdown = `![${filename}](${fileAccessUrl})`;
+    setContents(`${contents}\n\n${imageMarkdown}`);
+  };
+
   return (
     <MarkdownEditorComponent
       value={contents}
       onChange={updateContents}
+      onUpload={uploadFile}
       showContentsLength={showContentsLength}
       contentsLength={contentsLength}
     />

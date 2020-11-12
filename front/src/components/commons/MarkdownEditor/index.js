@@ -22,11 +22,17 @@ const EditorInputContainer = styled.div`
   }
 `;
 
-const MarkdownEditor = ({ contentsLength, showContentsLength, onChange }) => {
+const MarkdownEditor = ({
+  value,
+  contentsLength,
+  showContentsLength,
+  onChange,
+  onUpload,
+}) => {
   return (
     <EditorContainer>
       <EditorInputContainer>
-        <CustomTextarea onChange={onChange} />
+        <CustomTextarea value={value} onChange={onChange} />
         {showContentsLength && (
           <ContentsLengthLayer
             className="markdown-editor__content-length"
@@ -34,7 +40,7 @@ const MarkdownEditor = ({ contentsLength, showContentsLength, onChange }) => {
           />
         )}
       </EditorInputContainer>
-      <UploadInput />
+      <UploadInput onChange={onUpload} />
     </EditorContainer>
   );
 };
