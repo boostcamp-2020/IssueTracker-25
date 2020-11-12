@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   IssueDetailHeader,
   IssueDetailBody,
+  IssueDetailFooter,
 } from '../../../components/issue/detail';
+
+import SidebarLayout from '../../../components/commons/SidebarLayout';
+import Sidebar from '../../sidebar';
+import { userContext } from '../../../contexts/user';
 import IssueEditHeader from '../../../components/issue/edit/header';
 import issueAPI from '../../../apis/issue';
 import utils from '../../../libs/utils';
@@ -28,6 +33,11 @@ const IssueDetailPage = () => {
     reducer,
     initialState,
   });
+  
+  const {
+    state: { profileLink },
+  } = useContext(userContext);
+
   const { issue, showEditIssueHeader } = detailState;
   const { error, loading } = fetchStatus;
 
@@ -67,24 +77,37 @@ const IssueDetailPage = () => {
   return (
     !utils.isEmpty(issue) && (
       <>
-        {showEditIssueHeader ? (
-          <IssueEditHeader
-            issue={issue}
-            updateTitle={updateTitle}
-            onTitleSave={onTitleSave}
-            cancelTitleClickHandler={cancelTitleClickHandler}
-          />
-        ) : (
-          <IssueDetailHeader
-            issue={issue}
-            editTitleClickHandler={editTitleClickHandler}
-          />
-        )}
-        <IssueDetailBody
-          issue={issue}
-          seletedState={seletedState}
-          handlers={handlers}
-        />
+        <SidebarLayout.BaseLayout>
+          <SidebarLayout.Content>
+            <>
+              {showEditIssueHeader ? (
+                <IssueEditHeader
+                  issue={issue}
+                  updateTitle={updateTitle}
+                  onTitleSave={onTitleSave}
+                  cancelTitleClickHandler={cancelTitleClickHandler}
+                />
+              ) : (
+                <IssueDetailHeader
+                  issue={issue}
+                  editTitleClickHandler={editTitleClickHandler}
+                />
+              )}
+              <IssueDetailBody issue={issue} />
+              <IssueDetailFooter
+                isClosed={issue.isClosed}
+                profileLink={profileLink}
+                onInputComment={alert}
+                onReopenIssue={() => alert('reopen')}
+                onCloseIssue={() => alert('closed')}
+                onCommentSubmit={() => alert('submit!')}
+              />
+            </>
+          </SidebarLayout.Content>
+          <SidebarLayout.Sidebar>
+            <Sidebar selected={seletedState} handlers={handlers} />
+          </SidebarLayout.Sidebar>
+        </SidebarLayout.BaseLayout>
       </>
     )
   );

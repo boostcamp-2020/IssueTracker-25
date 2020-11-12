@@ -8,14 +8,17 @@ const GlobalStyled = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
   }
+  
   * {
     box-sizing: border-box;
   }
+
   body{
     margin: 0; 
     font-family:'IBMPlexSansKR-Regular';
     color: ${color.gray};
   }
+
   a {
     &:link {
       color: black;
@@ -29,10 +32,6 @@ const GlobalStyled = createGlobalStyle`
       color: black;
       text-decoration: none;
     }
-  }
-
-  img {
-    max-width: 100%;
   }
 
   @media (max-width: 767.98px) {
