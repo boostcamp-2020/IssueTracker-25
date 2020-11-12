@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import queryString from 'query-string';
 import { useHistory } from 'react-router-dom';
 import { useAsync } from '../../../hooks/useAsync';
@@ -16,17 +16,29 @@ const getPage = (location) => {
   const { page: currentPage } = queryString.parse(location.search);
   return currentPage || FIRST_PAGE;
 };
-
+const getFilter = (location) => {
+  const querys = queryString.parse(location.search);
+  const excludePageQuery = Object.keys(querys).reduce((acc, query) => {
+    if (query !== 'page') acc[query] = querys[query];
+    return acc;
+  }, {});
+  return queryString.stringify(excludePageQuery);
+};
 const initialState = {
   page: 1,
   lastPage: 1,
   issues: [],
   checkAllIssue: false,
 };
+
 const IssueList = ({ location }) => {
   const history = useHistory();
+  const filterQuery = decodeURIComponent(getFilter(location));
+  const [search, setSearch] = useState(
+    filterQuery.replace(/=/g, ':').replace(/&/g, ' '),
+  );
   const { state: filterState, handlers: filterHandler } = useFilter();
-  const getIssuesApi = () => issueApi.getIssues(getPage(location));
+  const getIssuesApi = () => issueApi.getIssues(getPage(location), filterQuery);
   const { state, fetchStatus, dispatch } = useAsync({
     api: getIssuesApi,
     reducer,
@@ -35,7 +47,6 @@ const IssueList = ({ location }) => {
   });
   const { page, lastPage, issues, checkAllIssue } = state;
   const { error, loading } = fetchStatus;
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -61,10 +72,22 @@ const IssueList = ({ location }) => {
     history.push(`${TARGET_PAGE}=${moveTo}`);
     dispatch(actions.issueListPaging(moveTo));
   };
-
+  const searchHandler = ({ target: { value } }) => {
+    setSearch(value);
+  };
+  const pressSearchEnter = ({ keyCode }) => {
+    if (keyCode === 13) {
+      const chageQuery = search.replace(/:/g, '=').replace(/[ *]/g, '&');
+      history.push(`${TARGET_PAGE}=1&${chageQuery}`);
+    }
+  };
   return (
     <>
-      <IssueListComponents.IssueFilterContainer />
+      <IssueListComponents.IssueFilterContainer
+        filter={search}
+        onEnter={pressSearchEnter}
+        onChange={searchHandler}
+      />
       <IssueListComponents.IssueListContainer
         issues={issues}
         checkAllIssue={checkAllIssue}

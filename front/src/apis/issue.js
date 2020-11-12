@@ -2,8 +2,8 @@ import axios from './axios';
 import { ISSUES_URL } from '../libs/apiUrl';
 
 export default {
-  getIssues: (page) => {
-    return axios.get(`${ISSUES_URL}?page=${page}`);
+  getIssues: (page, filter = '') => {
+    return axios.get(`${ISSUES_URL}?page=${page}&${filter}`);
   },
   getIssue: (id) => {
     return axios.get(`${ISSUES_URL}/${id}`);

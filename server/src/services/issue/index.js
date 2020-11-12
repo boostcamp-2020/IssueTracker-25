@@ -12,7 +12,8 @@ const IssueService = ({
     NOT_FOUND: '등록되지 않은 이슈 id 입니다.',
     ACCESS_DENIED: '접근 권한이 없습니다.',
   };
-
+  const swapOption = (option) =>
+    Object.keys(option).length === 0 ? undefined : option;
   const getPagedIssues = async ({ pageParams, whereOption }) => {
     const { page, LIMIT } = pageParams;
     const offset = (page - 1) * LIMIT;
@@ -20,33 +21,34 @@ const IssueService = ({
       attributes: {
         exclude: ['contents'],
       },
-      where: whereOption.open,
+      where: swapOption(whereOption.open),
+      subQuery: false,
+      order: [['id', 'DESC']],
       offset,
       limit: LIMIT,
-      order: [['id', 'DESC']],
       include: [
         {
           model: UserModel,
           as: 'Author',
           attributes: ['id', 'name'],
-          where: whereOption.author,
+          where: swapOption(whereOption.author),
         },
         {
           model: LabelModel,
           through: { attributes: [] },
-          where: whereOption.label,
+          where: swapOption(whereOption.label),
         },
         {
           model: UserModel,
           as: 'Assignees',
           attributes: ['id', 'profileLink'],
           through: { attributes: [] },
-          where: whereOption.assignee,
+          where: swapOption(whereOption.assignee),
         },
         {
           model: MilestoneModel,
           attributes: ['id', 'title'],
-          where: whereOption.milestone,
+          where: swapOption(whereOption.milestone),
         },
       ],
     });
