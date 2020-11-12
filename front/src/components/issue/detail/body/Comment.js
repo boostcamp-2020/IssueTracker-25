@@ -5,6 +5,7 @@ import { UserProfile } from '../../../commons/UserProfile';
 import ArrowContainerStyle from '../../../commons/ArrowContainerStyle';
 import MarkdownViewer from '../../../commons/MarkdownViewer';
 import CustomButton from '../../../commons/buttons/CustomButton';
+import { IssueEditBody } from '../../edit';
 
 const OWNER = 'Owner';
 
@@ -62,7 +63,9 @@ const Comment = ({
   createdAt,
   contents,
   isAuthor,
+  showEditIssueDetail,
   editContentsClickHandler,
+  ...restProps
 }) => {
   const commentedAt = `commented ${createdAt}`;
   return (
@@ -91,7 +94,11 @@ const Comment = ({
             </>
           )}
         </CommentDetailHeader>
-        <MarkdownViewer>{contents}</MarkdownViewer>
+        {showEditIssueDetail ? (
+          <IssueEditBody initialContents={contents} {...restProps} />
+        ) : (
+          <MarkdownViewer>{contents}</MarkdownViewer>
+        )}
       </CommentDetailContainer>
     </CommentContainer>
   );

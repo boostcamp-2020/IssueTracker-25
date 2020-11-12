@@ -1,26 +1,17 @@
 import React from 'react';
 import Comment from './Comment';
-import { IssueEditBody } from '../../edit';
 
-const IssueDetailBody = ({
-  issue,
-  showEditIssueDetail,
-  editContentsClickHandler,
-  ...restProps
-}) => {
+const IssueDetailBody = ({ issue, editContentsClickHandler, ...restProps }) => {
   return (
     <>
-      {showEditIssueDetail ? (
-        <IssueEditBody initialContents={issue.contents} {...restProps} />
-      ) : (
-        <Comment
-          writer={issue.Author}
-          createdAt={issue.createdAt}
-          contents={issue.contents}
-          isAuthor={issue.isAuthor}
-          editContentsClickHandler={editContentsClickHandler}
-        />
-      )}
+      <Comment
+        writer={issue.Author}
+        createdAt={issue.createdAt}
+        contents={issue.contents}
+        isAuthor={issue.isAuthor}
+        editContentsClickHandler={editContentsClickHandler}
+        {...restProps}
+      />
       {issue.Comments.map((comment) => {
         return (
           <Comment
