@@ -54,9 +54,7 @@ const IssueService = ({
     });
     return issues;
   };
-  const getUserbyName = (name) => {
-    return UserModel.findOne({ where: { name } });
-  };
+
   const getIssueList = async ({ page, whereOption }) => {
     const LIMIT = 15;
     const { count, rows: issues } = await getPagedIssues({
@@ -162,32 +160,12 @@ const IssueService = ({
       throw err;
     }
   };
-<<<<<<< HEAD
 
   const updateCloseStatus = async (issueId) => {
-=======
-  const updateMilestone = async (issueId, milestoneId) => {
->>>>>>> Style : 함수 이름 변경
     const issue = await IssueModel.findByPk(issueId);
     issue.isClosed = !issue.isClosed;
     if (issue.isClosed) issue.closedAt = new Date();
     await issue.save();
-<<<<<<< HEAD
-=======
-  };
-  const updateLabels = async (issueId, labels) => {
-    const issue = await IssueModel.findByPk(issueId, {
-      include: {
-        model: LabelModel,
-        through: { attributes: [] },
-      },
-    });
-    await issue.removeLabels(issue.Labels);
-    const associatedLabels = await getAssociatedLabels(labels);
-    if (associatedLabels) {
-      await issue.addLabels(associatedLabels);
-    }
->>>>>>> Style : 함수 이름 변경
     return issue;
   };
 
@@ -210,14 +188,8 @@ const IssueService = ({
   };
 
   const updateTitle = async (payload, loggedUserId) => {
-<<<<<<< HEAD
     const { issueId, title } = payload;
     const issue = await getValidIssue(issueId, loggedUserId);
-=======
-    const { id, title } = payload;
-
-    const issue = await getValidIssue(id, loggedUserId);
->>>>>>> Feat: 이슈 내용 변경 API 구현 (#145)
     issue.title = title;
     await issue.save();
     return issue;
@@ -294,14 +266,6 @@ const IssueService = ({
       await transaction.rollback();
       throw err;
     }
-  };
-
-  const updateContents = async (payload, loggedUserId) => {
-    const { id, contents } = payload;
-
-    const issue = await getValidIssue(id, loggedUserId);
-    issue.contents = contents;
-    await issue.save();
   };
 
   return {
