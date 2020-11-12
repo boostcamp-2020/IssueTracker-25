@@ -4,7 +4,6 @@ const {
   FETCH_SUCCESS,
   CHECK_ALL_ISSUE_HANDLER,
   CHECK_ISSUE_HANDLER,
-  ISSUE_LIST_PAGING,
 } = actionType;
 
 export default function reducer(state, action) {
@@ -21,13 +20,6 @@ export default function reducer(state, action) {
         issues: setAllIssueChecked(filteredIssues, false),
         page,
         lastPage,
-      };
-    }
-    case ISSUE_LIST_PAGING: {
-      const { moveTo } = action;
-      return {
-        ...state,
-        page: moveTo,
       };
     }
     case CHECK_ALL_ISSUE_HANDLER: {

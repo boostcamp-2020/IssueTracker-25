@@ -25,7 +25,6 @@ const getFilter = (location) => {
   return queryString.stringify(excludePageQuery);
 };
 const initialState = {
-  page: 1,
   lastPage: 1,
   issues: [],
   checkAllIssue: false,
@@ -49,7 +48,7 @@ const IssueList = ({ location }) => {
   useEffect(() => {
     setSearch(incodeFilter(filterQuery));
   }, [location.search]);
-  const { page, lastPage, issues, checkAllIssue } = state;
+  const { lastPage, issues, checkAllIssue } = state;
   const { error, loading } = fetchStatus;
   if (error) {
     return <div>{error}</div>;
@@ -74,7 +73,6 @@ const IssueList = ({ location }) => {
   const paginationClickHandler = ({ target }) => {
     const { page: moveTo } = target.dataset;
     history.push(`${TARGET_PAGE}=${moveTo}`);
-    dispatch(actions.issueListPaging(moveTo));
   };
   const searchHandler = ({ target: { value } }) => {
     setSearch(value);
@@ -105,7 +103,7 @@ const IssueList = ({ location }) => {
         filterHandler={filterHandler}
       />
       <Pagination
-        page={page}
+        page={getPage(location)}
         lastPage={lastPage}
         clickHandler={paginationClickHandler}
       />
