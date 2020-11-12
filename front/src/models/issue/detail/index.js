@@ -52,6 +52,9 @@ const IssueDetailPage = () => {
   const editContentsClickHandler = () => {
     dispatch(actions.updateOneState('showEditIssueDetail', true));
   };
+  const cancelContentsClickHandler = () => {
+    dispatch(actions.updateOneState('showEditIssueDetail', false));
+  };
 
   const updateTitle = (newTitle) => {
     dispatch(actions.updateOneState('newTitle', newTitle));
@@ -122,6 +125,7 @@ const IssueDetailPage = () => {
                 onChange={updateContents}
                 onContentsSave={onContentsSave}
                 editContentsClickHandler={editContentsClickHandler}
+                cancelContentsClickHandler={cancelContentsClickHandler}
               />
               <IssueDetailFooter
                 isClosed={issue.isClosed}
