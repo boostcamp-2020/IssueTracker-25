@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   IssueDetailHeader,
@@ -11,6 +11,7 @@ import Sidebar from '../../sidebar';
 import { userContext } from '../../../contexts/user';
 import IssueEditHeader from '../../../components/issue/edit/header';
 import issueAPI from '../../../apis/issue';
+import commentAPI from '../../../apis/comment';
 import utils from '../../../libs/utils';
 import { useAsync } from '../../../hooks/useAsync';
 import useSidebar from '../../../hooks/useSidebar';
@@ -33,7 +34,7 @@ const IssueDetailPage = () => {
     reducer,
     initialState,
   });
-
+  const [commentInput, setCommentInput] = useState('');
   const {
     state: { profileLink },
   } = useContext(userContext);
@@ -67,6 +68,16 @@ const IssueDetailPage = () => {
     dispatch(actions.updateTitle(newTitle));
   };
 
+  const registerComment = async () => {
+    const payload = {
+      issueId: issue.id,
+      contents: commentInput,
+    };
+    const newComment = await commentAPI.registerComment(payload);
+    dispatch(actions.updateComment(newComment));
+    setCommentInput('');
+  };
+
   if (error) {
     return <div>{error}</div>;
   }
@@ -95,12 +106,13 @@ const IssueDetailPage = () => {
               )}
               <IssueDetailBody issue={issue} />
               <IssueDetailFooter
+                inputState={commentInput}
                 isClosed={issue.isClosed}
                 profileLink={profileLink}
-                onInputComment={alert}
+                onInputComment={setCommentInput}
                 onReopenIssue={() => alert('reopen')}
                 onCloseIssue={() => alert('closed')}
-                onCommentSubmit={() => alert('submit!')}
+                onCommentSubmit={registerComment}
               />
             </>
           </SidebarLayout.Content>
