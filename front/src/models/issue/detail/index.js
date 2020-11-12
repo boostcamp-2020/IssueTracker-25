@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   IssueDetailHeader,
   IssueDetailBody,
+  IssueDetailFooter,
 } from '../../../components/issue/detail';
 
+import SidebarLayout from '../../../components/commons/SidebarLayout';
+import Sidebar from '../../sidebar';
+import { userContext } from '../../../contexts/user';
 import issueAPI from '../../../apis/issue';
 import utils from '../../../libs/utils';
 import { useAsync } from '../../../hooks/useAsync';
@@ -25,6 +29,9 @@ const IssueDetailPage = () => {
     reducer,
     initialState,
   });
+  const {
+    state: { profileLink },
+  } = useContext(userContext);
 
   const { issue } = state;
   const { error, loading } = fetchStatus;
@@ -39,12 +46,25 @@ const IssueDetailPage = () => {
   return (
     !utils.isEmpty(issue) && (
       <>
-        <IssueDetailHeader issue={issue} />
-        <IssueDetailBody
-          issue={issue}
-          seletedState={seletedState}
-          handlers={handlers}
-        />
+        <SidebarLayout.BaseLayout>
+          <SidebarLayout.Content>
+            <>
+              <IssueDetailHeader issue={issue} />
+              <IssueDetailBody issue={issue} />
+              <IssueDetailFooter
+                isClosed={issue.isClosed}
+                profileLink={profileLink}
+                onInputComment={alert}
+                onReopenIssue={() => alert('reopen')}
+                onCloseIssue={() => alert('closed')}
+                onCommentSubmit={() => alert('submit!')}
+              />
+            </>
+          </SidebarLayout.Content>
+          <SidebarLayout.Sidebar>
+            <Sidebar selected={seletedState} handlers={handlers} />
+          </SidebarLayout.Sidebar>
+        </SidebarLayout.BaseLayout>
       </>
     )
   );
