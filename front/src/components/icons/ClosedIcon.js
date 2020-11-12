@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ClosedIcon = () => {
+const ClosedIcon = ({ color = 'white' }) => {
   return (
     <svg
-      fill="white"
+      fill={color}
       height="16"
       viewBox="0 0 16 16"
       version="1.1"
