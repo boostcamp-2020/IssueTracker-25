@@ -33,7 +33,11 @@ const IssueDetailHeaderContainer = styled.div`
   }
 `;
 
-const IssueDetailHeader = ({ issue, editTitleClickHandler }) => {
+const IssueDetailHeader = ({
+  issue,
+  editTitleClickHandler,
+  countOfComments,
+}) => {
   return (
     <IssueDetailHeaderContainer>
       <div className="issue-detail-header__title-container">
@@ -52,7 +56,7 @@ const IssueDetailHeader = ({ issue, editTitleClickHandler }) => {
           </Link>
         </div>
       </div>
-      <IssueHeaderInfo issue={issue} />
+      <IssueHeaderInfo issue={issue} countOfComments={countOfComments} />
     </IssueDetailHeaderContainer>
   );
 };

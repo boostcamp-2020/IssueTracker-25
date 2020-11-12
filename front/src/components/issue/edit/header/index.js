@@ -37,6 +37,7 @@ const IssueEditHeader = ({
   updateTitle,
   onTitleSave,
   cancelTitleClickHandler,
+  countOfComments,
 }) => {
   return (
     <IssueEditHeaderContainer>
@@ -56,7 +57,7 @@ const IssueEditHeader = ({
           </CustomButton>
         </div>
       </div>
-      <IssueHeaderInfo issue={issue} />
+      <IssueHeaderInfo issue={issue} countOfComments={countOfComments} />
     </IssueEditHeaderContainer>
   );
 };
