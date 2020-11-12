@@ -11,7 +11,10 @@ const IssueDetailBody = ({
   return (
     <>
       {showEditIssueDetail ? (
-        <MarkdownEditor onChange={(value) => onChange(value)} />
+        <MarkdownEditor
+          onChange={(value) => onChange(value)}
+          initialContents={issue.contents}
+        />
       ) : (
         <Comment
           writer={issue.Author}
