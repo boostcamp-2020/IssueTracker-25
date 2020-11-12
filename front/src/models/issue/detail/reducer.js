@@ -1,12 +1,6 @@
 import actionType from './action-type';
 
-const {
-  FETCH_SUCCESS,
-  SHOW_EDIT_ISSUE_HEADER,
-  UPDATE_TITLE,
-  SUCCESS_UPDATE_TITLE,
-  SHOW_EDIT_ISSUE_DETAIL,
-} = actionType;
+const { FETCH_SUCCESS, SUCCESS_UPDATE_TITLE, UPDATE_ONE_STATE } = actionType;
 
 export default function reducer(state, action) {
   const { type } = action;
@@ -19,25 +13,11 @@ export default function reducer(state, action) {
         countOfComments: data.Comments.length,
       };
     }
-    case SHOW_EDIT_ISSUE_HEADER: {
-      const { showStatus } = action;
+    case UPDATE_ONE_STATE: {
+      const { newValue, targetState } = action;
       return {
         ...state,
-        showEditIssueHeader: showStatus,
-      };
-    }
-    case SHOW_EDIT_ISSUE_DETAIL: {
-      const { showStatus } = action;
-      return {
-        ...state,
-        showEditIssueDetail: showStatus,
-      };
-    }
-    case UPDATE_TITLE: {
-      const { newTitle } = action;
-      return {
-        ...state,
-        newTitle,
+        [targetState]: newValue,
       };
     }
     case SUCCESS_UPDATE_TITLE: {

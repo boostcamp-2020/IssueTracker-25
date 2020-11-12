@@ -20,6 +20,7 @@ import actions from './actions';
 const initialState = {
   issue: {},
   newTitle: '',
+  newContents: '',
   countOfComments: undefined,
   showEditIssueHeader: false,
   showEditIssueDetail: false,
@@ -43,13 +44,13 @@ const IssueDetailPage = () => {
   const { error, loading } = fetchStatus;
 
   const editTitleClickHandler = () => {
-    dispatch(actions.showEditIssueHeader(true));
+    dispatch(actions.updateOneState('showEditIssueHeader', true));
   };
   const cancelTitleClickHandler = () => {
-    dispatch(actions.showEditIssueHeader(false));
+    dispatch(actions.updateOneState('showEditIssueHeader', false));
   };
   const editContentsClickHandler = () => {
-    dispatch(actions.showEditIssueDetail(true));
+    dispatch(actions.updateOneState('showEditIssueDetail', true));
   };
 
   const onTitleSave = async () => {
@@ -68,10 +69,12 @@ const IssueDetailPage = () => {
   };
 
   const updateTitle = (newTitle) => {
-    dispatch(actions.updateTitle(newTitle));
+    dispatch(actions.updateOneState('newTitle', newTitle));
   };
 
-  const updateContents = () => {};
+  const updateContents = (newContents) => {
+    dispatch(actions.updateOneState('newContents', newContents));
+  };
 
   if (error) {
     return <div>{error}</div>;
