@@ -49,12 +49,9 @@ const IssueList = ({ location }) => {
     setSearch(incodeFilter(filterQuery));
   }, [location.search]);
   const { lastPage, issues, checkAllIssue } = state;
-  const { error, loading } = fetchStatus;
+  const { error } = fetchStatus;
   if (error) {
     return <div>{error}</div>;
-  }
-  if (loading) {
-    return null;
   }
 
   if (issues.length === 0) {

@@ -55,13 +55,6 @@ const IssueListHeader = ({
   ) {
     return <div>error</div>;
   }
-  if (
-    userFetchStatus.loading ||
-    milestoneFetchStatus.loading ||
-    labelFetchStatus.loading
-  ) {
-    return null;
-  }
 
   return (
     <IssueListHeaderContainer

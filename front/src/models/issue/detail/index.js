@@ -93,7 +93,7 @@ const IssueDetailPage = () => {
     const newComment = await commentAPI.registerComment(payload);
     dispatch(actions.updateComment(newComment));
     setCommentInput('');
-  }
+  };
 
   const onContentsSave = async () => {
     const {
@@ -111,9 +111,6 @@ const IssueDetailPage = () => {
 
   if (error) {
     return <div>{error}</div>;
-  }
-  if (loading) {
-    return null;
   }
 
   return (
