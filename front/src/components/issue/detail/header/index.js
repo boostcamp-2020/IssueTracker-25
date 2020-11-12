@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import color from '../../../../libs/color';
 import CustomButton from '../../../commons/buttons/CustomButton';
-import IssueDetailHeaderInfo from './IssueDetailHeaderInfo';
+import IssueHeaderInfo from '../../../commons/issue/IssueHeaderInfo';
 import routeUrl from '../../../../libs/routeUrl';
 
 const IssueDetailHeaderContainer = styled.div`
@@ -33,19 +33,30 @@ const IssueDetailHeaderContainer = styled.div`
   }
 `;
 
-const IssueDetailHeader = ({ issue, countOfComments }) => {
+const IssueDetailHeader = ({
+  issue,
+  editTitleClickHandler,
+  countOfComments,
+}) => {
   return (
     <IssueDetailHeaderContainer>
       <div className="issue-detail-header__title-container">
         <div className="issue-detail-header__title">{issue.title}</div>
         <div className="issue-detail-header__buttons">
-          <CustomButton style={{ color: 'default' }}>Edit</CustomButton>
+          {issue.isAuthor && (
+            <CustomButton
+              style={{ color: 'default' }}
+              handleClick={editTitleClickHandler}
+            >
+              Edit
+            </CustomButton>
+          )}
           <Link to={routeUrl.NEW_ISSUES}>
             <CustomButton style={{ color: 'green' }}>New issue</CustomButton>
           </Link>
         </div>
       </div>
-      <IssueDetailHeaderInfo issue={issue} countOfComments={countOfComments} />
+      <IssueHeaderInfo issue={issue} countOfComments={countOfComments} />
     </IssueDetailHeaderContainer>
   );
 };

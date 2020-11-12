@@ -17,6 +17,11 @@ const theme = {
     color: color.white,
     borderColor: 'transparent',
   },
+  grayBlack: {
+    background: color.lightGray,
+    color: color.black,
+    borderColor: 'transparent',
+  },
   whiteRed: {
     background: color.white,
     color: color.red,

@@ -6,7 +6,7 @@ const IssueInfoText = styled.span`
   margin-left: 0.5rem;
 `;
 
-const IssueDetailHeaderInfo = ({ issue, countOfComments }) => {
+const IssueHeaderInfo = ({ issue, countOfComments }) => {
   const { isClosed } = issue;
 
   const generateIssueInfo = () => {
@@ -25,4 +25,4 @@ const IssueDetailHeaderInfo = ({ issue, countOfComments }) => {
   );
 };
 
-export default IssueDetailHeaderInfo;
+export default IssueHeaderInfo;
