@@ -1,12 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import CustomCheckBoxButton from '../../../commons/buttons/CustomCheckBoxButton';
 import Dropdown from '../../../commons/dropdown/Dropdown';
 import UserDropdownItem from '../../../commons/dropdown/UserDropdownItem';
 import LabelDropdownItem from '../../../commons/dropdown/LabelDropdownItem';
 import MilestoneDropdownItem from '../../../commons/dropdown/MilestoneDropdownItem';
-
-const IssueListHeaderContainer = styled.div``;
 
 const IssueListHeader = ({
   checkAllIssue,
@@ -14,17 +11,17 @@ const IssueListHeader = ({
   labels,
   milestones,
   users,
-  selectedAssigneeId,
-  selectedAuthorId,
-  selectedMilestoneId,
-  selectedLabelSet,
-  milestoneSelectHandler,
-  labelSelectHandler,
-  assigneeSelectHandler,
-  authorSelectHandler,
+  filterState,
+  filterHandler,
 }) => {
+  const {
+    milestone: selectedMilestone = '',
+    author: selectedAuthor = '',
+    assginee: selectedAssignee = '',
+    label: selectedLabelSet = new Set(),
+  } = filterState;
   return (
-    <IssueListHeaderContainer>
+    <div>
       <CustomCheckBoxButton
         type="button"
         checked={checkAllIssue}
@@ -42,8 +39,9 @@ const IssueListHeader = ({
               <UserDropdownItem
                 key={`filter-author-id-${user.id}`}
                 userInfo={user}
-                onClick={authorSelectHandler}
-                selected={selectedAuthorId === user.id}
+                isAuthor
+                onClick={filterHandler}
+                selected={selectedAuthor === user.name}
               />
             );
           })}
@@ -60,8 +58,8 @@ const IssueListHeader = ({
               <LabelDropdownItem
                 key={`filter-label-id-${label.id}`}
                 label={label}
-                onClick={labelSelectHandler}
-                selected={selectedLabelSet.has(label.id)}
+                onClick={filterHandler}
+                selected={selectedLabelSet.has(label.name)}
               />
             );
           })}
@@ -81,8 +79,8 @@ const IssueListHeader = ({
               <MilestoneDropdownItem
                 key={`filter-milestone-id-${milestone.id}`}
                 milestone={milestone}
-                onClick={milestoneSelectHandler}
-                selected={selectedMilestoneId === milestone.id}
+                onClick={filterHandler}
+                selected={selectedMilestone === milestone.title}
               />
             );
           })}
@@ -99,13 +97,13 @@ const IssueListHeader = ({
               <UserDropdownItem
                 key={`filter-assignee-id-${user.id}`}
                 userInfo={user}
-                onClick={assigneeSelectHandler}
-                selected={selectedAssigneeId === user.id}
+                onClick={filterHandler}
+                selected={selectedAssignee === user.name}
               />
             );
           })}
       </Dropdown>
-    </IssueListHeaderContainer>
+    </div>
   );
 };
 

@@ -3,9 +3,11 @@ import DropdownItemContainer from './DropdownItemContainer';
 import * as Icons from '../../icons';
 
 const MilestoneDropdownItem = ({ selected, milestone, onClick }) => {
-  const { id, title } = milestone;
+  const { title } = milestone;
   return (
-    <DropdownItemContainer onClick={() => onClick(id)}>
+    <DropdownItemContainer
+      onClick={() => onClick({ key: 'milestone', value: title })}
+    >
       <div className="dropdown-item dropdown-item-check">
         {selected && <Icons.CheckIcon />}
       </div>

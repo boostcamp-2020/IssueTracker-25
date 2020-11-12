@@ -1,42 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import queryString from 'query-string';
 import { useHistory } from 'react-router-dom';
+import queryString from 'query-string';
 import { useAsync } from '../../../hooks/useAsync';
-import useFilter from '../../../hooks/useFilter';
 import * as IssueListComponents from '../../../components/issue/list';
 import Pagination from '../../../components/commons/Pagination';
 import issueApi from '../../../apis/issue';
 import reducer from './reducer';
 import actions from './actions';
 
-const FIRST_PAGE = 1;
-const TARGET_PAGE = '/?page';
+import {
+  decodeFilter,
+  incodeFilter,
+  parser,
+  getFilter,
+  getPage,
+} from '../../../libs/url-parser';
 
-const getPage = (location) => {
-  const { page: currentPage } = queryString.parse(location.search);
-  return currentPage || FIRST_PAGE;
-};
-const getFilter = (location) => {
-  const querys = queryString.parse(location.search);
-  const excludePageQuery = Object.keys(querys).reduce((acc, query) => {
-    if (query !== 'page') acc[query] = querys[query];
-    return acc;
-  }, {});
-  return queryString.stringify(excludePageQuery);
-};
+const TARGET_PAGE = '/?page';
 const initialState = {
   lastPage: 1,
   issues: [],
   checkAllIssue: false,
 };
-const decodeFilter = (target) =>
-  target.replace(/:/g, '=').replace(/[ *]/g, '&');
-const incodeFilter = (target) => target.replace(/=/g, ':').replace(/&/g, ' ');
+
 const IssueList = ({ location }) => {
   const history = useHistory();
   const filterQuery = decodeURIComponent(getFilter(location));
   const [search, setSearch] = useState(incodeFilter(filterQuery));
-  const { state: filterState, handlers: filterHandler } = useFilter();
   const getIssuesApi = () => issueApi.getIssues(getPage(location), filterQuery);
   const { state, fetchStatus, dispatch } = useAsync({
     api: getIssuesApi,
@@ -44,19 +34,32 @@ const IssueList = ({ location }) => {
     deps: [location.search],
     initialState,
   });
-
-  useEffect(() => {
-    setSearch(incodeFilter(filterQuery));
-  }, [location.search]);
   const { lastPage, issues, checkAllIssue } = state;
   const { error } = fetchStatus;
-  if (error) {
-    return <div>{error}</div>;
-  }
+  const parsered = parser(location.search);
 
-  if (issues.length === 0) {
-    return <div>No results matched your search.</div>;
-  }
+  useEffect(() => {
+    const a = incodeFilter(filterQuery);
+    console.log(a);
+    setSearch(a);
+  }, [location.search]);
+
+  const onFilterHandler = ({ key, value }) => {
+    if (key === 'label') {
+      if (!parsered[key]) {
+        parsered[key] = new Set([value]);
+      } else if (parsered[key].has(value)) parsered[key].delete(value);
+      else parsered[key].add(value);
+    } else if (!parsered[key]) parsered[key] = value;
+    else {
+      parsered[key] = parsered[key] === value ? undefined : value;
+    }
+    const query = queryString.stringify({
+      ...parsered,
+      label: parsered.label ? [...parsered.label] : undefined,
+    });
+    history.push(`${TARGET_PAGE}=1${query ? `&${query}` : ''}`);
+  };
 
   const checkBoxClickHandler = ({ target }) => {
     const { id } = target;
@@ -76,12 +79,19 @@ const IssueList = ({ location }) => {
   };
 
   const pressSearchEnter = ({ keyCode }) => {
+    const query = decodeFilter(search);
     if (keyCode === 13) {
-      history.push(`${TARGET_PAGE}=1&${decodeFilter(search)}`);
+      history.push(`${TARGET_PAGE}=1${query ? `&${query}` : ''}`);
     }
   };
-  const onClickFilterItem = (value) =>
-    history.push(`${TARGET_PAGE}=1&${decodeFilter(value)}`);
+  const onClickFilterItem = (value) => {
+    const query = decodeFilter(value);
+    history.push(`${TARGET_PAGE}=1${query ? `&${query}` : ''}`);
+  };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <>
@@ -96,8 +106,8 @@ const IssueList = ({ location }) => {
         checkAllIssue={checkAllIssue}
         checkBoxClickHandler={checkBoxClickHandler}
         allCheckBoxClickHandler={allCheckBoxClickHandler}
-        filterState={filterState}
-        filterHandler={filterHandler}
+        filterState={parsered}
+        filterHandler={onFilterHandler}
       />
       <Pagination
         page={getPage(location)}
