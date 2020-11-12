@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import { useAsync } from '../../hooks/useAsync';
 import { userContext } from '../../contexts/user';
-import labelReducer from './label-reducer';
-import milestoneReducer from './milestone-reducer';
-import assigneeReducer from './assignee-reducer';
+import reducer from './reducer';
 import labelApi from '../../apis/label';
 import milestoneApi from '../../apis/milestone';
 import usersApi from '../../apis/user';
@@ -22,7 +20,7 @@ const Sidebar = ({ handlers, selected }) => {
 
   const { state: labelState, fetchStatus: labelFetchStatus } = useAsync({
     api: labelApi.getLabels,
-    reducer: labelReducer,
+    reducer,
     deps: [],
     initialState: [],
   });
@@ -30,7 +28,7 @@ const Sidebar = ({ handlers, selected }) => {
   const { state: milestoneState, fetchStatus: milestoneFetchStatus } = useAsync(
     {
       api: milestoneApi.getMilestones,
-      reducer: milestoneReducer,
+      reducer,
       deps: [],
       initialState: [],
     },
@@ -38,7 +36,7 @@ const Sidebar = ({ handlers, selected }) => {
 
   const { state: assigneeState, fetchStatus: assigneeFetchStatus } = useAsync({
     api: usersApi.getUsers,
-    reducer: assigneeReducer,
+    reducer,
     deps: [],
     initialState: [],
   });

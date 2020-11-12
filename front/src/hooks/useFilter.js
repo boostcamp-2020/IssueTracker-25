@@ -3,11 +3,12 @@ import utils from '../libs/utils';
 
 const initialSideState = {
   milestoneId: null,
-  assignees: new Set(),
+  authorId: null,
+  assigneeId: null,
   labels: new Set(),
 };
 
-const useSidebar = () => {
+const useFilter = () => {
   const [state, setState] = useState(initialSideState);
   const updateMilestone = (id) => {
     utils.toggleStateIfEqual({
@@ -17,6 +18,13 @@ const useSidebar = () => {
       key: 'milestoneId',
     });
   };
+  const updateAuthor = (id) => {
+    utils.toggleStateIfEqual({ state, setState, value: id, key: 'authorId' });
+  };
+  const updateAssignee = (id) => {
+    utils.toggleStateIfEqual({ state, setState, value: id, key: 'assigneeId' });
+  };
+
   const updateSet = ({ type, id }) => {
     const target = state[type];
     if (target.has(id)) {
@@ -28,18 +36,14 @@ const useSidebar = () => {
       setState({ ...state, [type]: new Set([...target, id]) });
     }
   };
-  const updateAssignee = (id) => {
-    const type = 'assignees';
-    updateSet({ type, id });
-  };
   const updateLabel = (id) => {
     const type = 'labels';
     updateSet({ type, id });
   };
   return {
     state,
-    handlers: { updateAssignee, updateMilestone, updateLabel },
+    handlers: { updateAssignee, updateMilestone, updateLabel, updateAuthor },
   };
 };
 
-export default useSidebar;
+export default useFilter;

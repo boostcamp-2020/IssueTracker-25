@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import CustomButton from '../../commons/buttons/CustomButton';
 import MovePageButton from '../../commons/buttons/MovePageButton';
+import IssueFilterButton from './IssueFilterButton';
 import routeUrl from '../../../libs/routeUrl';
 
 const Div = styled.div`
@@ -16,7 +17,7 @@ const Nav = styled.nav`
 function IssueFilterContainer() {
   return (
     <Div>
-      <CustomButton>Filters</CustomButton>
+      <IssueFilterButton />
       <input
         name="issue-filter"
         type="text"

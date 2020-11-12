@@ -2,6 +2,7 @@ import React from 'react';
 import queryString from 'query-string';
 import { useHistory } from 'react-router-dom';
 import { useAsync } from '../../../hooks/useAsync';
+import useFilter from '../../../hooks/useFilter';
 import * as IssueListComponents from '../../../components/issue/list';
 import Pagination from '../../../components/commons/Pagination';
 import issueApi from '../../../apis/issue';
@@ -24,6 +25,7 @@ const initialState = {
 };
 const IssueList = ({ location }) => {
   const history = useHistory();
+  const { state: filterState, handlers: filterHandler } = useFilter();
   const getIssuesApi = () => issueApi.getIssues(getPage(location));
   const { state, fetchStatus, dispatch } = useAsync({
     api: getIssuesApi,
@@ -68,6 +70,8 @@ const IssueList = ({ location }) => {
         checkAllIssue={checkAllIssue}
         checkBoxClickHandler={checkBoxClickHandler}
         allCheckBoxClickHandler={allCheckBoxClickHandler}
+        filterState={filterState}
+        filterHandler={filterHandler}
       />
       <Pagination
         page={page}
