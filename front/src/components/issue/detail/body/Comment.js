@@ -6,6 +6,7 @@ import ArrowContainerStyle from '../../../commons/ArrowContainerStyle';
 import MarkdownViewer from '../../../commons/MarkdownViewer';
 import CustomButton from '../../../commons/buttons/CustomButton';
 import { IssueEditBody } from '../../edit';
+import utils from '../../../../libs/utils';
 
 const OWNER = 'Owner';
 
@@ -67,7 +68,7 @@ const Comment = ({
   editContentsClickHandler,
   ...restProps
 }) => {
-  const commentedAt = `commented ${createdAt}`;
+  const commentedAt = `commented ${utils.timeDiffFromNow(createdAt)}`;
   return (
     <CommentContainer>
       <ProfileContainer className="pc-only">
