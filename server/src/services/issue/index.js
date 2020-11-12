@@ -161,103 +161,12 @@ const IssueService = ({
     }
   };
 
-  const checkIsAuthor = (issue, loggedUserId) => {
-    if (issue.authorId === loggedUserId) {
-      return true;
-    }
-    return false;
-  };
-
-  const getValidIssue = async (issueId, loggedUserId) => {
+  const updateCloseStatus = async (issueId) => {
     const issue = await IssueModel.findByPk(issueId);
-    if (!issue) {
-      throw new Error(messages.NOT_FOUND);
-    }
-    if (!checkIsAuthor(issue, loggedUserId)) {
-      throw new Error(messages.ACCESS_DENIED);
-    }
-    return issue;
-  };
-
-  const updateTitle = async (payload, loggedUserId) => {
-    const { issueId, title } = payload;
-    const issue = await getValidIssue(issueId, loggedUserId);
-    issue.title = title;
+    issue.isClosed = !issue.isClosed;
+    if (issue.isClosed) issue.closedAt = new Date();
     await issue.save();
     return issue;
-  };
-
-  const updateContents = async (payload, loggedUserId) => {
-    const { issueId, contents } = payload;
-
-    const issue = await getValidIssue(issueId, loggedUserId);
-    issue.contents = contents;
-    await issue.save();
-    return issue;
-  };
-
-  const updateMilestone = async (payload) => {
-    const { issueId, milestoneId } = payload;
-    const issue = await IssueModel.findByPk(issueId);
-    const newMilestoneId =
-      issue.milestoneId === milestoneId ? null : milestoneId;
-    issue.milestoneId = newMilestoneId;
-    await issue.save();
-    return issue;
-  };
-
-  const updateLabels = async (payload) => {
-    const { issueId, labels } = payload;
-    const transaction = await sequelize.transaction();
-    try {
-      const issue = await IssueModel.findByPk(issueId, {
-        include: {
-          model: LabelModel,
-          through: { attributes: [] },
-        },
-        transaction,
-      });
-      if (!issue) {
-        throw new Error(messages.NOT_FOUND);
-      }
-      await issue.removeLabels(issue.Labels, transaction);
-      const associatedLabels = await getAssociatedLabels(labels);
-      if (associatedLabels) {
-        await issue.addLabels(associatedLabels, transaction);
-      }
-      await transaction.commit();
-      return issue;
-    } catch (err) {
-      await transaction.rollback();
-      throw err;
-    }
-  };
-
-  const updateAssignees = async (payload) => {
-    const { issueId, assignees } = payload;
-    const transaction = await sequelize.transaction();
-    try {
-      const issue = await IssueModel.findByPk(issueId, {
-        include: {
-          model: UserModel,
-          as: 'Assignees',
-          through: { attributes: [] },
-        },
-      });
-      if (!issue) {
-        throw new Error(messages.NOT_FOUND);
-      }
-      await issue.removeAssignees(issue.Assignees);
-      const associatedAssignees = await getAssociatedAssignees(assignees);
-      if (associatedAssignees) {
-        await issue.addAssignees(associatedAssignees);
-      }
-      await transaction.commit();
-      return issue;
-    } catch (err) {
-      await transaction.rollback();
-      throw err;
-    }
   };
 
   const checkIsAuthor = (issue, loggedUserId) => {
@@ -363,6 +272,7 @@ const IssueService = ({
     getIssueList,
     getIssue,
     registerIssue,
+    updateCloseStatus,
     updateTitle,
     updateContents,
     updateMilestone,
