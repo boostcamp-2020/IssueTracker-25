@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import { useHistory } from 'react-router-dom';
 import { useAsync } from '../../../hooks/useAsync';
@@ -30,13 +30,13 @@ const initialState = {
   issues: [],
   checkAllIssue: false,
 };
-
+const decodeFilter = (target) =>
+  target.replace(/:/g, '=').replace(/[ *]/g, '&');
+const incodeFilter = (target) => target.replace(/=/g, ':').replace(/&/g, ' ');
 const IssueList = ({ location }) => {
   const history = useHistory();
   const filterQuery = decodeURIComponent(getFilter(location));
-  const [search, setSearch] = useState(
-    filterQuery.replace(/=/g, ':').replace(/&/g, ' '),
-  );
+  const [search, setSearch] = useState(incodeFilter(filterQuery));
   const { state: filterState, handlers: filterHandler } = useFilter();
   const getIssuesApi = () => issueApi.getIssues(getPage(location), filterQuery);
   const { state, fetchStatus, dispatch } = useAsync({
@@ -45,6 +45,10 @@ const IssueList = ({ location }) => {
     deps: [location.search],
     initialState,
   });
+
+  useEffect(() => {
+    setSearch(incodeFilter(filterQuery));
+  }, [location.search]);
   const { page, lastPage, issues, checkAllIssue } = state;
   const { error, loading } = fetchStatus;
   if (error) {
@@ -75,18 +79,22 @@ const IssueList = ({ location }) => {
   const searchHandler = ({ target: { value } }) => {
     setSearch(value);
   };
+
   const pressSearchEnter = ({ keyCode }) => {
     if (keyCode === 13) {
-      const chageQuery = search.replace(/:/g, '=').replace(/[ *]/g, '&');
-      history.push(`${TARGET_PAGE}=1&${chageQuery}`);
+      history.push(`${TARGET_PAGE}=1&${decodeFilter(search)}`);
     }
   };
+  const onClickFilterItem = (value) =>
+    history.push(`${TARGET_PAGE}=1&${decodeFilter(value)}`);
+
   return (
     <>
       <IssueListComponents.IssueFilterContainer
         filter={search}
         onEnter={pressSearchEnter}
         onChange={searchHandler}
+        clickFilterHandler={onClickFilterItem}
       />
       <IssueListComponents.IssueListContainer
         issues={issues}

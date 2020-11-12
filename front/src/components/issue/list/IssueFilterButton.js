@@ -6,19 +6,34 @@ const filterButtonContent = () => {
   return <div>Filters</div>;
 };
 const filterDropdownItemContent = [
-  'Open issues and pull requests',
-  'Your issues',
-  'Your pull requests',
-  'Everything assgined to you',
-  'Everything mentioning you',
+  {
+    title: 'Open issues',
+    value: 'is:open',
+  },
+  {
+    title: 'Your issues',
+    value: 'author:@me',
+  },
+
+  {
+    title: 'Everything assgined to you',
+    value: 'assignee:@me',
+  },
+  {
+    title: 'Closed issues',
+    value: 'is:closed',
+  },
 ];
 
 const IssueFilterButton = ({ clickFilterHandler }) => {
   return (
     <Dropdown headerText="Filter Issues" button={filterButtonContent()}>
-      {[...filterDropdownItemContent].map((content) => {
+      {[...filterDropdownItemContent].map(({ value, title }) => {
         return (
-          <FilterDropdownItem content={content} onClick={clickFilterHandler} />
+          <FilterDropdownItem
+            content={title}
+            onClick={() => clickFilterHandler(value)}
+          />
         );
       })}
     </Dropdown>
