@@ -3,7 +3,7 @@ import filterParser from './filter-parser';
 
 jest.mock('sequelize');
 const defaultOption = {
-  open: {},
+  open: { isClosed: false },
   author: {},
   assignee: {},
   milestone: {},

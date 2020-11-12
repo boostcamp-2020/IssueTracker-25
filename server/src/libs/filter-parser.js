@@ -36,6 +36,13 @@ const nopParser = (target, whereOptions) => {
   return { ...whereOptions, [key]: { ...ABLE_KEY[key] } };
 };
 
+const defaultOpen = (query, whereOptions) => {
+  const { page, is } = query;
+  if (!page && !is) {
+    return { ...whereOptions, open: { isClosed: false } };
+  }
+  return whereOptions;
+};
 const filterParser = ({ query, myName }) => {
   let whereOptions = {
     open: {},
@@ -78,6 +85,7 @@ const filterParser = ({ query, myName }) => {
   };
 
   Object.keys(query).map(changeLowerCase).forEach(callback);
+  whereOptions = defaultOpen(query, whereOptions);
   return whereOptions;
 };
 export default filterParser;
