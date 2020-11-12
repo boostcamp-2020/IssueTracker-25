@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import color from '../../libs/color';
+import routeUrl from '../../libs/routeUrl';
 
 const Header = styled.header`
   display: flex;
   height: 4rem;
   background: ${color.black};
   align-items: center;
-  text-align: center;
+  justify-content: center;
 
   & .header-title {
     margin: 0 auto;
@@ -20,7 +22,9 @@ const Header = styled.header`
 const HeaderComponents = () => {
   return (
     <Header>
-      <div className="header-title">ISSUES</div>
+      <Link to={routeUrl.MAIN}>
+        <div className="header-title">ISSUES</div>
+      </Link>
     </Header>
   );
 };
