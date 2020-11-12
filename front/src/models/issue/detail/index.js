@@ -26,7 +26,7 @@ const IssueDetailPage = () => {
     initialState,
   });
 
-  const { issue } = state;
+  const { issue, countOfComments } = state;
   const { error, loading } = fetchStatus;
 
   if (error) {
@@ -39,7 +39,7 @@ const IssueDetailPage = () => {
   return (
     !utils.isEmpty(issue) && (
       <>
-        <IssueDetailHeader issue={issue} />
+        <IssueDetailHeader issue={issue} countOfComments={countOfComments} />
         <IssueDetailBody
           issue={issue}
           seletedState={seletedState}

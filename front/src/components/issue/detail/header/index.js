@@ -33,7 +33,7 @@ const IssueDetailHeaderContainer = styled.div`
   }
 `;
 
-const IssueDetailHeader = ({ issue }) => {
+const IssueDetailHeader = ({ issue, countOfComments }) => {
   return (
     <IssueDetailHeaderContainer>
       <div className="issue-detail-header__title-container">
@@ -45,7 +45,7 @@ const IssueDetailHeader = ({ issue }) => {
           </Link>
         </div>
       </div>
-      <IssueDetailHeaderInfo issue={issue} />
+      <IssueDetailHeaderInfo issue={issue} countOfComments={countOfComments} />
     </IssueDetailHeaderContainer>
   );
 };
