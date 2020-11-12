@@ -3,7 +3,7 @@ import IssueController from './controller';
 import IssueService from '../../services/issue';
 import db from '../../models';
 
-const { Sequelize } = db;
+const { Sequelize, sequelize } = db;
 
 const {
   Issue: IssueModel,
@@ -11,7 +11,7 @@ const {
   Label: LabelModel,
   Milestone: MilestoneModel,
   Comment: CommentModel,
-} = db.sequelize.models;
+} = sequelize.models;
 
 const router = express.Router();
 const issueController = IssueController(
@@ -22,6 +22,7 @@ const issueController = IssueController(
     MilestoneModel,
     CommentModel,
     Sequelize,
+    sequelize,
   }),
 );
 

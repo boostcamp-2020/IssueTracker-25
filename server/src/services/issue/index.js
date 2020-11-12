@@ -5,6 +5,7 @@ const IssueService = ({
   MilestoneModel,
   CommentModel,
   Sequelize,
+  sequelize,
 }) => {
   const { Op } = Sequelize;
 
@@ -135,18 +136,25 @@ const IssueService = ({
       milestoneId,
       authorId: loggedUserId,
     };
-    const issue = await IssueModel.create(newIssue);
-    const [labels, assignees] = await Promise.all([
-      getAssociatedLabels(payload.labels),
-      getAssociatedAssignees(payload.assignees),
-    ]);
-    if (labels) {
-      issue.addLabels(labels);
+    const transaction = await sequelize.transaction();
+    try {
+      const issue = await IssueModel.create(newIssue, { transaction });
+      const [labels, assignees] = await Promise.all([
+        getAssociatedLabels(payload.labels),
+        getAssociatedAssignees(payload.assignees),
+      ]);
+      if (labels) {
+        await issue.addLabels(labels, { transaction });
+      }
+      if (assignees) {
+        await issue.addAssignees(assignees, { transaction });
+      }
+      await transaction.commit();
+      return issue.id;
+    } catch (err) {
+      await transaction.rollback();
+      throw err;
     }
-    if (assignees) {
-      issue.addAssignees(assignees);
-    }
-    return issue.id;
   };
 
   return {
