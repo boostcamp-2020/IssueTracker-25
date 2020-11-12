@@ -6,14 +6,14 @@ const IssueInfoText = styled.span`
   margin-left: 0.5rem;
 `;
 
-const IssueHeaderInfo = ({ issue }) => {
+const IssueHeaderInfo = ({ issue, countOfComments }) => {
   const { isClosed } = issue;
 
   const generateIssueInfo = () => {
     return `${issue.Author.name} ${
       issue.isClosed ? 'closed' : 'opend'
     } this issue ${issue.isClosed ? issue.closedAt : issue.createdAt} ㆍ ${
-      issue.countOfComments || 0
+      countOfComments || 0
     } comments`;
   };
 

@@ -40,7 +40,12 @@ const IssueDetailPage = () => {
     state: { profileLink },
   } = useContext(userContext);
 
-  const { issue, showEditIssueHeader, showEditIssueDetail } = detailState;
+  const {
+    issue,
+    showEditIssueHeader,
+    showEditIssueDetail,
+    countOfComments,
+  } = detailState;
   const { error, loading } = fetchStatus;
 
   const editTitleClickHandler = () => {
@@ -112,9 +117,11 @@ const IssueDetailPage = () => {
                   updateTitle={updateTitle}
                   onTitleSave={onTitleSave}
                   cancelTitleClickHandler={cancelTitleClickHandler}
+                  countOfComments={countOfComments}
                 />
               ) : (
                 <IssueDetailHeader
+                  countOfComments={countOfComments}
                   issue={issue}
                   editTitleClickHandler={editTitleClickHandler}
                 />
