@@ -5,6 +5,7 @@ const {
   SHOW_EDIT_ISSUE_HEADER,
   UPDATE_TITLE,
   SUCCESS_UPDATE_TITLE,
+  REGISTER_COMMENT,
 } = actionType;
 export default {
   fetchSuccess(data) {
@@ -28,6 +29,12 @@ export default {
   successUpdateTitle() {
     return {
       type: SUCCESS_UPDATE_TITLE,
+    };
+  },
+  updateComment(comment) {
+    return {
+      type: REGISTER_COMMENT,
+      comment,
     };
   },
 };

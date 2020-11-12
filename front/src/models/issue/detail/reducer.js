@@ -5,6 +5,7 @@ const {
   SHOW_EDIT_ISSUE_HEADER,
   UPDATE_TITLE,
   SUCCESS_UPDATE_TITLE,
+  REGISTER_COMMENT,
 } = actionType;
 
 export default function reducer(state, action) {
@@ -38,6 +39,16 @@ export default function reducer(state, action) {
         issue: { ...state.issue, title: state.newTitle },
         newTitle: '',
         showEditIssueHeader: false,
+      };
+    }
+    case REGISTER_COMMENT: {
+      const { issue } = state;
+      return {
+        ...state,
+        issue: {
+          ...issue,
+          Comments: [...issue.Comments, action.comment],
+        },
       };
     }
     default:
