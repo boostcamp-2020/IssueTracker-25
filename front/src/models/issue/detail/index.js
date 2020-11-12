@@ -22,6 +22,7 @@ const initialState = {
   newTitle: '',
   countOfComments: undefined,
   showEditIssueHeader: false,
+  showEditIssueDetail: false,
 };
 
 const IssueDetailPage = () => {
@@ -33,12 +34,12 @@ const IssueDetailPage = () => {
     reducer,
     initialState,
   });
-  
+
   const {
     state: { profileLink },
   } = useContext(userContext);
 
-  const { issue, showEditIssueHeader } = detailState;
+  const { issue, showEditIssueHeader, showEditIssueDetail } = detailState;
   const { error, loading } = fetchStatus;
 
   const editTitleClickHandler = () => {
@@ -46,6 +47,9 @@ const IssueDetailPage = () => {
   };
   const cancelTitleClickHandler = () => {
     dispatch(actions.showEditIssueHeader(false));
+  };
+  const editContentsClickHandler = () => {
+    dispatch(actions.showEditIssueDetail(true));
   };
 
   const onTitleSave = async () => {
@@ -66,6 +70,8 @@ const IssueDetailPage = () => {
   const updateTitle = (newTitle) => {
     dispatch(actions.updateTitle(newTitle));
   };
+
+  const updateContents = () => {};
 
   if (error) {
     return <div>{error}</div>;
@@ -93,7 +99,12 @@ const IssueDetailPage = () => {
                   editTitleClickHandler={editTitleClickHandler}
                 />
               )}
-              <IssueDetailBody issue={issue} />
+              <IssueDetailBody
+                issue={issue}
+                showEditIssueDetail={showEditIssueDetail}
+                onChange={updateContents}
+                editContentsClickHandler={editContentsClickHandler}
+              />
               <IssueDetailFooter
                 isClosed={issue.isClosed}
                 profileLink={profileLink}

@@ -5,6 +5,7 @@ const {
   SHOW_EDIT_ISSUE_HEADER,
   UPDATE_TITLE,
   SUCCESS_UPDATE_TITLE,
+  SHOW_EDIT_ISSUE_DETAIL,
 } = actionType;
 export default {
   fetchSuccess(data) {
@@ -16,6 +17,12 @@ export default {
   showEditIssueHeader(showStatus) {
     return {
       type: SHOW_EDIT_ISSUE_HEADER,
+      showStatus,
+    };
+  },
+  showEditIssueDetail(showStatus) {
+    return {
+      type: SHOW_EDIT_ISSUE_DETAIL,
       showStatus,
     };
   },

@@ -5,6 +5,7 @@ const {
   SHOW_EDIT_ISSUE_HEADER,
   UPDATE_TITLE,
   SUCCESS_UPDATE_TITLE,
+  SHOW_EDIT_ISSUE_DETAIL,
 } = actionType;
 
 export default function reducer(state, action) {
@@ -23,6 +24,13 @@ export default function reducer(state, action) {
       return {
         ...state,
         showEditIssueHeader: showStatus,
+      };
+    }
+    case SHOW_EDIT_ISSUE_DETAIL: {
+      const { showStatus } = action;
+      return {
+        ...state,
+        showEditIssueDetail: showStatus,
       };
     }
     case UPDATE_TITLE: {

@@ -1,15 +1,26 @@
 import React from 'react';
 import Comment from './Comment';
+import MarkdownEditor from '../../../../models/markdown-editor';
 
-const IssueDetailBody = ({ issue }) => {
+const IssueDetailBody = ({
+  issue,
+  showEditIssueDetail,
+  onChange,
+  editContentsClickHandler,
+}) => {
   return (
     <>
-      <Comment
-        writer={issue.Author}
-        createdAt={issue.createdAt}
-        contents={issue.contents}
-        isAuthor={issue.isAuthor}
-      />
+      {showEditIssueDetail ? (
+        <MarkdownEditor onChange={(value) => onChange(value)} />
+      ) : (
+        <Comment
+          writer={issue.Author}
+          createdAt={issue.createdAt}
+          contents={issue.contents}
+          isAuthor={issue.isAuthor}
+          editContentsClickHandler={editContentsClickHandler}
+        />
+      )}
       {issue.Comments.map((comment) => {
         return (
           <Comment
