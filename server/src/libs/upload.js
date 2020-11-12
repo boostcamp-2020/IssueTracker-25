@@ -19,10 +19,10 @@ const storage = multerS3({
   bucket,
   contentType: multerS3.AUTO_CONTENT_TYPE,
   acl: 'public-read',
-  key(req, file, cb) {
+  key(req, file, setKey) {
     const originFilename = file.originalname;
     const extension = originFilename.substring(originFilename.lastIndexOf('.'));
-    cb(null, `uploads/${moment().format('YMD')}/${uuidv4()}${extension}`);
+    setKey(null, `uploads/${moment().format('YMD')}/${uuidv4()}${extension}`);
   },
 });
 

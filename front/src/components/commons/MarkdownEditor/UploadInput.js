@@ -39,11 +39,20 @@ const Input = styled.input`
   cursor: pointer;
 `;
 
-const UploadInput = () => {
+const UploadInput = ({ onChange }) => {
+  const onChangeHandler = ({ target: { files } }) => {
+    onChange(files);
+  };
+
   return (
     <UploadInputContainer>
       <Label htmlFor="input-upload">
-        <Input name="input-upload" accept={fileAccepts.join(',')} type="file" />
+        <Input
+          name="input-upload"
+          accept={fileAccepts.join(',')}
+          type="file"
+          onChange={onChangeHandler}
+        />
         <span>Attach files by selecting here</span>
       </Label>
     </UploadInputContainer>
