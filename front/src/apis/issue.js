@@ -17,4 +17,7 @@ export default {
   updateContents: ({ contents, id }) => {
     return axios.put(`${ISSUES_URL}/${id}/contents`, { contents });
   },
+  changeStatus: (id) => {
+    return axios.put(`${ISSUES_URL}/${id}/is-closed`);
+  },
 };

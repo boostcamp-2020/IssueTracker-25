@@ -93,7 +93,7 @@ const IssueDetailPage = () => {
     const newComment = await commentAPI.registerComment(payload);
     dispatch(actions.updateComment(newComment));
     setCommentInput('');
-  }
+  };
 
   const onContentsSave = async () => {
     const {
@@ -107,6 +107,11 @@ const IssueDetailPage = () => {
     } catch (updateContentsError) {
       return <div>{updateContentsError}</div>;
     }
+  };
+
+  const changeStatus = async () => {
+    const { isClosed, closedAt } = await issueAPI.changeStatus(issue.id);
+    dispatch(actions.updateClosedStatus(isClosed, closedAt));
   };
 
   if (error) {
@@ -150,8 +155,8 @@ const IssueDetailPage = () => {
                 isClosed={issue.isClosed}
                 profileLink={profileLink}
                 onInputComment={setCommentInput}
-                onReopenIssue={() => alert('reopen')}
-                onCloseIssue={() => alert('closed')}
+                onReopenIssue={changeStatus}
+                onCloseIssue={changeStatus}
                 onCommentSubmit={registerComment}
               />
             </>
