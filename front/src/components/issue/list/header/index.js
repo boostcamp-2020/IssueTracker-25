@@ -4,6 +4,7 @@ import Dropdown from '../../../commons/dropdown/Dropdown';
 import UserDropdownItem from '../../../commons/dropdown/UserDropdownItem';
 import LabelDropdownItem from '../../../commons/dropdown/LabelDropdownItem';
 import MilestoneDropdownItem from '../../../commons/dropdown/MilestoneDropdownItem';
+import NopDropdownItem from '../../../commons/dropdown/NopDropdownItem';
 
 const IssueListHeader = ({
   checkAllIssue,
@@ -20,6 +21,7 @@ const IssueListHeader = ({
     assginee: selectedAssignee = '',
     label: selectedLabelSet = new Set(),
   } = filterState;
+  console.log(filterState);
   return (
     <div>
       <CustomCheckBoxButton
@@ -51,7 +53,12 @@ const IssueListHeader = ({
         headerText="Filter by label"
         button={<div>Label</div>}
       >
-        <LabelDropdownItem label={{ id: 0, name: 'Unabled' }} />
+        <NopDropdownItem
+          value="label"
+          onClick={filterHandler}
+          title="Unabled"
+          key="filter-label-id-0"
+        />
         {labels &&
           labels.map((label) => {
             return (
@@ -69,9 +76,11 @@ const IssueListHeader = ({
         headerText="Filter by milestone"
         button={<div>Milestones</div>}
       >
-        <MilestoneDropdownItem
+        <NopDropdownItem
+          value="milestone"
+          onClick={filterHandler}
+          title="Issues with no milestones"
           key="filter-milestone-id-0"
-          milestone={{ id: 0, title: 'Issues with no milestones' }}
         />
         {milestones &&
           milestones.map((milestone) => {
@@ -90,7 +99,12 @@ const IssueListHeader = ({
         headerText="Filter by who's assigned"
         button={<div>Assignee</div>}
       >
-        <UserDropdownItem userInfo={{ id: 0, name: 'Assgined to nobody' }} />
+        <NopDropdownItem
+          value="assignee"
+          onClick={filterHandler}
+          title="Assgined to nobody"
+          key="filter-assignee-id-0"
+        />
         {users &&
           users.map((user) => {
             return (
