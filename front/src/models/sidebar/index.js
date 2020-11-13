@@ -48,13 +48,6 @@ const Sidebar = ({ handlers, selected }) => {
   ) {
     return <div>error</div>;
   }
-  if (
-    assigneeFetchStatus.loading ||
-    milestoneFetchStatus.loading ||
-    labelFetchStatus.loading
-  ) {
-    return null;
-  }
 
   return (
     <SidebarContainer

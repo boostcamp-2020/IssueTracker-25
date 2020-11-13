@@ -9,7 +9,6 @@ export const DBConfig = {
   password: process.env.DB_PASSWORD || 'password',
   database: process.env.DB_DATABASE || 'dbname',
   dialect: process.env.DB_DIALECT || 'mysql',
-  timezone: process.env.DB_TIMEZONE || '+09:00',
 };
 
 export const GitHubConfig = {

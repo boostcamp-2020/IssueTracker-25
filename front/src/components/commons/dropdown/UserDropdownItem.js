@@ -13,10 +13,16 @@ const UserDropdownItemContainer = styled(DropdownItemContainer)`
   }
 `;
 
-const UserDropdownItem = ({ selected, userInfo, onClick }) => {
-  const { id, name, profileLink } = userInfo;
+const UserDropdownItem = ({
+  selected,
+  userInfo,
+  onClick,
+  isAuthor = false,
+}) => {
+  const { name, profileLink } = userInfo;
+  const key = isAuthor ? 'author' : 'assginee';
   return (
-    <UserDropdownItemContainer onClick={() => onClick(id)}>
+    <UserDropdownItemContainer onClick={() => onClick({ key, value: name })}>
       <div className="dropdown-item dropdown-item-check">
         {selected && <Icons.CheckIcon />}
       </div>

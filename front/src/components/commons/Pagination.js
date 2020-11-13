@@ -20,20 +20,25 @@ const PaginationButton = styled.button`
   }
 `;
 
-const PaginationItem = ({ page, moveTo, clickHandler, children }) => {
+const PaginationItem = ({ page, moveTo, clickHandler, children, search }) => {
   const style =
-    page && page === moveTo ? ButtonTheme.blue : ButtonTheme.default;
+    page && +page === moveTo ? ButtonTheme.blue : ButtonTheme.default;
   return (
-    <PaginationButton style={style} data-page={moveTo} onClick={clickHandler}>
+    <PaginationButton
+      style={style}
+      data-page={moveTo + (search ? `&${search}` : '')}
+      onClick={clickHandler}
+    >
       {children}
     </PaginationButton>
   );
 };
 
-const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
+const PageButtonComponent = ({ page, lastPage, clickHandler, search }) => {
   const endPage = Math.ceil(page / NUM_OF_DISPLAY_PAGE) * NUM_OF_DISPLAY_PAGE;
   const startPage = endPage - NUM_OF_DISPLAY_PAGE + 1;
   const adjustedEndPage = Math.min(lastPage, endPage);
+
   const pages = new Array(adjustedEndPage - startPage + 1)
     .fill(startPage)
     .map((startOffset, idx) => startOffset + idx);
@@ -51,6 +56,7 @@ const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
       {pages.map((curPage) => (
         <PaginationItem
           moveTo={curPage}
+          search={search}
           page={page}
           clickHandler={clickHandler}
           key={`pagination-item_${curPage}`}
@@ -70,14 +76,10 @@ const PageButtonComponent = ({ page, lastPage, clickHandler }) => {
   );
 };
 
-const Pagination = ({ page, lastPage, clickHandler }) => {
+const Pagination = ({ ...rest }) => {
   return (
     <PaginationContainer>
-      <PageButtonComponent
-        page={page}
-        lastPage={lastPage}
-        clickHandler={clickHandler}
-      />
+      <PageButtonComponent {...rest} />
     </PaginationContainer>
   );
 };

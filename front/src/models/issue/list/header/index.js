@@ -12,19 +12,6 @@ const IssueListHeader = ({
   filterState,
   filterHandler,
 }) => {
-  const {
-    updateMilestone,
-    updateLabel,
-    updateAssignee,
-    updateAuthor,
-  } = filterHandler;
-  const {
-    milestoneId: selectedMilestoneId,
-    authorId: selectedAuthorId,
-    assigneeId: selectedAssigneeId,
-    labels: selectedLabelSet,
-  } = filterState;
-
   const { state: labelState, fetchStatus: labelFetchStatus } = useAsync({
     api: labelApi.getLabels,
     reducer,
@@ -55,13 +42,6 @@ const IssueListHeader = ({
   ) {
     return <div>error</div>;
   }
-  if (
-    userFetchStatus.loading ||
-    milestoneFetchStatus.loading ||
-    labelFetchStatus.loading
-  ) {
-    return null;
-  }
 
   return (
     <IssueListHeaderContainer
@@ -70,14 +50,8 @@ const IssueListHeader = ({
       labels={labelState}
       milestones={milestoneState}
       users={userState}
-      selectedAssigneeId={selectedAssigneeId}
-      selectedAuthorId={selectedAuthorId}
-      selectedMilestoneId={selectedMilestoneId}
-      selectedLabelSet={selectedLabelSet}
-      milestoneSelectHandler={updateMilestone}
-      labelSelectHandler={updateLabel}
-      assigneeSelectHandler={updateAssignee}
-      authorSelectHandler={updateAuthor}
+      filterState={filterState}
+      filterHandler={filterHandler}
     />
   );
 };

@@ -12,58 +12,58 @@ const IssueService = ({
     NOT_FOUND: '등록되지 않은 이슈 id 입니다.',
     ACCESS_DENIED: '접근 권한이 없습니다.',
   };
-
-  const getTotalIssueCount = async () => {
-    const totalIssueCount = await IssueModel.count();
-    return totalIssueCount;
-  };
-
-  const getPagedIssues = async ({ pageParams }) => {
+  const swapOption = (option) =>
+    Object.keys(option).length === 0 ? undefined : option;
+  const getPagedIssues = async ({ pageParams, whereOption }) => {
     const { page, LIMIT } = pageParams;
     const offset = (page - 1) * LIMIT;
-    const issues = await IssueModel.findAll({
+    const issues = await IssueModel.findAndCountAll({
       attributes: {
         exclude: ['contents'],
       },
+      where: swapOption(whereOption.open),
+      subQuery: false,
+      order: [['id', 'DESC']],
       offset,
       limit: LIMIT,
-      order: [['id', 'DESC']],
       include: [
         {
           model: UserModel,
           as: 'Author',
           attributes: ['id', 'name'],
+          where: swapOption(whereOption.author),
         },
         {
           model: LabelModel,
           through: { attributes: [] },
+          where: swapOption(whereOption.label),
         },
         {
           model: UserModel,
           as: 'Assignees',
           attributes: ['id', 'profileLink'],
           through: { attributes: [] },
+          where: swapOption(whereOption.assignee),
         },
         {
           model: MilestoneModel,
           attributes: ['id', 'title'],
+          where: swapOption(whereOption.milestone),
         },
       ],
     });
     return issues;
   };
 
-  const getIssueList = async ({ page }) => {
+  const getIssueList = async ({ page, whereOption }) => {
     const LIMIT = 15;
-    const [totalIssueCount, issues] = await Promise.all([
-      getTotalIssueCount(),
-      getPagedIssues({
-        pageParams: { page, LIMIT },
-      }),
-    ]);
+    const { count, rows: issues } = await getPagedIssues({
+      pageParams: { page, LIMIT },
+      whereOption,
+    });
     const pagination = {
       page,
-      lastPage: Math.ceil(totalIssueCount / LIMIT),
+      lastPage: Math.ceil(count / LIMIT),
     };
     return { pagination, issues };
   };

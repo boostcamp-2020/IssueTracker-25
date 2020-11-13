@@ -2,12 +2,10 @@ import React from 'react';
 import DropdownItemContainer from './DropdownItemContainer';
 import * as Icons from '../../icons';
 
-const MilestoneDropdownItem = ({ selected, milestone, onClick }) => {
-  const { title } = milestone;
+const NopDropdownItem = ({ selected, value, onClick, title }) => {
+  const key = 'no';
   return (
-    <DropdownItemContainer
-      onClick={() => onClick({ key: 'milestone', value: title })}
-    >
+    <DropdownItemContainer onClick={() => onClick({ key, value })}>
       <div className="dropdown-item dropdown-item-check">
         {selected && <Icons.CheckIcon />}
       </div>
@@ -19,4 +17,4 @@ const MilestoneDropdownItem = ({ selected, milestone, onClick }) => {
   );
 };
 
-export default MilestoneDropdownItem;
+export default NopDropdownItem;

@@ -1,12 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import CustomCheckBoxButton from '../../../commons/buttons/CustomCheckBoxButton';
 import Dropdown from '../../../commons/dropdown/Dropdown';
 import UserDropdownItem from '../../../commons/dropdown/UserDropdownItem';
 import LabelDropdownItem from '../../../commons/dropdown/LabelDropdownItem';
 import MilestoneDropdownItem from '../../../commons/dropdown/MilestoneDropdownItem';
-
-const IssueListHeaderContainer = styled.div``;
+import NopDropdownItem from '../../../commons/dropdown/NopDropdownItem';
 
 const IssueListHeader = ({
   checkAllIssue,
@@ -14,17 +12,18 @@ const IssueListHeader = ({
   labels,
   milestones,
   users,
-  selectedAssigneeId,
-  selectedAuthorId,
-  selectedMilestoneId,
-  selectedLabelSet,
-  milestoneSelectHandler,
-  labelSelectHandler,
-  assigneeSelectHandler,
-  authorSelectHandler,
+  filterState,
+  filterHandler,
 }) => {
+  const {
+    milestone: selectedMilestone = '',
+    author: selectedAuthor = '',
+    assginee: selectedAssignee = '',
+    label: selectedLabelSet = new Set(),
+  } = filterState;
+  console.log(filterState);
   return (
-    <IssueListHeaderContainer>
+    <div>
       <CustomCheckBoxButton
         type="button"
         checked={checkAllIssue}
@@ -42,8 +41,9 @@ const IssueListHeader = ({
               <UserDropdownItem
                 key={`filter-author-id-${user.id}`}
                 userInfo={user}
-                onClick={authorSelectHandler}
-                selected={selectedAuthorId === user.id}
+                isAuthor
+                onClick={filterHandler}
+                selected={selectedAuthor === user.name}
               />
             );
           })}
@@ -53,15 +53,20 @@ const IssueListHeader = ({
         headerText="Filter by label"
         button={<div>Label</div>}
       >
-        <LabelDropdownItem label={{ id: 0, name: 'Unabled' }} />
+        <NopDropdownItem
+          value="label"
+          onClick={filterHandler}
+          title="Unabled"
+          key="filter-label-id-0"
+        />
         {labels &&
           labels.map((label) => {
             return (
               <LabelDropdownItem
                 key={`filter-label-id-${label.id}`}
                 label={label}
-                onClick={labelSelectHandler}
-                selected={selectedLabelSet.has(label.id)}
+                onClick={filterHandler}
+                selected={selectedLabelSet.has(label.name)}
               />
             );
           })}
@@ -71,9 +76,11 @@ const IssueListHeader = ({
         headerText="Filter by milestone"
         button={<div>Milestones</div>}
       >
-        <MilestoneDropdownItem
+        <NopDropdownItem
+          value="milestone"
+          onClick={filterHandler}
+          title="Issues with no milestones"
           key="filter-milestone-id-0"
-          milestone={{ id: 0, title: 'Issues with no milestones' }}
         />
         {milestones &&
           milestones.map((milestone) => {
@@ -81,8 +88,8 @@ const IssueListHeader = ({
               <MilestoneDropdownItem
                 key={`filter-milestone-id-${milestone.id}`}
                 milestone={milestone}
-                onClick={milestoneSelectHandler}
-                selected={selectedMilestoneId === milestone.id}
+                onClick={filterHandler}
+                selected={selectedMilestone === milestone.title}
               />
             );
           })}
@@ -92,20 +99,25 @@ const IssueListHeader = ({
         headerText="Filter by who's assigned"
         button={<div>Assignee</div>}
       >
-        <UserDropdownItem userInfo={{ id: 0, name: 'Assgined to nobody' }} />
+        <NopDropdownItem
+          value="assignee"
+          onClick={filterHandler}
+          title="Assgined to nobody"
+          key="filter-assignee-id-0"
+        />
         {users &&
           users.map((user) => {
             return (
               <UserDropdownItem
                 key={`filter-assignee-id-${user.id}`}
                 userInfo={user}
-                onClick={assigneeSelectHandler}
-                selected={selectedAssigneeId === user.id}
+                onClick={filterHandler}
+                selected={selectedAssignee === user.name}
               />
             );
           })}
       </Dropdown>
-    </IssueListHeaderContainer>
+    </div>
   );
 };
 

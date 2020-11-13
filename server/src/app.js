@@ -26,7 +26,7 @@ db.sequelize.sync(syncOption).then(async () => {
   if (!isProd) await seedInit();
 });
 
-app.use(function (err, req, res) {
+app.use((err, req, res) => {
   res.status(err.status || 500);
   res.json({ error: err.message });
 });

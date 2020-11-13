@@ -12,8 +12,6 @@ const sequelizeConfigs = {
   ...DBConfig,
   dialectOptions: {
     charset: 'utf8mb4',
-    dateStrings: true,
-    typeCast: true,
   },
   define: {
     engine: 'InnoDB',
