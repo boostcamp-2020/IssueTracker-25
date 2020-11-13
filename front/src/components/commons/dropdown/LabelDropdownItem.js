@@ -27,10 +27,10 @@ const LabelDropdownItemContainer = styled(DropdownItemContainer)`
 `;
 
 const LabelDropdownItem = ({ selected, label, onClick }) => {
-  const { name, description, color: labelColor } = label;
+  const { id, name, description, color: labelColor } = label;
   return (
     <LabelDropdownItemContainer
-      onClick={() => onClick({ key: 'label', value: name })}
+      onClick={() => onClick({ key: 'label', value: name, id })}
       isDescription={description}
     >
       <div className="dropdown-item dropdown-item-check dropdown-item-top">

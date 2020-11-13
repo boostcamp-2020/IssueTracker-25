@@ -9,7 +9,7 @@ const initialSideState = {
 
 const useSidebar = () => {
   const [state, setState] = useState(initialSideState);
-  const updateMilestone = (id) => {
+  const updateMilestone = ({ id }) => {
     utils.toggleStateIfEqual({
       state,
       setState,
@@ -28,11 +28,11 @@ const useSidebar = () => {
       setState({ ...state, [type]: new Set([...target, id]) });
     }
   };
-  const updateAssignee = (id) => {
+  const updateAssignee = ({ id }) => {
     const type = 'assignees';
     updateSet({ type, id });
   };
-  const updateLabel = (id) => {
+  const updateLabel = ({ id }) => {
     const type = 'labels';
     updateSet({ type, id });
   };

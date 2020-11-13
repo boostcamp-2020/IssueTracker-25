@@ -30,7 +30,7 @@ const IssueRegisterModel = () => {
       title,
       contents,
       milestoneId,
-      assginees: [...assignees],
+      assignees: [...assignees],
       labels: [...labels],
     };
 

@@ -19,10 +19,12 @@ const UserDropdownItem = ({
   onClick,
   isAuthor = false,
 }) => {
-  const { name, profileLink } = userInfo;
-  const key = isAuthor ? 'author' : 'assginee';
+  const { id, name, profileLink } = userInfo;
+  const key = isAuthor ? 'author' : 'assignee';
   return (
-    <UserDropdownItemContainer onClick={() => onClick({ key, value: name })}>
+    <UserDropdownItemContainer
+      onClick={() => onClick({ key, value: name, id })}
+    >
       <div className="dropdown-item dropdown-item-check">
         {selected && <Icons.CheckIcon />}
       </div>
