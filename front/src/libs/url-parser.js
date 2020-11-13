@@ -2,17 +2,17 @@ import queryString from 'query-string';
 
 export const decodeFilter = (target) =>
   target.replace(/:/g, '=').replace(/[ *]/g, '&');
-export const incodeFilter = (target) =>
+export const encodeFilter = (target) =>
   target.replace(/=/g, ':').replace(/&/g, ' ');
 export const isObject = (target) => typeof target === 'object';
 export const changeAtom = (target) => target[target.length - 1];
 export const changeLowerCase = (target) => target.toLowerCase();
 export const parser = (query) => {
-  const queies = queryString.parse(query);
-  return Object.keys(queies)
+  const queries = queryString.parse(query);
+  return Object.keys(queries)
     .map(changeLowerCase)
     .reduce((acc, key) => {
-      const value = queies[key];
+      const value = queries[key];
       if (!value) return acc;
       if (key === 'label') {
         if (isObject(value)) {
@@ -33,9 +33,9 @@ export const getPage = (location) => {
   return currentPage || FIRST_PAGE;
 };
 export const getFilter = (location) => {
-  const querys = queryString.parse(location.search);
-  const excludePageQuery = Object.keys(querys).reduce((acc, query) => {
-    if (query !== 'page') acc[query] = querys[query];
+  const queries = queryString.parse(location.search);
+  const excludePageQuery = Object.keys(queries).reduce((acc, query) => {
+    if (query !== 'page') acc[query] = queries[query];
     return acc;
   }, {});
   return queryString.stringify(excludePageQuery);

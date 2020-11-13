@@ -47,7 +47,7 @@ const IssueDetailPage = () => {
     showEditIssueDetail,
     countOfComments,
   } = detailState;
-  const { error, loading } = fetchStatus;
+  const { error } = fetchStatus;
 
   const editTitleClickHandler = () => {
     dispatch(actions.updateOneState('showEditIssueHeader', true));
