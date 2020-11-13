@@ -28,6 +28,7 @@ export default function reducer(state, action) {
       return {
         ...state,
         page: moveTo,
+        checkAllIssue: false,
       };
     }
     case CHECK_ALL_ISSUE_HANDLER: {

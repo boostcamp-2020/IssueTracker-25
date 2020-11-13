@@ -93,7 +93,7 @@ const IssueDetailPage = () => {
     const newComment = await commentAPI.registerComment(payload);
     dispatch(actions.updateComment(newComment));
     setCommentInput('');
-  }
+  };
 
   const onContentsSave = async () => {
     const {
