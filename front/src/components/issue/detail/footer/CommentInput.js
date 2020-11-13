@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import color from '../../../../libs/color';
 import { UserProfile } from '../../../commons/UserProfile';
 import ArrowContainerStyle from '../../../commons/ArrowContainerStyle';
-import MarkdownEditor from '../../../commons/MarkdownEditor';
+import MarkdownEditor from '../../../../models/markdown-editor';
 import CustomButton from '../../../commons/buttons/CustomButton';
 import ClosedIcon from '../../../icons/ClosedIcon';
 
@@ -52,10 +52,10 @@ const InputButtonGroup = styled.div`
 `;
 
 const CommentInput = ({
-  value,
+  contents,
+  updateContents,
   profileLink,
   isClosed,
-  onInputComment,
   onCloseIssue,
   onReopenIssue,
   onSubmit,
@@ -68,7 +68,7 @@ const CommentInput = ({
       <InputContainer>
         <InputHeader />
         <InputBody>
-          <MarkdownEditor value={value} onChange={onInputComment} />
+          <MarkdownEditor contents={contents} updateContents={updateContents} />
           <InputButtonGroup>
             {isClosed ? (
               <CustomButton handleClick={onReopenIssue}>

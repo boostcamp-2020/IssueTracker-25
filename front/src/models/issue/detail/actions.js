@@ -6,6 +6,7 @@ const {
   SUCCESS_UPDATE_TITLE,
   UPDATE_ONE_STATE,
   SUCCESS_UPDATE_CONTENTS,
+  CHANGE_CLOSED_STATUS,
 } = actionType;
 
 export default {
@@ -36,6 +37,13 @@ export default {
   successUpdateContents() {
     return {
       type: SUCCESS_UPDATE_CONTENTS,
+    };
+  },
+  updateClosedStatus(isClosed, closedAt) {
+    return {
+      type: CHANGE_CLOSED_STATUS,
+      isClosed,
+      closedAt,
     };
   },
 };

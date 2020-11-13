@@ -6,13 +6,11 @@ const DELAY = 2000;
 
 let debounceTimer;
 
-const MarkdownEditor = ({ onChange, initialContents = '' }) => {
-  const [contents, setContents] = useState(initialContents);
+const MarkdownEditor = ({ contents, updateContents }) => {
   const [contentsLength, setContentsLength] = useState(0);
   const [showContentsLength, setShowContentsLength] = useState(false);
 
   useEffect(() => {
-    onChange(contents);
     setShowContentsLengthDebounce(contents.length);
     return clearTimer;
   }, [contents]);
@@ -39,21 +37,21 @@ const MarkdownEditor = ({ onChange, initialContents = '' }) => {
     debounceTimer = setTimeout(debounceCallback, DELAY);
   };
 
-  const updateContents = (newContents) => {
-    setContents(newContents);
+  const updateContentsHandler = (newContents) => {
+    updateContents(newContents);
   };
 
   const uploadFile = async (files) => {
     const uploadResponse = await uploadApi.uploadFile(files);
     const { filename, url: fileAccessUrl } = uploadResponse;
     const imageMarkdown = `![${filename}](${fileAccessUrl})`;
-    setContents(`${contents}\n\n${imageMarkdown}`);
+    updateContents(`${contents}\n\n${imageMarkdown}`);
   };
 
   return (
     <MarkdownEditorComponent
       value={contents}
-      onChange={updateContents}
+      onChange={updateContentsHandler}
       onUpload={uploadFile}
       showContentsLength={showContentsLength}
       contentsLength={contentsLength}

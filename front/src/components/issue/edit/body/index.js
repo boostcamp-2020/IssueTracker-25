@@ -9,17 +9,14 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 const IssueEditBody = ({
-  initialContents,
+  newContents,
   onChange,
   onContentsSave,
   cancelContentsClickHandler,
 }) => {
   return (
     <>
-      <MarkdownEditor
-        onChange={(value) => onChange(value)}
-        initialContents={initialContents}
-      />
+      <MarkdownEditor contents={newContents} updateContents={onChange} />
       <ButtonContainer>
         <CustomButton
           style={{ color: 'whiteRed' }}

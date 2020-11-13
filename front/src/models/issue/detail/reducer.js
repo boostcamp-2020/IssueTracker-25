@@ -6,6 +6,7 @@ const {
   SUCCESS_UPDATE_TITLE,
   UPDATE_ONE_STATE,
   SUCCESS_UPDATE_CONTENTS,
+  CHANGE_CLOSED_STATUS,
 } = actionType;
 
 export default function reducer(state, action) {
@@ -17,6 +18,7 @@ export default function reducer(state, action) {
         ...state,
         issue: data,
         countOfComments: data.Comments.length,
+        newContents: data.contents,
       };
     }
     case UPDATE_ONE_STATE: {
@@ -42,14 +44,24 @@ export default function reducer(state, action) {
           ...issue,
           Comments: [...issue.Comments, action.comment],
         },
+        countOfComments: state.countOfComments + 1,
       };
     }
     case SUCCESS_UPDATE_CONTENTS: {
       return {
         ...state,
         issue: { ...state.issue, contents: state.newContents },
-        newContents: '',
         showEditIssueDetail: false,
+      };
+    }
+    case CHANGE_CLOSED_STATUS: {
+      return {
+        ...state,
+        issue: {
+          ...state.issue,
+          isClosed: action.isClosed,
+          closedAt: action.closedAt,
+        },
       };
     }
     default:
