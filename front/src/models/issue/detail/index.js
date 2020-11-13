@@ -148,10 +148,10 @@ const IssueDetailPage = () => {
                 cancelContentsClickHandler={cancelContentsClickHandler}
               />
               <IssueDetailFooter
-                inputState={commentInput}
+                contents={commentInput}
+                updateContents={setCommentInput}
                 isClosed={issue.isClosed}
                 profileLink={profileLink}
-                onInputComment={setCommentInput}
                 onReopenIssue={changeStatus}
                 onCloseIssue={changeStatus}
                 onCommentSubmit={registerComment}
