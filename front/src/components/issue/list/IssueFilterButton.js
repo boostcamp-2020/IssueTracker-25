@@ -16,7 +16,7 @@ const filterDropdownItemContent = [
   },
 
   {
-    title: 'Everything assgined to you',
+    title: 'Everything assigned to you',
     value: 'assignee:@me',
   },
   {

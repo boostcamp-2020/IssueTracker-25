@@ -30,7 +30,7 @@ const IssueRegisterModel = () => {
       title,
       contents,
       milestoneId,
-      assginees: [...assignees],
+      assignees: [...assignees],
       labels: [...labels],
     };
 
@@ -38,7 +38,7 @@ const IssueRegisterModel = () => {
       const { id } = await issueApi.postIssue({ issue: newIssue });
       history.push(`${routeUrl.ISSUES}/${id}`);
     } catch (e) {
-      alert('^ㅡ^');
+      alert('^__^');
     }
   };
 
@@ -46,7 +46,8 @@ const IssueRegisterModel = () => {
     <IssueRegisterBody
       profileLink={profileLink}
       onSave={onSave}
-      updateContent={updateContents}
+      contents={contents}
+      updateContents={updateContents}
       submitButtonDisabled={submitButtonDisabled}
       updateTitle={updateTitle}
       sidebarHandlers={handlers}

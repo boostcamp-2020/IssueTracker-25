@@ -56,7 +56,7 @@ function IssueListContainer({
             filterState={filterState}
           />
         </ListHeader>
-        {!issues && (
+        {issues.length === 0 && (
           <WaringContainer>
             <div>No results matched your search.</div>
             <div>
@@ -64,7 +64,7 @@ function IssueListContainer({
             </div>
           </WaringContainer>
         )}
-        {issues && (
+        {issues.length !== 0 && (
           <IssueListBody
             issues={issues}
             checkBoxClickHandler={checkBoxClickHandler}

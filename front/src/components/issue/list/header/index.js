@@ -18,7 +18,7 @@ const IssueListHeader = ({
   const {
     milestone: selectedMilestone = '',
     author: selectedAuthor = '',
-    assginee: selectedAssignee = '',
+    assignee: selectedAssignee = '',
     label: selectedLabelSet = new Set(),
   } = filterState;
   console.log(filterState);
@@ -102,7 +102,7 @@ const IssueListHeader = ({
         <NopDropdownItem
           value="assignee"
           onClick={filterHandler}
-          title="Assgined to nobody"
+          title="Assigned to nobody"
           key="filter-assignee-id-0"
         />
         {users &&

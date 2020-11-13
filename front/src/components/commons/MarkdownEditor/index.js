@@ -33,7 +33,7 @@ const MarkdownEditor = ({
     <EditorContainer>
       <EditorInputContainer>
         <CustomTextarea value={value} onChange={onChange} />
-        {showContentsLength && (
+        {showContentsLength && contentsLength > 0 && (
           <ContentsLengthLayer
             className="markdown-editor__content-length"
             length={contentsLength}

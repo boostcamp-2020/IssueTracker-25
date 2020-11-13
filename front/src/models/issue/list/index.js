@@ -10,12 +10,13 @@ import actions from './actions';
 
 import {
   decodeFilter,
-  incodeFilter,
+  encodeFilter,
   parser,
   getFilter,
   getPage,
 } from '../../../libs/url-parser';
 
+const ENTER = 13;
 const TARGET_PAGE = '/?page';
 const initialState = {
   lastPage: 1,
@@ -26,7 +27,7 @@ const initialState = {
 const IssueList = ({ location }) => {
   const history = useHistory();
   const filterQuery = decodeURIComponent(getFilter(location));
-  const [search, setSearch] = useState(incodeFilter(filterQuery));
+  const [search, setSearch] = useState(encodeFilter(filterQuery));
   const getIssuesApi = () => issueApi.getIssues(getPage(location), filterQuery);
   const { state, fetchStatus, dispatch } = useAsync({
     api: getIssuesApi,
@@ -39,19 +40,22 @@ const IssueList = ({ location }) => {
   const parsered = parser(location.search);
 
   useEffect(() => {
-    const a = incodeFilter(filterQuery);
-    console.log(a);
-    setSearch(a);
+    const encodedFilter = encodeFilter(filterQuery);
+    setSearch(encodedFilter);
   }, [location.search]);
 
   const onFilterHandler = ({ key, value }) => {
     if (key === 'label') {
       if (!parsered[key]) {
         parsered[key] = new Set([value]);
-      } else if (parsered[key].has(value)) parsered[key].delete(value);
-      else parsered[key].add(value);
-    } else if (!parsered[key]) parsered[key] = value;
-    else {
+      } else if (parsered[key].has(value)) {
+        parsered[key].delete(value);
+      } else {
+        parsered[key].add(value);
+      }
+    } else if (!parsered[key]) {
+      parsered[key] = value;
+    } else {
       parsered[key] = parsered[key] === value ? undefined : value;
     }
     const query = queryString.stringify({
@@ -80,7 +84,7 @@ const IssueList = ({ location }) => {
 
   const pressSearchEnter = ({ keyCode }) => {
     const query = decodeFilter(search);
-    if (keyCode === 13) {
+    if (keyCode === ENTER) {
       history.push(`${TARGET_PAGE}=1${query ? `&${query}` : ''}`);
     }
   };
