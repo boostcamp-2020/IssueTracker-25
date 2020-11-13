@@ -1,13 +1,6 @@
 const MilestoneService = ({ MilestoneModel, sequelize }) => {
   const query = (isClosed) => {
-    return `(
-    SELECT COUNT(*)
-    FROM issues AS issue
-    WHERE
-        issue.milestone_id = milestone.id
-        AND
-        issue.is_closed = ${isClosed}
-    )`;
+    return `(SELECT COUNT(*) FROM issues AS issue WHERE issue.milestone_id = milestone.id AND issue.is_closed = ${isClosed})`;
   };
   const getMilestoneList = async () => {
     const milestones = await MilestoneModel.findAll({
