@@ -44,6 +44,7 @@ export default function reducer(state, action) {
           ...issue,
           Comments: [...issue.Comments, action.comment],
         },
+        countOfComments: state.countOfComments + 1,
       };
     }
     case SUCCESS_UPDATE_CONTENTS: {
