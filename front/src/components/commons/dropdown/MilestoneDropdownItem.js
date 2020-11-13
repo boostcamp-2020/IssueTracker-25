@@ -3,7 +3,7 @@ import DropdownItemContainer from './DropdownItemContainer';
 import * as Icons from '../../icons';
 
 const MilestoneDropdownItem = ({ selected, milestone, onClick }) => {
-  const { title } = milestone;
+  const { id, title } = milestone;
   return (
     <DropdownItemContainer
       onClick={() => onClick({ key: 'milestone', value: title, id })}
