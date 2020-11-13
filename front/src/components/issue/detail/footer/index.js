@@ -10,10 +10,10 @@ const IssueDetailFooterContainer = styled.div`
 `;
 
 const IssueDetailFooter = ({
-  inputState,
+  contents,
+  updateContents,
   profileLink,
   isClosed,
-  onInputComment,
   onCloseIssue,
   onReopenIssue,
   onCommentSubmit,
@@ -21,10 +21,10 @@ const IssueDetailFooter = ({
   return (
     <IssueDetailFooterContainer>
       <CommentInput
-        value={inputState}
+        contents={contents}
+        updateContents={updateContents}
         profileLink={profileLink}
         isClosed={isClosed}
-        onInputComment={onInputComment}
         onCloseIssue={onCloseIssue}
         onReopenIssue={onReopenIssue}
         onSubmit={onCommentSubmit}

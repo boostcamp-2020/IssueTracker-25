@@ -18,6 +18,7 @@ export default function reducer(state, action) {
         ...state,
         issue: data,
         countOfComments: data.Comments.length,
+        newContents: data.contents,
       };
     }
     case UPDATE_ONE_STATE: {
@@ -43,13 +44,13 @@ export default function reducer(state, action) {
           ...issue,
           Comments: [...issue.Comments, action.comment],
         },
+        countOfComments: state.countOfComments + 1,
       };
     }
     case SUCCESS_UPDATE_CONTENTS: {
       return {
         ...state,
         issue: { ...state.issue, contents: state.newContents },
-        newContents: '',
         showEditIssueDetail: false,
       };
     }

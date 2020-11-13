@@ -6,7 +6,7 @@ const MilestoneDropdownItem = ({ selected, milestone, onClick }) => {
   const { title } = milestone;
   return (
     <DropdownItemContainer
-      onClick={() => onClick({ key: 'milestone', value: title })}
+      onClick={() => onClick({ key: 'milestone', value: title, id })}
     >
       <div className="dropdown-item dropdown-item-check">
         {selected && <Icons.CheckIcon />}

@@ -11,7 +11,8 @@ const UserProfileContainer = styled.div`
 const IssueRegisterPageBody = ({
   onSave,
   updateTitle,
-  updateContent,
+  updateContents,
+  contents,
   submitButtonDisabled,
   profileLink,
   sidebarHandlers,
@@ -26,7 +27,8 @@ const IssueRegisterPageBody = ({
         <IssueRegisterContent
           onSave={onSave}
           updateTitle={updateTitle}
-          updateContent={updateContent}
+          contents={contents}
+          updateContents={updateContents}
           submitButtonDisabled={submitButtonDisabled}
         />
       </SidebarLayout.Content>

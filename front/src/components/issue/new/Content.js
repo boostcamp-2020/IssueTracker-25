@@ -29,7 +29,8 @@ const FormGroup = styled.div`
 const IssueRegisterContent = ({
   onSave,
   updateTitle,
-  updateContent,
+  contents,
+  updateContents,
   submitButtonDisabled,
 }) => {
   return (
@@ -41,7 +42,7 @@ const IssueRegisterContent = ({
         />
       </FormGroup>
       <FormGroup>
-        <MarkdownEditor onChange={(value) => updateContent(value)} />
+        <MarkdownEditor contents={contents} updateContents={updateContents} />
       </FormGroup>
 
       <FormGroup className="issue-register-contents__button-group">
