@@ -117,9 +117,6 @@ const IssueDetailPage = () => {
   if (error) {
     return <div>{error}</div>;
   }
-  if (loading) {
-    return null;
-  }
 
   return (
     !utils.isEmpty(issue) && (

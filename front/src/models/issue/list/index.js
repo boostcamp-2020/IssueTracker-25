@@ -1,51 +1,65 @@
-import React from 'react';
-import queryString from 'query-string';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import queryString from 'query-string';
 import { useAsync } from '../../../hooks/useAsync';
-import useFilter from '../../../hooks/useFilter';
 import * as IssueListComponents from '../../../components/issue/list';
 import Pagination from '../../../components/commons/Pagination';
 import issueApi from '../../../apis/issue';
 import reducer from './reducer';
 import actions from './actions';
 
-const FIRST_PAGE = 1;
+import {
+  decodeFilter,
+  incodeFilter,
+  parser,
+  getFilter,
+  getPage,
+} from '../../../libs/url-parser';
+
 const TARGET_PAGE = '/?page';
-
-const getPage = (location) => {
-  const { page: currentPage } = queryString.parse(location.search);
-  return currentPage || FIRST_PAGE;
-};
-
 const initialState = {
-  page: 1,
   lastPage: 1,
   issues: [],
   checkAllIssue: false,
 };
+
 const IssueList = ({ location }) => {
   const history = useHistory();
-  const { state: filterState, handlers: filterHandler } = useFilter();
-  const getIssuesApi = () => issueApi.getIssues(getPage(location));
+  const filterQuery = decodeURIComponent(getFilter(location));
+  const [search, setSearch] = useState(incodeFilter(filterQuery));
+  const getIssuesApi = () => issueApi.getIssues(getPage(location), filterQuery);
   const { state, fetchStatus, dispatch } = useAsync({
     api: getIssuesApi,
     reducer,
     deps: [location.search],
     initialState,
   });
-  const { page, lastPage, issues, checkAllIssue } = state;
-  const { error, loading } = fetchStatus;
+  const { lastPage, issues, checkAllIssue } = state;
+  const { error } = fetchStatus;
+  const parsered = parser(location.search);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-  if (loading) {
-    return null;
-  }
+  useEffect(() => {
+    const a = incodeFilter(filterQuery);
+    console.log(a);
+    setSearch(a);
+  }, [location.search]);
 
-  if (issues.length === 0) {
-    return <div>No results matched your search.</div>;
-  }
+  const onFilterHandler = ({ key, value }) => {
+    if (key === 'label') {
+      if (!parsered[key]) {
+        parsered[key] = new Set([value]);
+      } else if (parsered[key].has(value)) parsered[key].delete(value);
+      else parsered[key].add(value);
+    } else if (!parsered[key]) parsered[key] = value;
+    else {
+      parsered[key] = parsered[key] === value ? undefined : value;
+    }
+    const query = queryString.stringify({
+      ...parsered,
+      label: parsered.label ? [...parsered.label] : undefined,
+    });
+    history.push(`${TARGET_PAGE}=1${query ? `&${query}` : ''}`);
+  };
 
   const checkBoxClickHandler = ({ target }) => {
     const { id } = target;
@@ -59,23 +73,46 @@ const IssueList = ({ location }) => {
   const paginationClickHandler = ({ target }) => {
     const { page: moveTo } = target.dataset;
     history.push(`${TARGET_PAGE}=${moveTo}`);
-    dispatch(actions.issueListPaging(moveTo));
   };
+  const searchHandler = ({ target: { value } }) => {
+    setSearch(value);
+  };
+
+  const pressSearchEnter = ({ keyCode }) => {
+    const query = decodeFilter(search);
+    if (keyCode === 13) {
+      history.push(`${TARGET_PAGE}=1${query ? `&${query}` : ''}`);
+    }
+  };
+  const onClickFilterItem = (value) => {
+    const query = decodeFilter(value);
+    history.push(`${TARGET_PAGE}=1${query ? `&${query}` : ''}`);
+  };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <>
-      <IssueListComponents.IssueFilterContainer />
+      <IssueListComponents.IssueFilterContainer
+        filter={search}
+        onEnter={pressSearchEnter}
+        onChange={searchHandler}
+        clickFilterHandler={onClickFilterItem}
+      />
       <IssueListComponents.IssueListContainer
         issues={issues}
         checkAllIssue={checkAllIssue}
         checkBoxClickHandler={checkBoxClickHandler}
         allCheckBoxClickHandler={allCheckBoxClickHandler}
-        filterState={filterState}
-        filterHandler={filterHandler}
+        filterState={parsered}
+        filterHandler={onFilterHandler}
       />
       <Pagination
-        page={page}
+        page={getPage(location)}
         lastPage={lastPage}
+        search={decodeFilter(search)}
         clickHandler={paginationClickHandler}
       />
     </>

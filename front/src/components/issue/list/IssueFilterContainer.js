@@ -14,14 +14,22 @@ const Nav = styled.nav`
   display: inline-block;
 `;
 
-function IssueFilterContainer() {
+function IssueFilterContainer({
+  filter,
+  onEnter,
+  onChange,
+  clickFilterHandler,
+}) {
+  const filterValue = filter.replace(/=/g, ':').replace(/&/g, ' ');
   return (
     <Div>
-      <IssueFilterButton />
+      <IssueFilterButton clickFilterHandler={clickFilterHandler} />
       <input
         name="issue-filter"
         type="text"
-        value="is:open is:issue"
+        onKeyDown={onEnter}
+        onChange={onChange}
+        value={filterValue}
         placeholder="Search all issues"
       />
       <Nav>

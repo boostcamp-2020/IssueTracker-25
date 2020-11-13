@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import color from '../../../libs/color';
 import ListHeader from '../../commons/ListHeader';
 import IssueListItem from './IssueListItem';
@@ -16,6 +17,12 @@ const Ul = styled.ul`
   list-style-type: none;
 `;
 
+const WaringContainer = styled.div`
+  min-height: 15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 function IssueListBody({ issues, checkBoxClickHandler }) {
   return (
     <Ul>
@@ -49,10 +56,20 @@ function IssueListContainer({
             filterState={filterState}
           />
         </ListHeader>
-        <IssueListBody
-          issues={issues}
-          checkBoxClickHandler={checkBoxClickHandler}
-        />
+        {!issues && (
+          <WaringContainer>
+            <div>No results matched your search.</div>
+            <div>
+              You could search <Link to="/?page=1&is=open">ISSUES</Link> .
+            </div>
+          </WaringContainer>
+        )}
+        {issues && (
+          <IssueListBody
+            issues={issues}
+            checkBoxClickHandler={checkBoxClickHandler}
+          />
+        )}
       </IssueList>
     </>
   );

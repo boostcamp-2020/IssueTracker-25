@@ -1,8 +1,17 @@
+import filterParser from '../../libs/filter-parser';
+
 const IssueController = (issueService) => ({
   async getIssueList(req, res, next) {
     try {
       const page = Math.max(1, req.query.page || 1);
-      const { pagination, issues } = await issueService.getIssueList({ page });
+      const whereOption = filterParser({
+        query: req.query,
+        myName: req.user.name,
+      });
+      const { pagination, issues } = await issueService.getIssueList({
+        page,
+        whereOption,
+      });
       return res.status(200).json({ pagination, issues });
     } catch (err) {
       return next(err);
@@ -99,6 +108,16 @@ const IssueController = (issueService) => ({
         issueId,
         ...updateAssigneesPayload,
       });
+      return res.end();
+    } catch (err) {
+      return next(err);
+    }
+  },
+  async modifyLabels(req, res, next) {
+    const { id: issueId } = req.params;
+    const { labels } = req.body;
+    try {
+      await issueService.modifyLabels(issueId, labels);
       return res.end();
     } catch (err) {
       return next(err);
