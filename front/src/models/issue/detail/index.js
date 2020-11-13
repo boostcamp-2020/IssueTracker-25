@@ -109,7 +109,7 @@ const IssueDetailPage = () => {
     dispatch(actions.updateComment(newComment));
     setCommentInput('');
   };
-
+  
   const changeStatus = async () => {
     const { isClosed, closedAt } = await issueAPI.changeStatus(issue.id);
     dispatch(actions.updateClosedStatus(isClosed, closedAt));

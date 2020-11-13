@@ -27,7 +27,7 @@ const LabelDropdownItemContainer = styled(DropdownItemContainer)`
 `;
 
 const LabelDropdownItem = ({ selected, label, onClick }) => {
-  const { id, name, description, color: labelColor } = label;
+  const { name, description, color: labelColor } = label;
   return (
     <LabelDropdownItemContainer
       onClick={() => onClick({ key: 'label', value: name, id })}
