@@ -39,7 +39,10 @@ const SelectedAssignee = ({
           assignees={assignees}
         />
       ) : (
-        <button type="button" onClick={() => assigneeSelectHandler(userId)}>
+        <button
+          type="button"
+          onClick={() => assigneeSelectHandler({ id: userId })}
+        >
           {message}
         </button>
       )}
