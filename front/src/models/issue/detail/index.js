@@ -43,6 +43,7 @@ const IssueDetailPage = () => {
 
   const {
     issue,
+    newContents,
     showEditIssueHeader,
     showEditIssueDetail,
     countOfComments,
@@ -60,14 +61,15 @@ const IssueDetailPage = () => {
   };
   const cancelContentsClickHandler = () => {
     dispatch(actions.updateOneState('showEditIssueDetail', false));
+    dispatch(actions.updateOneState('newContents', issue.contents));
   };
 
   const updateTitle = (newTitle) => {
     dispatch(actions.updateOneState('newTitle', newTitle));
   };
 
-  const updateContents = (newContents) => {
-    dispatch(actions.updateOneState('newContents', newContents));
+  const updateContents = (newInputContents) => {
+    dispatch(actions.updateOneState('newContents', newInputContents));
   };
 
   const onTitleSave = async () => {
@@ -85,20 +87,9 @@ const IssueDetailPage = () => {
     }
   };
 
-  const registerComment = async () => {
-    const payload = {
-      issueId: issue.id,
-      contents: commentInput,
-    };
-    const newComment = await commentAPI.registerComment(payload);
-    dispatch(actions.updateComment(newComment));
-    setCommentInput('');
-  };
-
   const onContentsSave = async () => {
     const {
       issue: { id: issueId },
-      newContents,
     } = detailState;
     try {
       await issueAPI.updateContents({ id: issueId, contents: newContents });
@@ -107,6 +98,16 @@ const IssueDetailPage = () => {
     } catch (updateContentsError) {
       return <div>{updateContentsError}</div>;
     }
+  };
+
+  const registerComment = async () => {
+    const payload = {
+      issueId: issue.id,
+      contents: commentInput,
+    };
+    const newComment = await commentAPI.registerComment(payload);
+    dispatch(actions.updateComment(newComment));
+    setCommentInput('');
   };
 
   const changeStatus = async () => {
@@ -141,6 +142,7 @@ const IssueDetailPage = () => {
               )}
               <IssueDetailBody
                 issue={issue}
+                newContents={newContents}
                 showEditIssueDetail={showEditIssueDetail}
                 onChange={updateContents}
                 onContentsSave={onContentsSave}

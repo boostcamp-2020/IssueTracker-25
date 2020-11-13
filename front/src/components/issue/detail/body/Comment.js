@@ -98,7 +98,7 @@ const Comment = ({
           )}
         </CommentDetailHeader>
         {showEditIssueDetail ? (
-          <IssueEditBody initialContents={contents} {...restProps} />
+          <IssueEditBody {...restProps} />
         ) : (
           <MarkdownViewer>{contents}</MarkdownViewer>
         )}

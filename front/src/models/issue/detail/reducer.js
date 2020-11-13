@@ -18,6 +18,7 @@ export default function reducer(state, action) {
         ...state,
         issue: data,
         countOfComments: data.Comments.length,
+        newContents: data.contents,
       };
     }
     case UPDATE_ONE_STATE: {
@@ -49,7 +50,6 @@ export default function reducer(state, action) {
       return {
         ...state,
         issue: { ...state.issue, contents: state.newContents },
-        newContents: '',
         showEditIssueDetail: false,
       };
     }
